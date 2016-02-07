@@ -31,5 +31,8 @@ namespace ActiveReader.Web.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<ActiveReader.Web.Models.Article> Articles { get; set; }
+        public System.Data.Entity.DbSet<ActiveReader.Web.Models.Stat> Statistics { get; set; }
     }
 }

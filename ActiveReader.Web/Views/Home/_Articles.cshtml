@@ -1,0 +1,29 @@
+﻿<!-- ko with: articles -->
+
+<div class="jumbotron">
+    <h1>Articles</h1>
+</div>
+<button data-bind="click: function(){ isAdding(true); }, visible: !isAdding()">Add new article</button>
+<div style="display: none;" data-bind="visible: isAdding">
+    <h2>Add new article</h2>
+    <label for="titleInput">Title</label>
+    <br />
+    <input id="titleInput" type="text" name="name" data-bind="value: newArticleTitle" />
+    <br />
+    <label for="textInput">Text</label>
+    <br />
+    <textarea id="textInput" cols="80" rows="10" data-bind="value: newArticleText"></textarea>
+    <div>
+        <button data-bind="click: function(){ add() }">OK</button>
+        <button data-bind="click: function(){ cancel() }">Cancel</button>
+    </div>
+</div>
+
+<table data-bind="foreach: articles">
+    <tr>
+        <td><a href="#" data-bind="text: title"></a></td>
+        <td><a href="#" data-bind="click: function(){ $parent.remove($data) }">Remove</a></td>
+    </tr>
+</table>
+
+<!-- /ko -->
