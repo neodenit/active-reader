@@ -10,12 +10,13 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using ActiveReader.Web.Models;
+using ActiveReader.Persistence.Models;
 
 namespace ActiveReader.Web.Controllers
 {
     public class ArticlesController : ApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ActiveReaderDbContext db = new ActiveReaderDbContext();
 
         // GET: api/Articles
         public IQueryable<Article> GetArticles()

@@ -5,14 +5,14 @@ namespace ActiveReader.Web.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<ActiveReader.Web.Models.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ActiveReader.Web.Models.UsersDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(ActiveReader.Web.Models.ApplicationDbContext context)
+        protected override void Seed(ActiveReader.Web.Models.UsersDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
