@@ -10,6 +10,7 @@ namespace ActiveReader.Web
     {
         protected void Application_Start()
         {
+            DependenciesConfig.RegisterDependencies();
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

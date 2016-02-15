@@ -1,11 +1,12 @@
-﻿using System;
+﻿using ActiveReader.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ActiveReader.Persistence.Models
+namespace ActiveReader.Models.Models
 {
-    public class Article
+    public class Article : IArticle
     {
         public int ID { get; set; }
 

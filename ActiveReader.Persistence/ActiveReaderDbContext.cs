@@ -1,6 +1,7 @@
-﻿using System.Data.Entity;
+﻿using ActiveReader.Models.Models;
+using System.Data.Entity;
 
-namespace ActiveReader.Persistence.Models
+namespace ActiveReader.Persistence
 {
     public class ActiveReaderDbContext : DbContext
     {

@@ -10,25 +10,33 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using ActiveReader.Web.Models;
-using ActiveReader.Persistence.Models;
+using ActiveReader.Interfaces;
+using ActiveReader.Models.Models;
 
 namespace ActiveReader.Web.Controllers
 {
     public class ArticlesController : ApiController
     {
-        private ActiveReaderDbContext db = new ActiveReaderDbContext();
+        private readonly IRepository<Article> repository;
+        private readonly IStatCollector statCollector;
+
+        public ArticlesController(IRepository<Article> repository, IStatCollector statCollector)
+        {
+            this.repository = repository;
+            this.statCollector = statCollector;
+        }
 
         // GET: api/Articles
         public IQueryable<Article> GetArticles()
         {
-            return db.Articles;
+            return repository.Get();
         }
 
         //GET: api/Articles/5
         [ResponseType(typeof(Article))]
         public async Task<IHttpActionResult> GetArticle(int id)
         {
-            Article article = await db.Articles.FindAsync(id);
+            Article article = await repository.GetAsync(id);
             if (article == null)
             {
                 return NotFound();
@@ -51,11 +59,11 @@ namespace ActiveReader.Web.Controllers
                 return BadRequest();
             }
 
-            db.Entry(article).State = EntityState.Modified;
+            repository.Update(article);
 
             try
             {
-                await db.SaveChangesAsync();
+                await repository.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -81,38 +89,11 @@ namespace ActiveReader.Web.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Articles.Add(article);
+            repository.Create(article);
 
-            var words = System.Text.RegularExpressions.Regex.Split(article.Text, @"\W+");
+            statCollector.Collect(article.Text);
 
-            db.Statistics.Add(new Stat { Prefix = "", Suffix = "" });
-
-            var prefixLenght = 2;
-
-            var prefixExpression = new Queue<string>(words.Take(prefixLenght));
-
-            var rest = words.Skip(2);
-
-            var delimeter = " ";
-
-            foreach (var word in rest)
-            {
-                var prefix = string.Join(delimeter, prefixExpression);
-                var suffix = word;
-
-                var oldStat = await db.Statistics.FirstOrDefaultAsync(x => x.Prefix == prefix && x.Suffix == suffix);
-
-                var stat = oldStat == null ?
-                    new Stat { Prefix = prefix, Suffix = suffix, Number = 1 } :
-                    new Stat { Prefix = prefix, Suffix = suffix, Number = oldStat.Number + 1 };
-
-                db.Statistics.Add(stat);
-
-                prefixExpression.Enqueue(word);
-                prefixExpression.Dequeue();
-            }
-
-            await db.SaveChangesAsync();
+            await repository.SaveAsync();
 
             return CreatedAtRoute("DefaultApi", new { id = article.ID }, article);
         }
@@ -121,14 +102,14 @@ namespace ActiveReader.Web.Controllers
         [ResponseType(typeof(Article))]
         public async Task<IHttpActionResult> DeleteArticle(int id)
         {
-            Article article = await db.Articles.FindAsync(id);
+            Article article = await repository.GetAsync(id);
             if (article == null)
             {
                 return NotFound();
             }
 
-            db.Articles.Remove(article);
-            await db.SaveChangesAsync();
+            repository.Delete(article);
+            await repository.SaveAsync();
 
             return Ok(article);
         }
@@ -137,14 +118,14 @@ namespace ActiveReader.Web.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                repository.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool ArticleExists(int id)
         {
-            return db.Articles.Count(e => e.ID == id) > 0;
+            return repository.Get().Count(e => e.ID == id) > 0;
         }
     }
 }

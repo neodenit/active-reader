@@ -1,22 +1,23 @@
-﻿using System;
+﻿using ActiveReader.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ActiveReader.Persistence.Models
+namespace ActiveReader.Models.Models
 {
-    public class Stat
+    public class Stat : IStat
     {
         public int ID { get; set; }
 
         public int ArticleID { get; set; }
 
-        public virtual Article Article { get; set; }
+        public virtual IArticle Article { get; set; }
 
         public string Prefix { get; set; }
 
         public string Suffix { get; set; }
 
-        public int Number { get; set; }
+        public int Count { get; set; }
     }
 }

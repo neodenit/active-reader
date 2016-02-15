@@ -182,6 +182,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\DependenciesConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
@@ -341,9 +342,17 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ActiveReader.Persistence\ActiveReader.Persistence.csproj">
-      <Project>{3b214505-a6b0-4cfd-b609-c8e20345dcbb}</Project>
-      <Name>ActiveReader.Persistence</Name>
+    <ProjectReference Include="..\ActiveReader.DependencyInjection\ActiveReader.DependencyInjection.csproj">
+      <Project>{5d4a9134-2e06-4823-b27e-2e81f1b1fc4a}</Project>
+      <Name>ActiveReader.DependencyInjection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ActiveReader.Interfaces\ActiveReader.Interfaces.csproj">
+      <Project>{1b3be5f0-63e6-4c59-8bbf-1d263708771f}</Project>
+      <Name>ActiveReader.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ActiveReader.Models\ActiveReader.Models.csproj">
+      <Project>{73ba7fff-e3db-4e66-9a80-63283ff85fbc}</Project>
+      <Name>ActiveReader.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
