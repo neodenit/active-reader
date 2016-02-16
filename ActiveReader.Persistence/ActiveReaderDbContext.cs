@@ -5,6 +5,10 @@ namespace ActiveReader.Persistence
 {
     public class ActiveReaderDbContext : DbContext
     {
+        public ActiveReaderDbContext() : base("DefaultConnection")
+        {
+        }
+
         public DbSet<Article> Articles { get; set; }
         public DbSet<Stat> Statistics { get; set; }
     }
