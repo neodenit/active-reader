@@ -21,8 +21,6 @@ namespace ActiveReader.Core
         {
             var words = System.Text.RegularExpressions.Regex.Split(text, @"\W+");
 
-            repository.Create(new Stat { Prefix = "", Suffix = "" });
-
             var prefixLenght = 2;
 
             var prefixExpression = new Queue<string>(words.Take(prefixLenght));
@@ -38,11 +36,16 @@ namespace ActiveReader.Core
 
                 var oldStat = repository.Get().FirstOrDefault(x => x.Prefix == prefix && x.Suffix == suffix);
 
-                var stat = oldStat == null ?
-                    new Stat { Prefix = prefix, Suffix = suffix, Count = 1 } :
-                    new Stat { Prefix = prefix, Suffix = suffix, Count = oldStat.Count + 1 };
-
-                repository.Update(stat);
+                if (oldStat == null)
+                {
+                    var stat = new Stat { Prefix = prefix, Suffix = suffix, Count = 1 };
+                    repository.Create(stat);
+                }
+                else
+                {
+                    var stat = new Stat { Prefix = prefix, Suffix = suffix, Count = oldStat.Count + 1 };
+                    repository.Update(stat);
+                }
 
                 prefixExpression.Enqueue(word);
                 prefixExpression.Dequeue();
