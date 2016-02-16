@@ -11,6 +11,10 @@ class ArticlesViewModel {
     newArticleTitle = ko.observable("");
     newArticleText = ko.observable("");
 
+    isSelected = ko.observable(false);
+    selectedTitle = ko.observable("");
+    startText = ko.observable("");
+
     constructor() {
         $.getJSON(app.dataModel.articlesUrl).done((data) => {
             this.articles(data);
@@ -35,7 +39,17 @@ class ArticlesViewModel {
         this.dropValues();
     }
 
-    public remove(article) {
+    public open(article: IArticle) {
+        this.isSelected(true);
+        this.selectedTitle(article.title);
+        this.startText(article.text);
+    }
+
+    public backToList() {
+        this.isSelected(false);
+    }
+
+    public remove(article: IArticle) {
         $.ajax({
             url: app.dataModel.articlesUrl + article.id,
             type: "DELETE",
