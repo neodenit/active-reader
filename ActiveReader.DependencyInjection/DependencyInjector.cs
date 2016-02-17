@@ -6,6 +6,7 @@ using Autofac;
 using Autofac.Integration.WebApi;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -22,8 +23,8 @@ namespace ActiveReader.DependencyInjection
 
             builder.RegisterApiControllers(assembly);
 
-            builder.RegisterType<ArticleRepositoryEF>().As<IRepository<Article>>();
-            builder.RegisterType<StatRepositoryEF>().As<IRepository<Stat>>();
+            builder.RegisterType<ActiveReaderDbContext>().As<DbContext>();
+            builder.RegisterGeneric(typeof(EFRepository<>)).As(typeof(IRepository<>));
             builder.RegisterType<StatCollector>().As<IStatCollector>();
 
             var container = builder.Build();

@@ -49,8 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="StatRepositoryEF.cs" />
-    <Compile Include="ArticleRepositoryEF.cs" />
+    <Compile Include="EFRepository.cs" />
     <Compile Include="ActiveReaderDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
