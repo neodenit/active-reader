@@ -51,6 +51,15 @@
   <ItemGroup>
     <Compile Include="EFRepository.cs" />
     <Compile Include="ActiveReaderDbContext.cs" />
+    <Compile Include="Migrations\201602161838054_InitialCreate.cs" />
+    <Compile Include="Migrations\201602161838054_InitialCreate.Designer.cs">
+      <DependentUpon>201602161838054_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602181818173_Add artlicle converter.cs" />
+    <Compile Include="Migrations\201602181818173_Add artlicle converter.Designer.cs">
+      <DependentUpon>201602181818173_Add artlicle converter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -66,6 +75,14 @@
       <Project>{73ba7fff-e3db-4e66-9a80-63283ff85fbc}</Project>
       <Name>ActiveReader.Models</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201602161838054_InitialCreate.resx">
+      <DependentUpon>201602161838054_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602181818173_Add artlicle converter.resx">
+      <DependentUpon>201602181818173_Add artlicle converter.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

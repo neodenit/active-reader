@@ -11,5 +11,6 @@ namespace ActiveReader.Persistence
 
         public DbSet<Article> Articles { get; set; }
         public DbSet<Stat> Statistics { get; set; }
+        public DbSet<Word> Words { get; set; }
     }
 }

@@ -19,11 +19,13 @@ namespace ActiveReader.Web.Controllers
     {
         private readonly IRepository<Article> repository;
         private readonly IStatCollector statCollector;
+        private readonly IArticleConverter converter;
 
-        public ArticlesController(IRepository<Article> repository, IStatCollector statCollector)
+        public ArticlesController(IRepository<Article> repository, IStatCollector statCollector, IArticleConverter converter)
         {
             this.repository = repository;
             this.statCollector = statCollector;
+            this.converter = converter;
         }
 
         // GET: api/Articles
@@ -92,6 +94,8 @@ namespace ActiveReader.Web.Controllers
             repository.Create(article);
 
             statCollector.Collect(article.Text);
+
+            converter.SaveArticle(article.Text, article.ID);
 
             await repository.SaveAsync();
 

@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IArticle.cs" />
+    <Compile Include="IArticleConverter.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IStat.cs" />
     <Compile Include="IStatCollector.cs" />

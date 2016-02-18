@@ -26,6 +26,7 @@ namespace ActiveReader.DependencyInjection
             builder.RegisterType<ActiveReaderDbContext>().As<DbContext>();
             builder.RegisterGeneric(typeof(EFRepository<>)).As(typeof(IRepository<>));
             builder.RegisterType<StatCollector>().As<IStatCollector>();
+            builder.RegisterType<ArticleConverter>().As<IArticleConverter>();
 
             var container = builder.Build();
 

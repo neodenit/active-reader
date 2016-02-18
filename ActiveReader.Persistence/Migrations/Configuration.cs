@@ -1,18 +1,19 @@
-namespace ActiveReader.Web.Migrations
+namespace ActiveReader.Persistence.Migrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<ActiveReader.Web.Models.UsersDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ActiveReader.Persistence.ActiveReaderDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+            ContextKey = "ActiveReader.Persistence.ActiveReaderDbContext";
         }
 
-        protected override void Seed(ActiveReader.Web.Models.UsersDbContext context)
+        protected override void Seed(ActiveReader.Persistence.ActiveReaderDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
