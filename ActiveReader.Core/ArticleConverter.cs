@@ -26,7 +26,7 @@ namespace ActiveReader.Core
 
             var spaces = GetSpaces(trimmedText);
 
-            var pairsCount = Math.Min(words.Length, spaces.Length);
+            var pairsCount = Math.Min(words.Count(), spaces.Count());
 
             var wordsSpaces = words
                 .Zip(spaces, (word, space) =>
@@ -51,17 +51,17 @@ namespace ActiveReader.Core
 
         private static string[] GetSpaces(string correctedText)
         {
-            return Regex.Split(correctedText, @"\w");
+            return Regex.Split(correctedText, @"\w+").Skip(1);
         }
 
-        private static string[] GetWords(string correctedText)
+        private static IEnumerable<string> GetWords(string correctedText)
         {
-            return Regex.Split(correctedText, @"\W");
+            return Regex.Split(correctedText, @"\W+");
         }
 
         private string DropStartingSpace(string text)
         {
-            return Regex.Match(text, @"\w.+").Value;
+            return Regex.Match(text, @"\w.+", RegexOptions.Singleline).Value;
         }
 
         private string CorrectWord(string word)
