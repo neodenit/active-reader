@@ -17,7 +17,7 @@ namespace ActiveReader.Core
             this.repository = repository;
         }
 
-        public void Collect(string text)
+        public void Collect(string text, int articleID)
         {
             var words = System.Text.RegularExpressions.Regex.Split(text, @"\W+");
 
@@ -36,22 +36,21 @@ namespace ActiveReader.Core
 
                 var oldStat = repository.Get().FirstOrDefault(x => x.Prefix == prefix && x.Suffix == suffix);
 
-                if (oldStat == null)
+                if (dbStat == null)
                 {
-                    var stat = new Stat { Prefix = prefix, Suffix = suffix, Count = 1 };
+                    var stat = new Stat { Prefix = prefix, Suffix = suffix, Count = 1, ArticleID = articleID };
                     repository.Create(stat);
                 }
                 else
                 {
-                    var stat = new Stat { Prefix = prefix, Suffix = suffix, Count = oldStat.Count + 1 };
-                    repository.Update(stat);
+                    dbStat.Count++;
                 }
 
                 prefixExpression.Enqueue(word);
                 prefixExpression.Dequeue();
-            }
 
-            repository.Save();
+                repository.Save();
+            }
         }
     }
 }
