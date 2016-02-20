@@ -34,7 +34,7 @@ namespace ActiveReader.Core
                 var prefix = string.Join(delimeter, prefixExpression);
                 var suffix = word;
 
-                var dbStat = repository.Get().FirstOrDefault(x => x.Prefix == prefix && x.Suffix == suffix);
+                var dbStat = repository.Get().SingleOrDefault(x => x.Prefix == prefix && x.Suffix == suffix && x.ArticleID == articleID);
 
                 if (dbStat == null)
                 {
