@@ -14,6 +14,7 @@ class ArticlesViewModel {
     isSelected = ko.observable(false);
     selectedTitle = ko.observable("");
     startText = ko.observable("");
+    currentPosition = ko.observable(0);
 
     constructor() {
         $.getJSON(app.dataModel.articlesUrl).done((data) => {
@@ -42,7 +43,15 @@ class ArticlesViewModel {
     public open(article: IArticle) {
         this.isSelected(true);
         this.selectedTitle(article.title);
-        this.startText(article.text);
+        $.getJSON("/api/questions/" + article.id + "/0").done((data) => {
+            this.currentPosition(data.position);
+            var startText = data.startingWords;
+            this.startText(startText);
+        });
+    }
+
+    public next() {
+
     }
 
     public backToList() {

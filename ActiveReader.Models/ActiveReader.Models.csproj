@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Article.cs" />
+    <Compile Include="Models\QuestionViewModel.cs" />
     <Compile Include="Models\Stat.cs" />
     <Compile Include="Models\Word.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -25,6 +25,16 @@ namespace ActiveReader.Persistence
             return dbSet;
         }
 
+        public IEnumerable<T> GetAll()
+        {
+            return dbSet.ToList();
+        }
+
+        public async Task<IEnumerable<T>> GetAllAsync()
+        {
+            return await dbSet.ToListAsync();
+        }
+
         public T Get(int id)
         {
             return dbSet.Find(id);

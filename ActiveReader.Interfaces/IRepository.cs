@@ -9,6 +9,8 @@ namespace ActiveReader.Interfaces
     public interface IRepository<T> : IDisposable
     {
         IQueryable<T> Get();
+        IEnumerable<T> GetAll();
+        Task<IEnumerable<T>> GetAllAsync();
         T Get(int id);
         Task<T> GetAsync(int id);
         void Create(T entity);

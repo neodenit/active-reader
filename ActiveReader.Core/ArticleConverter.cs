@@ -20,36 +20,50 @@ namespace ActiveReader.Core
 
         public void SaveArticle(string text, int articleID)
         {
-            var trimmedText = DropStartingSpace(text);
+            var words = GetWords(text);
 
-            var words = GetWords(trimmedText);
+            var spaces = GetSpaces(text);
 
-            var spaces = GetSpaces(trimmedText);
-
-            var pairsCount = Math.Min(words.Count(), spaces.Count());
+            var pairsCount = words.Count();
 
             var wordsSpaces = words
                 .Zip(spaces, (word, space) =>
                     new { word, space })
                 .Zip(Enumerable.Range(0, pairsCount), (wordSpace, i) =>
-                    new { wordSpace.word, wordSpace.space, position = i });
+                    new { Word = wordSpace.word, Space = wordSpace.space, Position = i });
 
             foreach (var wordSpace in wordsSpaces)
             {
                 var word = new Word
                 {
-                    Position = wordSpace.position,
-                    OriginalWord = wordSpace.word,
-                    CorrectedWord = CorrectWord(wordSpace.word),
-                    NextSpace = wordSpace.space,
+                    Position = wordSpace.Position,
+                    OriginalWord = wordSpace.Word,
+                    CorrectedWord = CorrectWord(wordSpace.Word),
+                    NextSpace = wordSpace.Space,
                     ArticleID = articleID,
                 };
 
                 repository.Create(word);
             }
+
+            repository.Save();
         }
 
-        private static string[] GetSpaces(string correctedText)
+        public string GetText(IEnumerable<IWord> words)
+        {
+            return string.Join(string.Empty, GetTextParts(words));
+        }
+
+        public IEnumerable<string> GetTextParts(IEnumerable<IWord> words)
+        {
+            foreach (var word in words)
+            {
+                yield return word.OriginalWord;
+                yield return word.NextSpace;
+            }
+        }
+
+        private static IEnumerable<string> GetSpaces(string correctedText)
         {
             return Regex.Split(correctedText, @"\w+").Skip(1);
         }
@@ -57,11 +71,6 @@ namespace ActiveReader.Core
         private static IEnumerable<string> GetWords(string correctedText)
         {
             return Regex.Split(correctedText, @"\W+");
-        }
-
-        private string DropStartingSpace(string text)
-        {
-            return Regex.Match(text, @"\w.+", RegexOptions.Singleline).Value;
         }
 
         private string CorrectWord(string word)

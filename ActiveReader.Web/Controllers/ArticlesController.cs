@@ -94,6 +94,7 @@ namespace ActiveReader.Web.Controllers
             repository.Create(article);
 
             statCollector.Collect(article.Text);
+            statCollector.Collect(article.Text, article.ID);
 
             converter.SaveArticle(article.Text, article.ID);
 

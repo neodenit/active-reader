@@ -2,6 +2,6 @@
 {
     public interface IStatCollector
     {
-        void Collect(string text);
+        void Collect(string text, int articleID);
     }
 }

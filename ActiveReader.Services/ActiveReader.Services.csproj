@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1B3BE5F0-63E6-4C59-8BBF-1D263708771F}</ProjectGuid>
+    <ProjectGuid>{AEC73FE5-D5CE-46C9-A675-07EA4D353DC4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ActiveReader.Interfaces</RootNamespace>
-    <AssemblyName>ActiveReader.Interfaces</AssemblyName>
+    <RootNamespace>ActiveReader.Services</RootNamespace>
+    <AssemblyName>ActiveReader.Services</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,15 +40,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IArticle.cs" />
-    <Compile Include="IArticleConverter.cs" />
-    <Compile Include="IQuestionsService.cs" />
-    <Compile Include="IRepository.cs" />
-    <Compile Include="IStat.cs" />
-    <Compile Include="IStatCollector.cs" />
-    <Compile Include="IStatRepository.cs" />
-    <Compile Include="IWord.cs" />
+    <Compile Include="QuestionsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ActiveReader.Interfaces\ActiveReader.Interfaces.csproj">
+      <Project>{1b3be5f0-63e6-4c59-8bbf-1d263708771f}</Project>
+      <Name>ActiveReader.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ActiveReader.Models\ActiveReader.Models.csproj">
+      <Project>{73ba7fff-e3db-4e66-9a80-63283ff85fbc}</Project>
+      <Name>ActiveReader.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
