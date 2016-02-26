@@ -12,8 +12,10 @@ class ArticlesViewModel {
     newArticleText = ko.observable("");
 
     isSelected = ko.observable(false);
-    selectedTitle = ko.observable("");
-    startText = ko.observable("");
+    selectedArticleTitle = ko.observable("");
+    selectedArticleID = ko.observable(-1);
+
+    startText = ko.observable("");    
     currentPosition = ko.observable(0);
 
     constructor() {
@@ -42,16 +44,16 @@ class ArticlesViewModel {
 
     public open(article: IArticle) {
         this.isSelected(true);
-        this.selectedTitle(article.title);
-        $.getJSON("/api/questions/" + article.id + "/0").done((data) => {
-            this.currentPosition(data.position);
-            var startText = data.startingWords;
-            this.startText(startText);
-        });
+        this.selectedArticleID(article.id);
+        this.selectedArticleTitle(article.title);
+
+        var initialPosition = 0;
+        this.getStartText(article.id, initialPosition);
     }
 
     public next() {
-
+        var nextPosition = this.currentPosition() + 1;
+        this.getStartText(this.selectedArticleID(), nextPosition);
     }
 
     public backToList() {
@@ -64,6 +66,14 @@ class ArticlesViewModel {
             type: "DELETE",
         }).done((result: IArticle) => {
             this.articles.remove(article);
+        });
+    }
+
+    private getStartText(articleID: number, position: number) {
+        $.getJSON("/api/questions/" + articleID + "/" + position).done((data) => {
+            this.currentPosition(data.position);
+            var startText = data.startingWords;
+            this.startText(startText);
         });
     }
 
