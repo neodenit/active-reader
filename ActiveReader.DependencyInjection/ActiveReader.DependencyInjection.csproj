@@ -125,6 +125,10 @@
       <Project>{3b214505-a6b0-4cfd-b609-c8e20345dcbb}</Project>
       <Name>ActiveReader.Persistence</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ActiveReader.Services\ActiveReader.Services.csproj">
+      <Project>{aec73fe5-d5ce-46c9-a675-07ea4d353dc4}</Project>
+      <Name>ActiveReader.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
