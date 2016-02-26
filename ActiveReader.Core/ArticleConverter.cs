@@ -26,10 +26,12 @@ namespace ActiveReader.Core
 
             var pairsCount = words.Count();
 
+            var positions = Enumerable.Range(1, pairsCount);
+
             var wordsSpaces = words
                 .Zip(spaces, (word, space) =>
                     new { word, space })
-                .Zip(Enumerable.Range(0, pairsCount), (wordSpace, i) =>
+                .Zip(positions, (wordSpace, i) =>
                     new { Word = wordSpace.word, Space = wordSpace.space, Position = i });
 
             foreach (var wordSpace in wordsSpaces)
