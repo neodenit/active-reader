@@ -41,13 +41,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IArticle.cs" />
-    <Compile Include="IArticleConverter.cs" />
+    <Compile Include="IConverter.cs" />
+    <Compile Include="IExpressionsService.cs" />
     <Compile Include="IQuestionsService.cs" />
+    <Compile Include="IQuestionViewModel.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IStat.cs" />
-    <Compile Include="IStatCollector.cs" />
+    <Compile Include="IStatManager.cs" />
     <Compile Include="IStatRepository.cs" />
     <Compile Include="IWord.cs" />
+    <Compile Include="IWordsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

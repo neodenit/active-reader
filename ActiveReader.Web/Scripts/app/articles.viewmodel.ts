@@ -1,7 +1,15 @@
 ﻿interface IArticle {
     id: number
-    title: string
     text: string
+    title: string
+}
+
+interface IQuestion {
+    answer: string
+    answerPosition: number
+    articleID: number
+    startingWords: string
+    variants: Array<string>
 }
 
 class ArticlesViewModel {
@@ -19,7 +27,7 @@ class ArticlesViewModel {
     currentPosition = ko.observable(0);
 
     constructor() {
-        $.getJSON(app.dataModel.articlesUrl).done((data) => {
+        $.getJSON(app.dataModel.articlesUrl).done((data: Array<IArticle>) => {
             this.articles(data);
         });
     }
@@ -77,6 +85,14 @@ class ArticlesViewModel {
         });
     }
 
+    private getQuestion(articleID: number, position: number) {
+        $.getJSON("/api/questions/" + articleID + "/" + position).done((data: IQuestion) => {
+            this.currentPosition(data.answerPosition);
+            var startText = data.startingWords;
+            this.startText(startText);
+        });
+    }
+
     private dropValues() {
         this.newArticleTitle("");
         this.newArticleText("");
@@ -86,5 +102,5 @@ class ArticlesViewModel {
 app.addViewModel({
     name: "Articles",
     bindingMemberName: "articles",
-    factory: ArticlesViewModel
+    factory: ArticlesViewModel,
 });

@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace ActiveReader.Web.Controllers
 {
@@ -19,22 +21,12 @@ namespace ActiveReader.Web.Controllers
         }
 
         // GET: api/Question/5/10
-        [Route("api/Questions/{articleID}/{position}")]
-        public QuestionViewModel Get(int articleID, int position)
+        [Route("api/Questions/{articleID}/{lastAnswerPosition}")]
+        [ResponseType(typeof(IQuestionViewModel))]
+        public async Task<IHttpActionResult> Get(int articleID, int lastAnswerPosition)
         {
-            var minPosition = questionsService.GetPosition(position);
-
-            return new QuestionViewModel {
-                ArticleID = articleID,
-                Position = minPosition,
-                StartingWords = questionsService.GetStartingWords(articleID, minPosition),
-             };
-        }
-
-        // POST: api/Question
-        public QuestionViewModel Post(QuestionViewModel model)
-        {
-            throw new NotImplementedException();
+            var question = await questionsService.GetQuestionAsync(articleID, lastAnswerPosition);
+            return Ok(question);
         }
     }
 }

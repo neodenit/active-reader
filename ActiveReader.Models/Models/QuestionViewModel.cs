@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ActiveReader.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace ActiveReader.Models.Models
 {
-    public class QuestionViewModel
+    public class QuestionViewModel : IQuestionViewModel
     {
         public int ArticleID { get; set; }
 
-        public int Position { get; set; }
+        public int AnswerPosition { get; set; }
 
         public string StartingWords { get; set; }
 

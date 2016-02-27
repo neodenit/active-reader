@@ -40,8 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExpressionsService.cs" />
     <Compile Include="QuestionsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WordsService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ActiveReader.Interfaces\ActiveReader.Interfaces.csproj">

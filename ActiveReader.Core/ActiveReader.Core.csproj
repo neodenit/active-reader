@@ -40,9 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArticleConverter.cs" />
+    <Compile Include="Converter.cs" />
+    <Compile Include="CoreSettings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>CoreSettings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StatCollector.cs" />
+    <Compile Include="StatManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ActiveReader.Interfaces\ActiveReader.Interfaces.csproj">
@@ -53,6 +59,13 @@
       <Project>{73ba7fff-e3db-4e66-9a80-63283ff85fbc}</Project>
       <Name>ActiveReader.Models</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="CoreSettings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>CoreSettings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

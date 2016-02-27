@@ -1,8 +1,9 @@
-﻿namespace ActiveReader.Interfaces
+﻿using System.Threading.Tasks;
+
+namespace ActiveReader.Interfaces
 {
     public interface IQuestionsService
     {
-        int GetPosition(int position);
-        string GetStartingWords(int articleID, int position);
+        Task<IQuestionViewModel> GetQuestionAsync(int articleID, int lastAnswerPosition);
     }
 }

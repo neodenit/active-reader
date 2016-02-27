@@ -10,62 +10,59 @@ namespace ActiveReader.Services
 {
     public class QuestionsService : IQuestionsService
     {
-        private const int prefixLenght = 2;
-
-        private readonly IRepository<Article> articleRepository;
-        private readonly IRepository<Stat> statRepository;
+        private readonly IStatRepository<Stat> statRepository;
         private readonly IRepository<Word> wordRepository;
-        private readonly IArticleConverter converter;
+        private readonly IConverter converter;
 
-        public QuestionsService(IRepository<Article> articleRepository, IRepository<Stat> statRepository, IRepository<Word> wordRepository, IArticleConverter converter)
+        public QuestionsService(IStatRepository<Stat> statRepository, IRepository<Word> wordRepository, IConverter converter)
         {
-            this.articleRepository = articleRepository;
             this.statRepository = statRepository;
             this.wordRepository = wordRepository;
 
             this.converter = converter;
         }
 
-        public QuestionViewModel GetFirstQuestion(QuestionViewModel model)
+        public async Task<IQuestionViewModel> GetQuestionAsync(int articleID, int lastAnswerPosition)
         {
+            var words = wordRepository.GetAll()
+                                      .Where(w => w.ArticleID == articleID)
+                                      .OrderBy(w => w.Position);
+
+            var expressions = converter.GetExpressions(words)
+                                       .Where(e => e.SuffixPosition > lastAnswerPosition);
+
+            var statistics = await statRepository.GetByArticleAsync(articleID);
+
+            foreach (var expression in expressions)
+            {
+                var variantsCount = statistics.Count(s => s.Prefix == expression.Prefix);
+
+                if (variantsCount > 1)
+                {
+                    var wordsForText = words.Where(w => w.Position < expression.SuffixPosition);
+                    var text = converter.GetText(wordsForText);
+
+                    var question = new QuestionViewModel
+                    {
+                        Answer = expression.Suffix,
+                        AnswerPosition = expression.SuffixPosition,
+                        ArticleID = expression.ArticleID,
+                        Variants = converter.SplitPrefix(expression.Prefix),
+                        StartingWords = text,
+                    };
+
+                    return question;
+                }
+            }
+
             return new QuestionViewModel
             {
-                ArticleID = model.ArticleID
+                Answer = null,
+                AnswerPosition = 0,
+                ArticleID = articleID,
+                Variants = null,
+                StartingWords = converter.GetText(words),
             };
         }
-
-        public int GetPosition(int position)
-        {
-            var minPosition = Math.Max(position, prefixLenght);
-
-            return minPosition;
-        }
-
-        public string GetStartingWords(int articleID, int position)
-        {
-            var allWords = wordRepository.GetAll();
-
-            var words = allWords
-                .Where(x => x.ArticleID == articleID)
-                .Where(x => x.Position <= position)
-                .OrderBy(x => x.Position);
-
-            return converter.GetText(words);
-        }
-
-        public string GetStartingWords(QuestionViewModel model)
-        {
-
-            var position = Math.Max(model.Position, prefixLenght);
-
-            var allWords = wordRepository.GetAll();
-
-            var words = allWords
-                .Where(x => x.Position <= position)
-                .OrderBy(x => x.Position);
-
-            return converter.GetText(words);
-        }
-
     }
 }

@@ -18,14 +18,14 @@ namespace ActiveReader.Web.Controllers
     public class ArticlesController : ApiController
     {
         private readonly IRepository<Article> repository;
-        private readonly IStatCollector statCollector;
-        private readonly IArticleConverter converter;
+        private readonly IWordsService wordsService;
+        private readonly IExpressionsService expressionsService;
 
-        public ArticlesController(IRepository<Article> repository, IStatCollector statCollector, IArticleConverter converter)
+        public ArticlesController(IRepository<Article> repository, IStatManager statCollector, IConverter converter, IWordsService wordsService, IExpressionsService expressionsService)
         {
             this.repository = repository;
-            this.statCollector = statCollector;
-            this.converter = converter;
+            this.wordsService = wordsService;
+            this.expressionsService = expressionsService;
         }
 
         // GET: api/Articles
@@ -93,12 +93,11 @@ namespace ActiveReader.Web.Controllers
 
             repository.Create(article);
 
-            statCollector.Collect(article.Text);
-            statCollector.Collect(article.Text, article.ID);
-
-            converter.SaveArticle(article.Text, article.ID);
-
             await repository.SaveAsync();
+
+            await expressionsService.AddExpressionsFromArticle(article);
+
+            await wordsService.AddWordsFromArticle(article);
 
             return CreatedAtRoute("DefaultApi", new { id = article.ID }, article);
         }

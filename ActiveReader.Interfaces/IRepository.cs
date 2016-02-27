@@ -14,6 +14,7 @@ namespace ActiveReader.Interfaces
         T Get(int id);
         Task<T> GetAsync(int id);
         void Create(T entity);
+        void Create(IEnumerable<T> entities);
         void Update(T entity);
         void Delete(T entity);
         void Save();

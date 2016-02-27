@@ -11,8 +11,8 @@ namespace ActiveReader.Persistence
 {
     public class EFRepository<T> : IRepository<T> where T : class
     {
-        private readonly DbContext dbContext;
-        private readonly DbSet<T> dbSet;
+        protected readonly DbContext dbContext;
+        protected readonly DbSet<T> dbSet;
 
         public EFRepository(DbContext dbContext)
         {
@@ -48,6 +48,11 @@ namespace ActiveReader.Persistence
         public void Create(T entity)
         {
             dbSet.Add(entity);
+        }
+
+        public void Create(IEnumerable<T> entities)
+        {
+            dbSet.AddRange(entities);
         }
 
         public void Update(T entity)

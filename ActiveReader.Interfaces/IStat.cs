@@ -8,5 +8,6 @@
         int Count { get; set; }
         string Prefix { get; set; }
         string Suffix { get; set; }
+        int SuffixPosition { get; set; }
     }
 }
