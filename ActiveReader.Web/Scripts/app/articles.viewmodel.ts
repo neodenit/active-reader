@@ -13,35 +13,45 @@ interface IQuestion {
 }
 
 class ArticlesViewModel {
-    isAdding = ko.observable(false);
-    articles = ko.observableArray<IArticle>();
+    public isAdding = ko.observable(false);
+    public articles = ko.observableArray<IArticle>();
 
-    newArticleTitle = ko.observable("");
-    newArticleText = ko.observable("");
+    public newArticleTitle = ko.observable("");
+    public newArticleText = ko.observable("");
 
-    isSelected = ko.observable(false);
-    selectedArticleTitle = ko.observable("");
-    selectedArticleID = ko.observable(-1);
+    public isSelected = ko.observable(false);
+    public selectedArticleTitle = ko.observable("");
+    public selectedArticleID = ko.observable(-1);
 
-    startText = ko.observable("");    
-    currentPosition = ko.observable(0);
+    public startText = ko.observable("");
+    public currentPosition = ko.observable(0);
+
+    public variants = ko.observableArray<string>();
+    public answer = "";
+
+    public score = ko.observable(0);
+    public scoreStyle = ko.observable("");
 
     constructor() {
+        var me = this;
+
         $.getJSON(app.dataModel.articlesUrl).done((data: Array<IArticle>) => {
-            this.articles(data);
+            me.articles(data);
         });
     }
 
     public add() {
+        var me = this;
+
         var newArticle = {
-            title: this.newArticleTitle(),
-            text: this.newArticleText()
+            title: me.newArticleTitle(),
+            text: me.newArticleText()
         };
 
         $.post(app.dataModel.articlesUrl, newArticle).done((article: IArticle) => {
-            this.articles.push(article);
-            this.isAdding(false);
-            this.dropValues();
+            me.articles.push(article);
+            me.isAdding(false);
+            me.dropValues();
         });
     }
 
@@ -50,46 +60,51 @@ class ArticlesViewModel {
         this.dropValues();
     }
 
-    public open(article: IArticle) {
+    public open = (article: IArticle) => {
         this.isSelected(true);
         this.selectedArticleID(article.id);
         this.selectedArticleTitle(article.title);
 
+        this.score(0);
         var initialPosition = 0;
-        this.getStartText(article.id, initialPosition);
-    }
-
-    public next() {
-        var nextPosition = this.currentPosition() + 1;
-        this.getStartText(this.selectedArticleID(), nextPosition);
+        this.getQuestion(article.id, initialPosition);
     }
 
     public backToList() {
         this.isSelected(false);
     }
 
-    public remove(article: IArticle) {
+    public remove = (article: IArticle) => {
         $.ajax({
             url: app.dataModel.articlesUrl + article.id,
             type: "DELETE",
+            context: this,
         }).done((result: IArticle) => {
             this.articles.remove(article);
         });
     }
+    public check = (answer: string) => {
+        var score = this.score();
 
-    private getStartText(articleID: number, position: number) {
-        $.getJSON("/api/questions/" + articleID + "/" + position).done((data) => {
-            this.currentPosition(data.position);
-            var startText = data.startingWords;
-            this.startText(startText);
-        });
+        if (answer !== this.answer) {
+            this.scoreStyle("wrong");
+            this.score(score - 1);
+            this.variants.remove(answer);
+        } else {
+            this.variants.removeAll();
+            this.scoreStyle("right");
+            this.score(score + 1);
+            this.getQuestion(this.selectedArticleID(), this.currentPosition());
+        }
     }
-
     private getQuestion(articleID: number, position: number) {
-        $.getJSON("/api/questions/" + articleID + "/" + position).done((data: IQuestion) => {
-            this.currentPosition(data.answerPosition);
-            var startText = data.startingWords;
-            this.startText(startText);
+        var me = this;
+
+        $.getJSON(`/api/questions/${articleID}/${position}`).done((data) => {
+            me.currentPosition(data.answerPosition);
+            me.variants(data.variants);
+            me.startText(data.startingWords);
+            me.answer = data.answer;
         });
     }
 

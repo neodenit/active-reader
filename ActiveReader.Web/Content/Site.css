@@ -34,3 +34,15 @@ textarea {
         padding: 10px 15px;
     }
 }
+
+.multiline {
+    white-space: pre-wrap;
+}
+
+.right {
+    color: lime;
+}
+
+.wrong {
+    color: red;
+}

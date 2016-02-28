@@ -35,7 +35,8 @@ namespace ActiveReader.Services
 
             foreach (var expression in expressions)
             {
-                var variantsCount = statistics.Count(s => s.Prefix == expression.Prefix);
+                var variants = statistics.Where(s => s.Prefix == expression.Prefix);
+                var variantsCount = variants.Count();
 
                 if (variantsCount > 1)
                 {
@@ -47,7 +48,7 @@ namespace ActiveReader.Services
                         Answer = expression.Suffix,
                         AnswerPosition = expression.SuffixPosition,
                         ArticleID = expression.ArticleID,
-                        Variants = converter.SplitPrefix(expression.Prefix),
+                        Variants = variants.Select(v => v.Suffix).OrderBy(v => v),
                         StartingWords = text,
                     };
 

@@ -6,9 +6,12 @@
 
 <div id="selected-article" data-bind="visible: isSelected">
     <h2 data-bind="text: selectedArticleTitle"></h2>
-    <p data-bind="text: startText"></p>
-    <button data-bind="click: function () { next(); }">Next</button>
-    <button data-bind="click: function () { backToList(); }">Back to list</button>
+    <div class="multiline" data-bind="text: startText"></div>
+    <ul data-bind="foreach: variants">
+        <li><a href="#" data-bind="text: $data, click: $parent.check"></a></li>
+    </ul>
+    <h3 data-bind="text: 'Score: ' + score(), css: scoreStyle"></h3>
+    <button data-bind="click: backToList">Back to list</button>
 </div>
 
 <div data-bind="visible: !isSelected()">
@@ -23,15 +26,15 @@
         <br />
         <textarea id="textInput" cols="80" rows="10" data-bind="value: newArticleText"></textarea>
         <div>
-            <button data-bind="click: function () { add(); }">OK</button>
-            <button data-bind="click: function () { cancel(); }">Cancel</button>
+            <button data-bind="click: add">OK</button>
+            <button data-bind="click: cancel">Cancel</button>
         </div>
     </div>
 
     <table data-bind="foreach: articles">
         <tr>
-            <td><a href="#" data-bind="text: title, click: function () { $parent.open($data); }"></a></td>
-            <td><a href="#" data-bind="click: function () { $parent.remove($data); }">Remove</a></td>
+            <td><a href="#" data-bind="text: title, click: $parent.open"></a></td>
+            <td><a href="#" data-bind="click: $parent.remove">Remove</a></td>
         </tr>
     </table>
 </div>
