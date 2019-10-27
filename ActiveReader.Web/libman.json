@@ -1,0 +1,28 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "jquery@3.4.1",
+      "destination": "Scripts/lib/jquery/"
+    },
+    {
+      "library": "knockout@3.5.0",
+      "destination": "Scripts/lib/knockout/"
+    },
+    {
+      "library": "knockout-validation@2.0.3",
+      "destination": "Scripts/lib/knockout-validation/"
+    }
+  ,
+{
+  "library": "jquery-validate@1.19.1",
+  "destination": "Scripts/lib/jquery-validate/"
+}
+,
+{
+  "library": "jquery-validation-unobtrusive@3.2.11",
+  "destination": "Scripts/lib/jquery-validation-unobtrusive/"
+}
+]
+}

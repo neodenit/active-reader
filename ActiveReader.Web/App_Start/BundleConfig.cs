@@ -11,18 +11,20 @@ namespace ActiveReader.Web
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                "~/Scripts/jquery-{version}.js"));
+                "~/Scripts/lib/jquery/jquery.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                "~/Scripts/jquery.unobtrusive*",
-                "~/Scripts/jquery.validate*"));
+                "~/Scripts/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
+                "~/Scripts/lib/jquery-validate/jquery.validate.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
-                "~/Scripts/knockout-{version}.js",
-                "~/Scripts/knockout.validation.js"));
+                "~/Scripts/lib/knockout/knockout-debug.js",
+                "~/Scripts/lib/knockout-validation/knockout.validation.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/sammy").Include(
+                "~/Scripts/sammy-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
-                "~/Scripts/sammy-{version}.js",
                 "~/Scripts/app/common.js",
                 "~/Scripts/app/app.datamodel.js",
                 "~/Scripts/app/app.viewmodel.js",

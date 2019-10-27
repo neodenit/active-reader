@@ -9,7 +9,7 @@ namespace ActiveReader.Web.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(ActiveReader.Web.Models.UsersDbContext context)
