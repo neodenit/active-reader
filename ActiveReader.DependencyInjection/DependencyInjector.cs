@@ -1,18 +1,13 @@
-﻿using ActiveReader.Core;
+﻿using System.Data.Entity;
+using System.Reflection;
+using System.Web.Http.Dependencies;
+using ActiveReader.Core;
 using ActiveReader.Interfaces;
 using ActiveReader.Models.Models;
 using ActiveReader.Persistence;
 using ActiveReader.Services;
 using Autofac;
 using Autofac.Integration.WebApi;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Http.Dependencies;
 
 namespace ActiveReader.DependencyInjection
 {
@@ -26,7 +21,6 @@ namespace ActiveReader.DependencyInjection
 
             builder.RegisterType<ActiveReaderDbContext>().As<DbContext>();
 
-            builder.RegisterType<Stat>().As<IStat>();
             builder.RegisterType<StatRepository>().As<IStatRepository<Stat>>();
             builder.RegisterGeneric(typeof(EFRepository<>)).As(typeof(IRepository<>));
 

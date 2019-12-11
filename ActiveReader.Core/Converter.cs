@@ -1,17 +1,15 @@
-﻿using ActiveReader.Interfaces;
-using ActiveReader.Models.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using ActiveReader.Interfaces;
+using ActiveReader.Models.Models;
 
 namespace ActiveReader.Core
 {
     public class Converter : IConverter
     {
-        public IEnumerable<IWord> GetWords(IArticle article)
+        public IEnumerable<Word> GetWords(Article article)
         {
             var words = GetWords(article.Text);
             var spaces = GetSpaces(article.Text);
@@ -36,13 +34,13 @@ namespace ActiveReader.Core
             return result;
         }
 
-        public string GetText(IEnumerable<IWord> words) =>
+        public string GetText(IEnumerable<Word> words) =>
             string.Join(string.Empty, words.Select(w => w.OriginalWord + w.NextSpace));
 
-        public string GetTextAlt(IEnumerable<IWord> words) =>
+        public string GetTextAlt(IEnumerable<Word> words) =>
             string.Join(string.Empty, GetTextParts(words));
 
-        public IEnumerable<string> GetTextParts(IEnumerable<IWord> words)
+        public IEnumerable<string> GetTextParts(IEnumerable<Word> words)
         {
             foreach (var word in words)
             {
@@ -51,7 +49,7 @@ namespace ActiveReader.Core
             }
         }
 
-        public IEnumerable<IStat> GetExpressions(IEnumerable<IWord> words)
+        public IEnumerable<Stat> GetExpressions(IEnumerable<Word> words)
         {
             return words.GetPairs(
                 w => GetPrefix(w.Select(x => x.CorrectedWord)),

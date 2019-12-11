@@ -1,13 +1,8 @@
-﻿using ActiveReader.Interfaces;
-using ActiveReader.Models.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using ActiveReader.Interfaces;
+using ActiveReader.Models.Models;
 
 namespace ActiveReader.Web.Controllers
 {
@@ -22,7 +17,7 @@ namespace ActiveReader.Web.Controllers
 
         // GET: api/Question/5/10
         [Route("api/Questions/{articleID}/{lastAnswerPosition}")]
-        [ResponseType(typeof(IQuestionViewModel))]
+        [ResponseType(typeof(QuestionViewModel))]
         public async Task<IHttpActionResult> Get(int articleID, int lastAnswerPosition)
         {
             var question = await questionsService.GetQuestionAsync(articleID, lastAnswerPosition);

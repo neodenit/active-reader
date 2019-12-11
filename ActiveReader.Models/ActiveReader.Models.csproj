@@ -47,12 +47,6 @@
     <Compile Include="Models\Word.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ActiveReader.Interfaces\ActiveReader.Interfaces.csproj">
-      <Project>{1b3be5f0-63e6-4c59-8bbf-1d263708771f}</Project>
-      <Name>ActiveReader.Interfaces</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -40,18 +40,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IArticle.cs" />
     <Compile Include="IConverter.cs" />
     <Compile Include="IExpressionsService.cs" />
     <Compile Include="IQuestionsService.cs" />
-    <Compile Include="IQuestionViewModel.cs" />
     <Compile Include="IRepository.cs" />
-    <Compile Include="IStat.cs" />
     <Compile Include="IStatManager.cs" />
     <Compile Include="IStatRepository.cs" />
-    <Compile Include="IWord.cs" />
     <Compile Include="IWordsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ActiveReader.Models\ActiveReader.Models.csproj">
+      <Project>{73ba7fff-e3db-4e66-9a80-63283ff85fbc}</Project>
+      <Name>ActiveReader.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

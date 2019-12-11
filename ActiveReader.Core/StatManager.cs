@@ -1,10 +1,7 @@
-﻿using ActiveReader.Interfaces;
-using ActiveReader.Models.Models;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ActiveReader.Interfaces;
+using ActiveReader.Models.Models;
 
 namespace ActiveReader.Core
 {
@@ -17,7 +14,7 @@ namespace ActiveReader.Core
             this.converter = converter;
         }
 
-        public IEnumerable<IStat> GetExpressions(IArticle article)
+        public IEnumerable<Stat> GetExpressions(Article article)
         {
             var statDict = new Dictionary<KeyValuePair<string, string>, int>();
             var words = converter.GetWords(article.Text);

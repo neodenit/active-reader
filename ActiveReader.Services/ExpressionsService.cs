@@ -1,10 +1,7 @@
-﻿using ActiveReader.Interfaces;
-using ActiveReader.Models.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using ActiveReader.Interfaces;
+using ActiveReader.Models.Models;
 
 namespace ActiveReader.Services
 {
@@ -19,7 +16,7 @@ namespace ActiveReader.Services
             this.statManager = statManager;
         }
 
-        public async Task AddExpressionsFromArticle(IArticle article)
+        public async Task AddExpressionsFromArticle(Article article)
         {
             var expressions = statManager.GetExpressions(article);
             

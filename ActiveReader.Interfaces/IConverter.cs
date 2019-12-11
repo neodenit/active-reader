@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+using ActiveReader.Models.Models;
 
 namespace ActiveReader.Interfaces
 {
     public interface IConverter
     {
-        IEnumerable<IWord> GetWords(IArticle article);
-        string GetText(IEnumerable<IWord> words);
-        IEnumerable<IStat> GetExpressions(IEnumerable<IWord> words);
+        IEnumerable<Word> GetWords(Article article);
+        string GetText(IEnumerable<Word> words);
+        IEnumerable<Stat> GetExpressions(IEnumerable<Word> words);
         string GetPrefix(IEnumerable<string> words);
         string GetSuffix(string word);
         IEnumerable<string> GetWords(string text);

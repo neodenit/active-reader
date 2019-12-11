@@ -1,13 +1,8 @@
-﻿using ActiveReader.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ActiveReader.Models.Models
 {
-    public class QuestionViewModel : IQuestionViewModel
+    public class QuestionViewModel
     {
         public int ArticleID { get; set; }
 

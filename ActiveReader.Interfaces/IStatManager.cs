@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+using ActiveReader.Models.Models;
 
 namespace ActiveReader.Interfaces
 {
     public interface IStatManager
     {
-        IEnumerable<IStat> GetExpressions(IArticle article);
+        IEnumerable<Stat> GetExpressions(Article article);
     }
 }

@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
-using ActiveReader.Interfaces;
+using ActiveReader.Models.Models;
 
 namespace ActiveReader.Interfaces
 {
     public interface IExpressionsService
     {
-        Task AddExpressionsFromArticle(IArticle article);
+        Task AddExpressionsFromArticle(Article article);
     }
 }

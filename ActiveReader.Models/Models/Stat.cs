@@ -1,19 +1,14 @@
-﻿using ActiveReader.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ActiveReader.Models.Models
 {
-    public class Stat : IStat
+    public class Stat
     {
         public int ID { get; set; }
 
         public int ArticleID { get; set; }
 
-        public virtual IArticle Article { get; set; }
+        public virtual Article Article { get; set; }
 
         public string Prefix { get; set; }
 

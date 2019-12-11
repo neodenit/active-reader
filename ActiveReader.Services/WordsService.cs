@@ -1,10 +1,7 @@
-﻿using ActiveReader.Interfaces;
-using ActiveReader.Models.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using ActiveReader.Interfaces;
+using ActiveReader.Models.Models;
 
 namespace ActiveReader.Services
 {
@@ -20,7 +17,7 @@ namespace ActiveReader.Services
             this.converter = converter;
         }
 
-        public async Task AddWordsFromArticle(IArticle article)
+        public async Task AddWordsFromArticle(Article article)
         {
             var words = converter.GetWords(article);
 

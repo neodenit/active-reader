@@ -1,13 +1,6 @@
-﻿using ActiveReader.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ActiveReader.Models.Models
+﻿namespace ActiveReader.Models.Models
 {
-    public class Word : IWord
+    public class Word
     {
         public int ID { get; set; }
 
