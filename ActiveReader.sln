@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveReader.Web", "ActiveReader.Web\ActiveReader.Web.csproj", "{BF1632EC-65D5-46D4-9C4E-39744264FEB8}"
 EndProject
@@ -18,6 +18,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveReader.Models", "ActiveReader.Models\ActiveReader.Models.csproj", "{73BA7FFF-E3DB-4E66-9A80-63283FF85FBC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveReader.Services", "ActiveReader.Services\ActiveReader.Services.csproj", "{AEC73FE5-D5CE-46C9-A675-07EA4D353DC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveReader.Web.Angular", "ActiveReader.Web.Angular\ActiveReader.Web.Angular.csproj", "{CC3482EF-80B2-4A24-AE93-94D3B1770FC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,8 +59,15 @@ Global
 		{AEC73FE5-D5CE-46C9-A675-07EA4D353DC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEC73FE5-D5CE-46C9-A675-07EA4D353DC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEC73FE5-D5CE-46C9-A675-07EA4D353DC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC3482EF-80B2-4A24-AE93-94D3B1770FC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC3482EF-80B2-4A24-AE93-94D3B1770FC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC3482EF-80B2-4A24-AE93-94D3B1770FC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC3482EF-80B2-4A24-AE93-94D3B1770FC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {44534E86-6E54-41B3-8E5A-50D43167210C}
 	EndGlobalSection
 EndGlobal
