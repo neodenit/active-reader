@@ -21,6 +21,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveReader.Services", "Ac
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neodenit.ActiveReader.Web.Angular", "Neodenit.ActiveReader.Web.Angular\Neodenit.ActiveReader.Web.Angular.csproj", "{CC3482EF-80B2-4A24-AE93-94D3B1770FC3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neodenit.ActiveReader.Common", "Neodenit.ActiveReader.Common\Neodenit.ActiveReader.Common.csproj", "{5A00A375-772C-4D84-9C76-531067583A05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neodenit.ActiveReader.DataAccess", "Neodenit.ActiveReader.DataAccess\Neodenit.ActiveReader.DataAccess.csproj", "{C71B0F15-320C-4447-8C84-A52ED030BB3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neodenit.ActiveReader.Services", "Neodenit.ActiveReader.Services\Neodenit.ActiveReader.Services.csproj", "{5CF99010-B5EE-4BFC-BF6A-863BAB554EC2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +69,18 @@ Global
 		{CC3482EF-80B2-4A24-AE93-94D3B1770FC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC3482EF-80B2-4A24-AE93-94D3B1770FC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC3482EF-80B2-4A24-AE93-94D3B1770FC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A00A375-772C-4D84-9C76-531067583A05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A00A375-772C-4D84-9C76-531067583A05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A00A375-772C-4D84-9C76-531067583A05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A00A375-772C-4D84-9C76-531067583A05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C71B0F15-320C-4447-8C84-A52ED030BB3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C71B0F15-320C-4447-8C84-A52ED030BB3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C71B0F15-320C-4447-8C84-A52ED030BB3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C71B0F15-320C-4447-8C84-A52ED030BB3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CF99010-B5EE-4BFC-BF6A-863BAB554EC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CF99010-B5EE-4BFC-BF6A-863BAB554EC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CF99010-B5EE-4BFC-BF6A-863BAB554EC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CF99010-B5EE-4BFC-BF6A-863BAB554EC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
