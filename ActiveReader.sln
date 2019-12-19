@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveReader.Models", "Acti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveReader.Services", "ActiveReader.Services\ActiveReader.Services.csproj", "{AEC73FE5-D5CE-46C9-A675-07EA4D353DC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveReader.Web.Angular", "ActiveReader.Web.Angular\ActiveReader.Web.Angular.csproj", "{CC3482EF-80B2-4A24-AE93-94D3B1770FC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neodenit.ActiveReader.Web.Angular", "Neodenit.ActiveReader.Web.Angular\Neodenit.ActiveReader.Web.Angular.csproj", "{CC3482EF-80B2-4A24-AE93-94D3B1770FC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
