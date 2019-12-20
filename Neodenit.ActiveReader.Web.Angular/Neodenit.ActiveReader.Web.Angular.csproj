@@ -31,7 +31,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\Neodenit.ActiveReader.Common\Neodenit.ActiveReader.Common.csproj" />
+    <ProjectReference Include="..\Neodenit.ActiveReader.DataAccess\Neodenit.ActiveReader.DataAccess.csproj" />
+    <ProjectReference Include="..\Neodenit.ActiveReader.Services\Neodenit.ActiveReader.Services.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
