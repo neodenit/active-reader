@@ -2,15 +2,18 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
-using Neodenit.ActiveReader.Web.Angular.Data;
-using Neodenit.ActiveReader.Web.Angular.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Neodenit.ActiveReader.Common;
+using Neodenit.ActiveReader.Common.Interfaces;
+using Neodenit.ActiveReader.Common.Models;
+using Neodenit.ActiveReader.DataAccess;
+using Neodenit.ActiveReader.Services;
+using Neodenit.ActiveReader.Web.Angular.Data;
+using Neodenit.ActiveReader.Web.Angular.Models;
 
 namespace Neodenit.ActiveReader.Web.Angular
 {
@@ -45,6 +48,15 @@ namespace Neodenit.ActiveReader.Web.Angular
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddTransient(typeof(IRepository<>), typeof(EFRepository<>));
+            services.AddTransient<IWordsService, WordsService>();
+            services.AddTransient<IExpressionsService, ExpressionsService>();
+            services.AddTransient<IConverter, Converter>();
+            services.AddTransient<IStatManager, StatManager>();
+            services.AddTransient<IStatRepository<Stat>, StatRepository>();
+
+            services.AddTransient<DbContext, ActiveReaderDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
