@@ -43,6 +43,14 @@ namespace Neodenit.ActiveReader.Web.Angular
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, IdentityDbContext>();
 
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            });
+
             services.AddAuthentication()
                 .AddIdentityServerJwt();
             services.AddControllersWithViews();
