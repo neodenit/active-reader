@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Neodenit.ActiveReader.Common.Interfaces;
 using Neodenit.ActiveReader.Common.Models;
 
-namespace ActiveReader.Web.Controllers.API
+namespace Neodenit.ActiveReader.Web.Angular.Controllers
 {
     [ApiController]
     [Route("[controller]")]
