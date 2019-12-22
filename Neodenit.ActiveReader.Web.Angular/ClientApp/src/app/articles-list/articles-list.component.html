@@ -1,3 +1,11 @@
+<div *ngIf="isAdding">
+  <articles-create (close)="finishAdding($event)"></articles-create>
+</div>
+
+<div *ngIf="!isAdding">
+  <button (click)="startAdding()">Add new article</button>
+</div>
+
 <ul *ngFor="let article of articles">
   <li>{{ article.title }}</li>
 </ul>

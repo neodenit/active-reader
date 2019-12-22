@@ -30,7 +30,7 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
             return Ok(articles);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetArticle")]
         public async Task<ActionResult<Article>> Get(int id)
         {
             Article article = await repository.GetAsync(id);
@@ -94,7 +94,7 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
 
             await wordsService.AddWordsFromArticle(article);
 
-            return CreatedAtRoute("DefaultApi", new { id = article.ID }, article);
+            return CreatedAtRoute("GetArticle", new { id = article.ID }, article);
         }
 
         [HttpDelete]

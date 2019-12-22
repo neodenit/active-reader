@@ -7,15 +7,28 @@ import { HttpClient } from "@angular/common/http";
 })
 export class ArticlesListComponent {
   articles: Article[];
+  isAdding: boolean;
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     http.get<Article[]>(baseUrl + "articles").subscribe(
       data => this.articles = data,
       error => console.error(error));
   }
+
+  public startAdding() {
+    this.isAdding = true;
+  }
+
+  public finishAdding(article: Article) {
+    this.isAdding = false;
+
+    if (article) {
+      this.articles.push(article);
+    }
+  }
 }
 
-interface Article {
+export interface Article {
   id: number;
   title: string;
   text: string;

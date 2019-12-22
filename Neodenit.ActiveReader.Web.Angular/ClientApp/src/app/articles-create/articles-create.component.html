@@ -1,0 +1,22 @@
+<h2>Add new article</h2>
+
+<div>
+  <label>Title</label>
+</div>
+
+<div>
+  <input [(ngModel)]="newArticleTitle" />
+</div>
+
+<div>
+  <label>Text</label>
+</div>
+
+<div>
+  <textarea  [(ngModel)]="newArticleText"></textarea>
+</div>
+
+<div>
+  <button (click)="add()">OK</button>
+  <button (click)="cancel()">Cancel</button>
+</div>
