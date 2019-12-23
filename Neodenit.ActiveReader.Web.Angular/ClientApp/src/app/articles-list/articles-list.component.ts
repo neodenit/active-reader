@@ -9,8 +9,8 @@ export class ArticlesListComponent {
   articles: Article[];
   isAdding: boolean;
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<Article[]>(baseUrl + "articles").subscribe(
+  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
+    this.http.get<Article[]>(this.baseUrl + "articles").subscribe(
       data => this.articles = data,
       error => console.error(error));
   }
@@ -25,6 +25,12 @@ export class ArticlesListComponent {
     if (article) {
       this.articles.push(article);
     }
+  }
+
+  public remove(article: Article) {
+    this.http.delete<Article>(this.baseUrl + "articles" + "/" + article.id).subscribe(
+        data => this.articles = this.articles.filter(x => x.id !== data.id),
+        error => console.error(error));
   }
 }
 

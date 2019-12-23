@@ -97,7 +97,7 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
             return CreatedAtRoute("GetArticle", new { id = article.ID }, article);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<ActionResult<Article>> Delete(int id)
         {
             Article article = await repository.GetAsync(id);

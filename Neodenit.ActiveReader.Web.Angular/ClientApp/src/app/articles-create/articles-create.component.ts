@@ -23,7 +23,7 @@ export class ArticlesCreateComponent {
 
     this.http.post<Article>(this.baseUrl + "articles", data).subscribe(
       article => this.close.emit(article),
-      error => console.error(error));    
+      error => console.error(error));
   }
 
   public cancel() {

@@ -1,9 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
-
 /* Provide sufficient contrast against white background */
 a {
   color: #0366d6;
+  cursor: pointer;
 }
+
+  a:hover {
+    text-decoration: underline;
+  }
 
 code {
   color: #e01a76;
