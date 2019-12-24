@@ -17,3 +17,15 @@ code {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+
+.multiline {
+  white-space: pre-wrap;
+}
+
+.right {
+  color: lime;
+}
+
+.wrong {
+  color: red;
+}

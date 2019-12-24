@@ -1,3 +1,11 @@
-<h2>Read article</h2>
+<h2 *ngIf="article">{{ article.title }}</h2>
 
-<p *ngIf="article">{{ article.text }}</p>
+<h3 [class]="scoreStyle">Score: {{ score }}</h3>
+
+<div class="multiline">{{ startText }}</div>
+
+<ul *ngFor="let choice of choices">
+  <li><a tabindex="0" (click)="check(choice)">{{ choice }}</a></li>
+</ul>
+
+<a href="/">Back to list</a>
