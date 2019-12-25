@@ -1,10 +1,12 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Neodenit.ActiveReader.Common.Interfaces;
 using Neodenit.ActiveReader.Common.Models;
 
 namespace Neodenit.ActiveReader.Web.Angular.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class QuestionsController : ControllerBase

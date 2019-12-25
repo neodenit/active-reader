@@ -1,13 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Neodenit.ActiveReader.Common.Interfaces;
 using Neodenit.ActiveReader.Common.Models;
+using Neodenit.ActiveReader.Web.Angular.Models;
 
 namespace Neodenit.ActiveReader.Web.Angular.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class ArticlesController : ControllerBase
@@ -15,12 +20,14 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
         private readonly IRepository<Article> repository;
         private readonly IWordsService wordsService;
         private readonly IExpressionsService expressionsService;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public ArticlesController(IRepository<Article> repository, IWordsService wordsService, IExpressionsService expressionsService)
+        public ArticlesController(IRepository<Article> repository, IWordsService wordsService, IExpressionsService expressionsService, UserManager<ApplicationUser> userManager)
         {
-            this.repository = repository;
-            this.wordsService = wordsService;
-            this.expressionsService = expressionsService;
+            this.repository = repository ?? throw new System.ArgumentNullException(nameof(repository));
+            this.wordsService = wordsService ?? throw new System.ArgumentNullException(nameof(wordsService));
+            this.expressionsService = expressionsService ?? throw new System.ArgumentNullException(nameof(expressionsService));
+            this.userManager = userManager ?? throw new System.ArgumentNullException(nameof(userManager));
         }
 
         [HttpGet]
@@ -34,6 +41,7 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
         public async Task<ActionResult<Article>> Get(int id)
         {
             Article article = await repository.GetAsync(id);
+
             if (article == null)
             {
                 return NotFound();
@@ -86,6 +94,11 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
                 return BadRequest(ModelState);
             }
 
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var user = await userManager.FindByIdAsync(userId);
+
+            article.Owner = user.UserName;
+
             repository.Create(article);
 
             await repository.SaveAsync();
@@ -101,6 +114,7 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
         public async Task<ActionResult<Article>> Delete(int id)
         {
             Article article = await repository.GetAsync(id);
+
             if (article == null)
             {
                 return NotFound();
