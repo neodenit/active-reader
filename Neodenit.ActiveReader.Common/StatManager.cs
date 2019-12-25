@@ -9,7 +9,7 @@ namespace Neodenit.ActiveReader.Common
     {
         private readonly IConverter converter;
 
-        public StatManager(IStatRepository<Stat> repository, IConverter converter)
+        public StatManager(IConverter converter)
         {
             this.converter = converter;
         }

@@ -7,11 +7,11 @@ namespace Neodenit.ActiveReader.Services
 {
     public class QuestionsService : IQuestionsService
     {
-        private readonly IStatRepository<Stat> statRepository;
+        private readonly IStatRepository statRepository;
         private readonly IRepository<Word> wordRepository;
         private readonly IConverter converter;
 
-        public QuestionsService(IStatRepository<Stat> statRepository, IRepository<Word> wordRepository, IConverter converter)
+        public QuestionsService(IStatRepository statRepository, IRepository<Word> wordRepository, IConverter converter)
         {
             this.statRepository = statRepository;
             this.wordRepository = wordRepository;

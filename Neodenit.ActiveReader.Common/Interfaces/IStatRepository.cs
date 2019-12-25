@@ -4,10 +4,10 @@ using Neodenit.ActiveReader.Common.Models;
 
 namespace Neodenit.ActiveReader.Common.Interfaces
 {
-    public interface IStatRepository<T> : IRepository<T> where T : Stat
+    public interface IStatRepository : IRepository<Stat>
     {
-        Task<T> GetByPrefixSuffixArticleAsync(string prefix, string suffix, int articleID);
+        Task<Stat> GetByPrefixSuffixArticleAsync(string prefix, string suffix, int articleID);
 
-        Task<IEnumerable<T>> GetByArticleAsync(int articleID);
+        Task<IEnumerable<Stat>> GetByArticleAsync(int articleID);
     }
 }

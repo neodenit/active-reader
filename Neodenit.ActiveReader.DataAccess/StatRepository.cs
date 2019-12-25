@@ -7,7 +7,7 @@ using Neodenit.ActiveReader.Common.Models;
 
 namespace Neodenit.ActiveReader.DataAccess
 {
-    public class StatRepository : EFRepository<Stat>, IStatRepository<Stat>
+    public class StatRepository : EFRepository<Stat>, IStatRepository
     {
         public StatRepository(DbContext dbContext) : base(dbContext) { }
 
