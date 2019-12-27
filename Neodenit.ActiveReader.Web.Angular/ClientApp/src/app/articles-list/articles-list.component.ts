@@ -10,16 +10,16 @@ export class ArticlesListComponent {
   isAdding: boolean;
 
   constructor(private http: HttpClient, @Inject("BASE_URL") private baseUrl: string) {
-    this.http.get<Article[]>(this.baseUrl + "articles").subscribe(
+    this.http.get<Article[]>(`${this.baseUrl}articles`).subscribe(
       data => this.articles = data,
       error => console.error(error));
   }
 
-  public startAdding() {
+  startAdding() {
     this.isAdding = true;
   }
 
-  public finishAdding(article: Article) {
+  finishAdding(article: Article) {
     this.isAdding = false;
 
     if (article) {
@@ -27,8 +27,8 @@ export class ArticlesListComponent {
     }
   }
 
-  public remove(article: Article) {
-    this.http.delete<Article>(this.baseUrl + "articles" + "/" + article.id).subscribe(
+  remove(article: Article) {
+    this.http.delete<Article>(`${this.baseUrl}articles/${article.id}`).subscribe(
         data => this.articles = this.articles.filter(x => x.id !== data.id),
         error => console.error(error));
   }
