@@ -9,14 +9,14 @@ namespace Neodenit.ActiveReader.Services
     {
         private readonly IStatRepository statRepository;
         private readonly IRepository<Word> wordRepository;
-        private readonly IConverter converter;
+        private readonly IConverterService converterService;
 
-        public QuestionsService(IStatRepository statRepository, IRepository<Word> wordRepository, IConverter converter)
+        public QuestionsService(IStatRepository statRepository, IRepository<Word> wordRepository, IConverterService converterService)
         {
             this.statRepository = statRepository;
             this.wordRepository = wordRepository;
 
-            this.converter = converter;
+            this.converterService = converterService;
         }
 
         public async Task<QuestionViewModel> GetQuestionAsync(int articleID, int lastAnswerPosition)
@@ -25,7 +25,7 @@ namespace Neodenit.ActiveReader.Services
                                       .Where(w => w.ArticleID == articleID)
                                       .OrderBy(w => w.Position);
 
-            var expressions = converter.GetExpressions(words)
+            var expressions = converterService.GetExpressions(words)
                                        .Where(e => e.SuffixPosition > lastAnswerPosition);
 
             var statistics = await statRepository.GetByArticleAsync(articleID);
@@ -38,7 +38,7 @@ namespace Neodenit.ActiveReader.Services
                 if (variantsCount > 1)
                 {
                     var wordsForText = words.Where(w => w.Position < expression.SuffixPosition);
-                    var text = converter.GetText(wordsForText);
+                    var text = converterService.GetText(wordsForText);
 
                     var question = new QuestionViewModel
                     {
@@ -59,7 +59,7 @@ namespace Neodenit.ActiveReader.Services
                 AnswerPosition = 0,
                 ArticleID = articleID,
                 Variants = null,
-                StartingWords = converter.GetText(words),
+                StartingWords = converterService.GetText(words),
             };
         }
     }

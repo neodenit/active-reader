@@ -66,8 +66,8 @@ namespace Neodenit.ActiveReader.Web.Angular
             services.AddTransient<IWordsService, WordsService>();
             services.AddTransient<IExpressionsService, ExpressionsService>();
             services.AddTransient<IQuestionsService, QuestionsService>();
-            services.AddTransient<IConverter, Converter>();
-            services.AddTransient<IStatManager, StatManager>();
+            services.AddTransient<IConverterService, ConverterService>();
+            services.AddTransient<IStatManagerService, StatManagerService>();
             services.AddTransient<IArticlesRepository, ArticlesRepository>();
             services.AddTransient<IStatRepository, StatRepository>();
 

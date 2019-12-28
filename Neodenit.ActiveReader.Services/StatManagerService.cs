@@ -1,27 +1,28 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Neodenit.ActiveReader.Common;
 using Neodenit.ActiveReader.Common.Interfaces;
 using Neodenit.ActiveReader.Common.Models;
 
-namespace Neodenit.ActiveReader.Common
+namespace Neodenit.ActiveReader.Services
 {
-    public class StatManager : IStatManager
+    public class StatManagerService : IStatManagerService
     {
-        private readonly IConverter converter;
+        private readonly IConverterService converterService;
 
-        public StatManager(IConverter converter)
+        public StatManagerService(IConverterService converterService)
         {
-            this.converter = converter;
+            this.converterService = converterService;
         }
 
         public IEnumerable<Stat> GetExpressions(Article article)
         {
             var statDict = new Dictionary<KeyValuePair<string, string>, int>();
-            var words = converter.GetWords(article.Text);
+            var words = converterService.GetWords(article.Text);
 
             var pairs = words.GetPairs(
-                converter.GetPrefix,
-                converter.GetSuffix,
+                converterService.GetPrefix,
+                converterService.GetSuffix,
                 (word, prefix, suffix) =>
                     new KeyValuePair<string, string>(prefix, suffix)
             );

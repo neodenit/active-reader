@@ -3,7 +3,7 @@ using Neodenit.ActiveReader.Common.Models;
 
 namespace Neodenit.ActiveReader.Common.Interfaces
 {
-    public interface IConverter
+    public interface IConverterService
     {
         IEnumerable<Word> GetWords(Article article);
 

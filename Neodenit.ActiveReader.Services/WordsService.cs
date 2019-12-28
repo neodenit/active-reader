@@ -8,18 +8,18 @@ namespace Neodenit.ActiveReader.Services
     public class WordsService : IWordsService
     {
         private readonly IRepository<Word> wordRepository;
-        private readonly IConverter converter;
+        private readonly IConverterService converterService;
 
-        public WordsService(IRepository<Article> articleRepository, IRepository<Stat> statRepository, IRepository<Word> wordRepository, IConverter converter)
+        public WordsService(IRepository<Word> wordRepository, IConverterService converterService)
         {
             this.wordRepository = wordRepository;
 
-            this.converter = converter;
+            this.converterService = converterService;
         }
 
         public async Task AddWordsFromArticle(Article article)
         {
-            var words = converter.GetWords(article);
+            var words = converterService.GetWords(article);
 
             wordRepository.Create(words.Cast<Word>());
 

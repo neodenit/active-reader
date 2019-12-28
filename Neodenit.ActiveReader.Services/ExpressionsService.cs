@@ -8,17 +8,17 @@ namespace Neodenit.ActiveReader.Services
     public class ExpressionsService : IExpressionsService
     {
         private readonly IRepository<Stat> repository;
-        private readonly IStatManager statManager;
+        private readonly IStatManagerService statManagerService;
 
-        public ExpressionsService(IRepository<Stat> repository, IStatManager statManager)
+        public ExpressionsService(IRepository<Stat> repository, IStatManagerService statManagerService)
         {
             this.repository = repository;
-            this.statManager = statManager;
+            this.statManagerService = statManagerService;
         }
 
         public async Task AddExpressionsFromArticle(Article article)
         {
-            var expressions = statManager.GetExpressions(article);
+            var expressions = statManagerService.GetExpressions(article);
             
             repository.Create(expressions.Cast<Stat>());
 

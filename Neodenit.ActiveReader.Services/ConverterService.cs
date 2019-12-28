@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Neodenit.ActiveReader.Common;
 using Neodenit.ActiveReader.Common.Interfaces;
 using Neodenit.ActiveReader.Common.Models;
 
-namespace Neodenit.ActiveReader.Common
+namespace Neodenit.ActiveReader.Services
 {
-    public class Converter : IConverter
+    public class ConverterService : IConverterService
     {
         public IEnumerable<Word> GetWords(Article article)
         {

@@ -21,7 +21,7 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
         [HttpGet("{articleId}/{lastAnswerPosition}")]
         public async Task<ActionResult<QuestionViewModel>> Get(int articleId, int lastAnswerPosition)
         {
-            var question = await questionsService.GetQuestionAsync(articleId, lastAnswerPosition);
+            QuestionViewModel question = await questionsService.GetQuestionAsync(articleId, lastAnswerPosition);
             return Ok(question);
         }
     }
