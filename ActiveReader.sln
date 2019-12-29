@@ -3,29 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveReader.Web", "ActiveReader.Web\ActiveReader.Web.csproj", "{BF1632EC-65D5-46D4-9C4E-39744264FEB8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveReader.Web.Tests", "ActiveReader.Web.Tests\ActiveReader.Web.Tests.csproj", "{61DA7C4E-22E1-451C-B32D-4BF9D37E997C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveReader.Core", "ActiveReader.Core\ActiveReader.Core.csproj", "{6D2A5241-1CEE-4FC4-88D1-BB7CF2507F49}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveReader.Persistence", "ActiveReader.Persistence\ActiveReader.Persistence.csproj", "{3B214505-A6B0-4CFD-B609-C8E20345DCBB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveReader.Interfaces", "ActiveReader.Interfaces\ActiveReader.Interfaces.csproj", "{1B3BE5F0-63E6-4C59-8BBF-1D263708771F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveReader.DependencyInjection", "ActiveReader.DependencyInjection\ActiveReader.DependencyInjection.csproj", "{5D4A9134-2E06-4823-B27E-2E81F1B1FC4A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveReader.Models", "ActiveReader.Models\ActiveReader.Models.csproj", "{73BA7FFF-E3DB-4E66-9A80-63283FF85FBC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveReader.Services", "ActiveReader.Services\ActiveReader.Services.csproj", "{AEC73FE5-D5CE-46C9-A675-07EA4D353DC4}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neodenit.ActiveReader.Web.Angular", "Neodenit.ActiveReader.Web.Angular\Neodenit.ActiveReader.Web.Angular.csproj", "{CC3482EF-80B2-4A24-AE93-94D3B1770FC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neodenit.ActiveReader.Common", "Neodenit.ActiveReader.Common\Neodenit.ActiveReader.Common.csproj", "{5A00A375-772C-4D84-9C76-531067583A05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neodenit.ActiveReader.Common", "Neodenit.ActiveReader.Common\Neodenit.ActiveReader.Common.csproj", "{5A00A375-772C-4D84-9C76-531067583A05}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neodenit.ActiveReader.DataAccess", "Neodenit.ActiveReader.DataAccess\Neodenit.ActiveReader.DataAccess.csproj", "{C71B0F15-320C-4447-8C84-A52ED030BB3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neodenit.ActiveReader.DataAccess", "Neodenit.ActiveReader.DataAccess\Neodenit.ActiveReader.DataAccess.csproj", "{C71B0F15-320C-4447-8C84-A52ED030BB3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neodenit.ActiveReader.Services", "Neodenit.ActiveReader.Services\Neodenit.ActiveReader.Services.csproj", "{5CF99010-B5EE-4BFC-BF6A-863BAB554EC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neodenit.ActiveReader.Services", "Neodenit.ActiveReader.Services\Neodenit.ActiveReader.Services.csproj", "{5CF99010-B5EE-4BFC-BF6A-863BAB554EC2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,38 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BF1632EC-65D5-46D4-9C4E-39744264FEB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BF1632EC-65D5-46D4-9C4E-39744264FEB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BF1632EC-65D5-46D4-9C4E-39744264FEB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BF1632EC-65D5-46D4-9C4E-39744264FEB8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{61DA7C4E-22E1-451C-B32D-4BF9D37E997C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{61DA7C4E-22E1-451C-B32D-4BF9D37E997C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{61DA7C4E-22E1-451C-B32D-4BF9D37E997C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{61DA7C4E-22E1-451C-B32D-4BF9D37E997C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6D2A5241-1CEE-4FC4-88D1-BB7CF2507F49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6D2A5241-1CEE-4FC4-88D1-BB7CF2507F49}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6D2A5241-1CEE-4FC4-88D1-BB7CF2507F49}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6D2A5241-1CEE-4FC4-88D1-BB7CF2507F49}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3B214505-A6B0-4CFD-B609-C8E20345DCBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3B214505-A6B0-4CFD-B609-C8E20345DCBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3B214505-A6B0-4CFD-B609-C8E20345DCBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3B214505-A6B0-4CFD-B609-C8E20345DCBB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1B3BE5F0-63E6-4C59-8BBF-1D263708771F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1B3BE5F0-63E6-4C59-8BBF-1D263708771F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1B3BE5F0-63E6-4C59-8BBF-1D263708771F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1B3BE5F0-63E6-4C59-8BBF-1D263708771F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5D4A9134-2E06-4823-B27E-2E81F1B1FC4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5D4A9134-2E06-4823-B27E-2E81F1B1FC4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5D4A9134-2E06-4823-B27E-2E81F1B1FC4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5D4A9134-2E06-4823-B27E-2E81F1B1FC4A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{73BA7FFF-E3DB-4E66-9A80-63283FF85FBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{73BA7FFF-E3DB-4E66-9A80-63283FF85FBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{73BA7FFF-E3DB-4E66-9A80-63283FF85FBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{73BA7FFF-E3DB-4E66-9A80-63283FF85FBC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AEC73FE5-D5CE-46C9-A675-07EA4D353DC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AEC73FE5-D5CE-46C9-A675-07EA4D353DC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AEC73FE5-D5CE-46C9-A675-07EA4D353DC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AEC73FE5-D5CE-46C9-A675-07EA4D353DC4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CC3482EF-80B2-4A24-AE93-94D3B1770FC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CC3482EF-80B2-4A24-AE93-94D3B1770FC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC3482EF-80B2-4A24-AE93-94D3B1770FC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
