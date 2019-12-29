@@ -1,4 +1,4 @@
-﻿namespace Neodenit.ActiveReader.Common.Models
+﻿namespace Neodenit.ActiveReader.Common.DataModels
 {
     public class Word
     {

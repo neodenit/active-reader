@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Neodenit.ActiveReader.Common;
+using Neodenit.ActiveReader.Common.DataModels;
 using Neodenit.ActiveReader.Common.Interfaces;
-using Neodenit.ActiveReader.Common.Models;
 
 namespace Neodenit.ActiveReader.Services
 {

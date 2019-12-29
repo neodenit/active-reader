@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Neodenit.ActiveReader.Common.Interfaces;
-using Neodenit.ActiveReader.Common.Models;
+using Neodenit.ActiveReader.Common.ViewModels;
 
 namespace Neodenit.ActiveReader.Web.Angular.Controllers
 {

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Neodenit.ActiveReader.Common.Models;
+using Neodenit.ActiveReader.Common.DataModels;
 
 namespace Neodenit.ActiveReader.Common.Interfaces
 {

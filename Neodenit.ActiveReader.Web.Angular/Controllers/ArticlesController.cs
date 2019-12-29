@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Neodenit.ActiveReader.Common.Interfaces;
-using Neodenit.ActiveReader.Common.Models;
+using Neodenit.ActiveReader.Common.ViewModels;
 using Neodenit.ActiveReader.Web.Angular.Models;
 
 namespace Neodenit.ActiveReader.Web.Angular.Controllers
@@ -25,25 +25,25 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Article>>> Get()
+        public async Task<ActionResult<IEnumerable<ArticleViewModel>>> Get()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var user = await userManager.FindByIdAsync(userId);
 
-            IEnumerable<Article> articles = articlesService.GetArticlesAsync(user.UserName);
+            IEnumerable<ArticleViewModel> articles = articlesService.GetArticlesAsync(user.UserName);
             return Ok(articles);
         }
 
         [HttpGet("{id}", Name = "GetArticle")]
-        public async Task<ActionResult<Article>> Get(int id)
+        public async Task<ActionResult<ArticleViewModel>> Get(int id)
         {
-            Article article = await articlesService.GetAsync(id);
+            ArticleViewModel article = await articlesService.GetAsync(id);
 
             return Ok(article);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Article>> Post(Article article)
+        public async Task<ActionResult<ArticleViewModel>> Post(ArticleViewModel article)
         {
             if (!ModelState.IsValid)
             {
@@ -61,9 +61,9 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Article>> Delete(int id)
+        public async Task<ActionResult<ArticleViewModel>> Delete(int id)
         {
-            Article article = await articlesService.GetAsync(id);
+            ArticleViewModel article = await articlesService.GetAsync(id);
 
             await articlesService.DeleteAsync(article);
 

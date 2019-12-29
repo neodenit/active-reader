@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Neodenit.ActiveReader.Common.Models;
+using Neodenit.ActiveReader.Common.DataModels;
 
 namespace Neodenit.ActiveReader.DataAccess
 {

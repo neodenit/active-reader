@@ -1,17 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Neodenit.ActiveReader.Common.Models;
+using Neodenit.ActiveReader.Common.ViewModels;
 
 namespace Neodenit.ActiveReader.Common.Interfaces
 {
     public interface IArticlesService
     {
-        IEnumerable<Article> GetArticlesAsync(string userName);
+        IEnumerable<ArticleViewModel> GetArticlesAsync(string userName);
 
-        Task<Article> GetAsync(int id);
+        Task<ArticleViewModel> GetAsync(int id);
 
-        Task CreateAsync(Article article);
+        Task CreateAsync(ArticleViewModel articleViewModel);
 
-        Task DeleteAsync(Article article);
+        Task DeleteAsync(ArticleViewModel articleViewModel);
     }
 }

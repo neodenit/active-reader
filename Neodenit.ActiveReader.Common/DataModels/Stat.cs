@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Neodenit.ActiveReader.Common.Models
+namespace Neodenit.ActiveReader.Common.DataModels
 {
     public class Stat
     {

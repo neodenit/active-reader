@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Neodenit.ActiveReader.Common.Interfaces;
-using Neodenit.ActiveReader.Common.Models;
+using Neodenit.ActiveReader.Common.DataModels;
 
 namespace Neodenit.ActiveReader.DataAccess
 {

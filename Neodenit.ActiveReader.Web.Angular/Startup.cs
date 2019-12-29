@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,9 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Neodenit.ActiveReader.Common;
 using Neodenit.ActiveReader.Common.Interfaces;
-using Neodenit.ActiveReader.Common.Models;
 using Neodenit.ActiveReader.DataAccess;
 using Neodenit.ActiveReader.Services;
 using Neodenit.ActiveReader.Web.Angular.Data;
@@ -72,6 +71,8 @@ namespace Neodenit.ActiveReader.Web.Angular
             services.AddTransient<IStatRepository, StatRepository>();
 
             services.AddTransient<DbContext, ActiveReaderDbContext>();
+
+            services.AddAutoMapper(typeof(MappingProfile));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

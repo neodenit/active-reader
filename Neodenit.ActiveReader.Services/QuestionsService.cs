@@ -1,7 +1,8 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Neodenit.ActiveReader.Common.DataModels;
 using Neodenit.ActiveReader.Common.Interfaces;
-using Neodenit.ActiveReader.Common.Models;
+using Neodenit.ActiveReader.Common.ViewModels;
 
 namespace Neodenit.ActiveReader.Services
 {

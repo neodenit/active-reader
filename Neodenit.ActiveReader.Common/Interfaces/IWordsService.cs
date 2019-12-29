@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Neodenit.ActiveReader.Common.Models;
+using Neodenit.ActiveReader.Common.DataModels;
 
 namespace Neodenit.ActiveReader.Common.Interfaces
 {

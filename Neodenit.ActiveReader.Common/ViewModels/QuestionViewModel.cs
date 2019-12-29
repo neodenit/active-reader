@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Neodenit.ActiveReader.Common.Models
+namespace Neodenit.ActiveReader.Common.ViewModels
 {
     public class QuestionViewModel
     {
