@@ -7,8 +7,6 @@ namespace Neodenit.ActiveReader.Common.Interfaces
 {
     public interface IRepository<T> : IDisposable
     {
-        IQueryable<T> Get();
-
         IEnumerable<T> GetAll();
 
         Task<IEnumerable<T>> GetAllAsync();

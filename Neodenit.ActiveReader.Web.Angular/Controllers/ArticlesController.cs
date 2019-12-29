@@ -30,7 +30,7 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var user = await userManager.FindByIdAsync(userId);
 
-            IEnumerable<ArticleViewModel> articles = articlesService.GetArticlesAsync(user.UserName);
+            IEnumerable<ArticleViewModel> articles = await articlesService.GetArticlesAsync(user.UserName);
             return Ok(articles);
         }
 

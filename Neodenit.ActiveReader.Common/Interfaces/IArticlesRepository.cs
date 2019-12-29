@@ -4,7 +4,7 @@ using Neodenit.ActiveReader.Common.DataModels;
 
 namespace Neodenit.ActiveReader.Common.Interfaces
 {
-    public interface IArticlesRepository
+    public interface IArticlesRepository : IRepository<Article>
     {
         Task<IEnumerable<Article>> GetArticlesAsync(string userName);
     }

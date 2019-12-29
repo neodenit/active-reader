@@ -6,7 +6,7 @@ namespace Neodenit.ActiveReader.Common.Interfaces
 {
     public interface IArticlesService
     {
-        IEnumerable<ArticleViewModel> GetArticlesAsync(string userName);
+        Task<IEnumerable<ArticleViewModel>> GetArticlesAsync(string userName);
 
         Task<ArticleViewModel> GetAsync(int id);
 

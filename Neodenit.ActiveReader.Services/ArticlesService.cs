@@ -10,11 +10,11 @@ namespace Neodenit.ActiveReader.Services
     public class ArticlesService : IArticlesService
     {
         private readonly IMapper mapper;
-        private readonly IRepository<Article> repository;
+        private readonly IArticlesRepository repository;
         private readonly IWordsService wordsService;
         private readonly IExpressionsService expressionsService;
 
-        public ArticlesService(IMapper mapper, IRepository<Article> repository, IWordsService wordsService, IExpressionsService expressionsService)
+        public ArticlesService(IMapper mapper, IArticlesRepository repository, IWordsService wordsService, IExpressionsService expressionsService)
         {
             this.mapper = mapper ?? throw new System.ArgumentNullException(nameof(mapper));
             this.repository = repository ?? throw new System.ArgumentNullException(nameof(repository));
@@ -44,9 +44,9 @@ namespace Neodenit.ActiveReader.Services
             await repository.SaveAsync();
         }
 
-        public IEnumerable<ArticleViewModel> GetArticlesAsync(string userName)
+        public async Task<IEnumerable<ArticleViewModel>> GetArticlesAsync(string userName)
         {
-            IEnumerable<Article> articles = repository.Get();
+            IEnumerable<Article> articles = await repository.GetArticlesAsync(userName);
             var viewModel = mapper.Map<IEnumerable<ArticleViewModel>>(articles);
             return viewModel;
         }

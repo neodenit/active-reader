@@ -18,11 +18,6 @@ namespace Neodenit.ActiveReader.DataAccess
             dbSet = dbContext.Set<T>();
         }
 
-        public IQueryable<T> Get()
-        {
-            return dbSet;
-        }
-
         public IEnumerable<T> GetAll()
         {
             return dbSet.ToList();
