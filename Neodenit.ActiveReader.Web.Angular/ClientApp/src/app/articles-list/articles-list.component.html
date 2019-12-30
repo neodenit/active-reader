@@ -7,5 +7,5 @@
 </div>
 
 <ul *ngFor="let article of articles">
-  <li><a href="article/{{ article.id }}">{{ article.title }}</a> <a tabindex="0" (click)="remove(article)">&times;</a></li>
+  <li><a [routerLink]="['article', article.id]">{{ article.title }}</a> <a tabindex="0" (click)="remove(article)">&times;</a></li>
 </ul>
