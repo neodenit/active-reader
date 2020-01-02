@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
+using Neodenit.ActiveReader.Common;
 using Neodenit.ActiveReader.Common.DataModels;
 using Neodenit.ActiveReader.Common.Interfaces;
 using Neodenit.ActiveReader.Common.ViewModels;
@@ -38,6 +40,14 @@ namespace Neodenit.ActiveReader.Services
 
                 if (variantsCount > 1)
                 {
+                    var bestVariants = variants
+                        .OrderByDescending(x => x.Suffix == expression.Suffix)
+                        .ThenByDescending(x => x.Count)
+                        .ThenBy(_ => Guid.NewGuid())
+                        .Take(CoreSettings.Default.MaxChoices)
+                        .OrderBy(_ => Guid.NewGuid())
+                        .Select(v => v.Suffix);
+
                     var wordsForText = words.Where(w => w.Position < expression.SuffixPosition);
                     var text = converterService.GetText(wordsForText);
 
@@ -46,7 +56,7 @@ namespace Neodenit.ActiveReader.Services
                         Answer = expression.Suffix,
                         AnswerPosition = expression.SuffixPosition,
                         ArticleID = expression.ArticleID,
-                        Variants = variants.Select(v => v.Suffix).OrderBy(v => v),
+                        Variants = bestVariants,
                         StartingWords = text,
                     };
 

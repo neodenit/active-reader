@@ -40,5 +40,14 @@ namespace Neodenit.ActiveReader.Common {
                 return ((int)(this["PrefixLength"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
+        public int MaxChoices {
+            get {
+                return ((int)(this["MaxChoices"]));
+            }
+        }
     }
 }
