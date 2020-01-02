@@ -29,9 +29,7 @@ namespace Neodenit.ActiveReader.Services
 
             foreach (var pair in pairs)
             {
-                int count;
-
-                if (statDict.TryGetValue(pair, out count))
+                if (statDict.TryGetValue(pair, out var count))
                 {
                     statDict[pair]++;
                 }
@@ -41,13 +39,13 @@ namespace Neodenit.ActiveReader.Services
                 }
             }
 
-            var result = statDict.Keys.Select((key, value) =>
+            var result = statDict.Select(stat =>
                 new Stat
                 {
                     ArticleID = article.ID,
-                    Prefix = key.Key,
-                    Suffix = key.Value,
-                    Count = value,
+                    Prefix = stat.Key.Key,
+                    Suffix = stat.Key.Value,
+                    Count = stat.Value,
                 });
 
             return result;
