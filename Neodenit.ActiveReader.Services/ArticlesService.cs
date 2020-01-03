@@ -35,9 +35,9 @@ namespace Neodenit.ActiveReader.Services
             await wordsService.AddWordsFromArticle(article);
         }
 
-        public async Task DeleteAsync(ArticleViewModel articleViewModel)
+        public async Task DeleteAsync(int id)
         {
-            var article = mapper.Map<Article>(articleViewModel);
+            Article article = await repository.GetAsync(id);
 
             repository.Delete(article);
 

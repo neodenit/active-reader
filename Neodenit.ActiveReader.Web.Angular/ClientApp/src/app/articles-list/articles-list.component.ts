@@ -29,8 +29,8 @@ export class ArticlesListComponent {
 
   remove(article: Article) {
     this.http.delete<Article>(`${this.baseUrl}articles/${article.id}`).subscribe(
-        data => this.articles = this.articles.filter(x => x.id !== data.id),
-        error => console.error(error));
+      () => this.articles = this.articles.filter(x => x.id !== article.id),
+      error => console.error(error));
   }
 }
 

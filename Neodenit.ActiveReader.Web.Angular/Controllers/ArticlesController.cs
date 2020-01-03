@@ -63,11 +63,9 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<ArticleViewModel>> Delete(int id)
         {
-            ArticleViewModel article = await articlesService.GetAsync(id);
+            await articlesService.DeleteAsync(id);
 
-            await articlesService.DeleteAsync(article);
-
-            return Ok(article);
+            return NoContent();
         }
     }
 }
