@@ -30,6 +30,8 @@ namespace Neodenit.ActiveReader.Services
 
             await repository.SaveAsync();
 
+            articleViewModel.ID = article.ID;
+
             await expressionsService.AddExpressionsFromArticle(article);
 
             await wordsService.AddWordsFromArticle(article);
