@@ -18,7 +18,7 @@ namespace Neodenit.ActiveReader.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Neodenit.ActiveReader.Common.Models.Article", b =>
+            modelBuilder.Entity("Neodenit.ActiveReader.Common.DataModels.Article", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -27,6 +27,9 @@ namespace Neodenit.ActiveReader.DataAccess.Migrations
 
                     b.Property<string>("Owner")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("int");
 
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
@@ -39,7 +42,7 @@ namespace Neodenit.ActiveReader.DataAccess.Migrations
                     b.ToTable("Articles");
                 });
 
-            modelBuilder.Entity("Neodenit.ActiveReader.Common.Models.Stat", b =>
+            modelBuilder.Entity("Neodenit.ActiveReader.Common.DataModels.Stat", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -65,7 +68,7 @@ namespace Neodenit.ActiveReader.DataAccess.Migrations
                     b.ToTable("Statistics");
                 });
 
-            modelBuilder.Entity("Neodenit.ActiveReader.Common.Models.Word", b =>
+            modelBuilder.Entity("Neodenit.ActiveReader.Common.DataModels.Word", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -94,18 +97,18 @@ namespace Neodenit.ActiveReader.DataAccess.Migrations
                     b.ToTable("Words");
                 });
 
-            modelBuilder.Entity("Neodenit.ActiveReader.Common.Models.Stat", b =>
+            modelBuilder.Entity("Neodenit.ActiveReader.Common.DataModels.Stat", b =>
                 {
-                    b.HasOne("Neodenit.ActiveReader.Common.Models.Article", "Article")
+                    b.HasOne("Neodenit.ActiveReader.Common.DataModels.Article", "Article")
                         .WithMany()
                         .HasForeignKey("ArticleID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Neodenit.ActiveReader.Common.Models.Word", b =>
+            modelBuilder.Entity("Neodenit.ActiveReader.Common.DataModels.Word", b =>
                 {
-                    b.HasOne("Neodenit.ActiveReader.Common.Models.Article", "Article")
+                    b.HasOne("Neodenit.ActiveReader.Common.DataModels.Article", "Article")
                         .WithMany()
                         .HasForeignKey("ArticleID")
                         .OnDelete(DeleteBehavior.Cascade)
