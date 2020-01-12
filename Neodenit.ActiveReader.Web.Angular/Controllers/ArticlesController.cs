@@ -60,6 +60,19 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
             return CreatedAtRoute("GetArticle", new { id = article.ID }, article);
         }
 
+        [HttpPost("{id}/position/{position}")]
+        public async Task<ActionResult> Post(int id, int position)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            await articlesService.UpdatePositionAsync(id, position);
+
+            return Ok();
+        }
+
         [HttpDelete("{id}")]
         public async Task<ActionResult<ArticleViewModel>> Delete(int id)
         {

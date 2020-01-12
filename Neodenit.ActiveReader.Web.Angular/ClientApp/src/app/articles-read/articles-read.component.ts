@@ -19,11 +19,12 @@ export class ArticlesReadComponent {
   constructor(private http: HttpClient, @Inject("BASE_URL") private baseUrl: string, private route: ActivatedRoute) {    
     let idParam = this.route.snapshot.paramMap.get("id");
     let id = parseInt(idParam);
+
     http.get<Article>(`${baseUrl}articles/${id}`).subscribe(
       data => this.article = data,
       error => console.error(error));
 
-    this.position = 0;
+    this.position = 1;
     this.score = 0;
     this.getQuestion(id, this.position);
   }
@@ -32,7 +33,9 @@ export class ArticlesReadComponent {
     if (answer === this.answer) {
       this.score++;
       this.scoreStyle = "right";
-      this.getQuestion(this.article.id, this.position);
+
+      let nextPosition = this.position + 1;
+      this.getQuestion(this.article.id, nextPosition);
     } else {
       this.score--;
       this.scoreStyle = "wrong";
@@ -40,13 +43,15 @@ export class ArticlesReadComponent {
     }
   }
 
-  getQuestion(articleId: number, position: number) {
-    this.http.get<Question>(`${this.baseUrl}questions/${articleId}/${position}`).subscribe(
+  getQuestion(articleId: number, nextPosition: number) {
+    this.http.get<Question>(`${this.baseUrl}questions/article/${articleId}/position/${nextPosition}`).subscribe(
       data => {
         this.position = data.answerPosition;
         this.startText = data.startingWords;
         this.choices = data.variants;
         this.answer = data.answer;
+
+        this.http.post<Question>(`${this.baseUrl}articles/${articleId}/position/${data.answerPosition}`, null).subscribe();
       },
       error => console.error(error));
   }

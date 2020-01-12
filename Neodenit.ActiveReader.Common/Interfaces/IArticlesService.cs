@@ -13,5 +13,7 @@ namespace Neodenit.ActiveReader.Common.Interfaces
         Task CreateAsync(ArticleViewModel articleViewModel);
 
         Task DeleteAsync(int id);
+
+        Task UpdatePositionAsync(int articleId, int position);
     }
 }

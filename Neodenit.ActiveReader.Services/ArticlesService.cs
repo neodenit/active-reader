@@ -59,5 +59,14 @@ namespace Neodenit.ActiveReader.Services
             var viewModel = mapper.Map<ArticleViewModel>(article);
             return viewModel;
         }
+
+        public async Task UpdatePositionAsync(int articleId, int position)
+        {
+            var article = await repository.GetAsync(articleId);
+
+            article.Position = position;
+
+            await repository.SaveAsync();
+        }
     }
 }

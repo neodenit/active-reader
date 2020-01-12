@@ -12,24 +12,30 @@ namespace Neodenit.ActiveReader.Services
     {
         private readonly IStatRepository statRepository;
         private readonly IRepository<Word> wordRepository;
+        private readonly IArticlesRepository articlesRepository;
         private readonly IConverterService converterService;
 
-        public QuestionsService(IStatRepository statRepository, IRepository<Word> wordRepository, IConverterService converterService)
+        public QuestionsService(IStatRepository statRepository, IRepository<Word> wordRepository, IArticlesRepository articlesRepository, IConverterService converterService)
         {
-            this.statRepository = statRepository;
-            this.wordRepository = wordRepository;
+            this.statRepository = statRepository ?? throw new ArgumentNullException(nameof(statRepository));
+            this.wordRepository = wordRepository ?? throw new ArgumentNullException(nameof(wordRepository));
+            this.articlesRepository = articlesRepository ?? throw new ArgumentNullException(nameof(articlesRepository));
 
-            this.converterService = converterService;
+            this.converterService = converterService ?? throw new ArgumentNullException(nameof(converterService));
         }
 
-        public async Task<QuestionViewModel> GetQuestionAsync(int articleID, int lastAnswerPosition)
+        public async Task<QuestionViewModel> GetQuestionAsync(int articleID, int position)
         {
+            Article article = await articlesRepository.GetAsync(articleID);
+
+            var lastPosition = Math.Max(position, article.Position);
+
             var words = wordRepository.GetAll()
                                       .Where(w => w.ArticleID == articleID)
                                       .OrderBy(w => w.Position);
 
             var expressions = converterService.GetExpressions(words)
-                                       .Where(e => e.SuffixPosition > lastAnswerPosition);
+                                       .Where(e => e.SuffixPosition >= lastPosition);
 
             var statistics = await statRepository.GetByArticleAsync(articleID);
 
