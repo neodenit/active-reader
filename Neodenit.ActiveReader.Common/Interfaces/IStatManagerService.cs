@@ -6,5 +6,7 @@ namespace Neodenit.ActiveReader.Common.Interfaces
     public interface IStatManagerService
     {
         IEnumerable<Stat> GetExpressions(Article article);
+
+        IEnumerable<Stat> GetWords(Article article);
     }
 }

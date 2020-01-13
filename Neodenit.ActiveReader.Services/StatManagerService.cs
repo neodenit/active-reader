@@ -18,7 +18,7 @@ namespace Neodenit.ActiveReader.Services
         public IEnumerable<Stat> GetExpressions(Article article)
         {
             var statDict = new Dictionary<KeyValuePair<string, string>, int>();
-            var words = converterService.GetWords(article.Text);
+            IEnumerable<string> words = converterService.GetWords(article.Text);
 
             var pairs = words.GetPairs(
                 converterService.GetPrefix,
@@ -45,6 +45,36 @@ namespace Neodenit.ActiveReader.Services
                     ArticleID = article.ID,
                     Prefix = stat.Key.Key,
                     Suffix = stat.Key.Value,
+                    Count = stat.Value,
+                });
+
+            return result;
+        }
+
+        public IEnumerable<Stat> GetWords(Article article)
+        {
+            var statDict = new Dictionary<string, int>();
+            var words = converterService.GetWords(article.Text);
+
+            var normalizedWords = words.Select(w => converterService.NormalizeWord(w));
+
+            foreach (var word in normalizedWords)
+            {
+                if (statDict.TryGetValue(word, out var count))
+                {
+                    statDict[word]++;
+                }
+                else
+                {
+                    statDict[word] = 1;
+                }
+            }
+
+            var result = statDict.Select(stat =>
+                new Stat
+                {
+                    ArticleID = article.ID,
+                    Suffix = stat.Key,
                     Count = stat.Value,
                 });
 

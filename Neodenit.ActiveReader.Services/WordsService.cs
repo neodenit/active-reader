@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Neodenit.ActiveReader.Common.DataModels;
 using Neodenit.ActiveReader.Common.Interfaces;
 
@@ -21,7 +20,7 @@ namespace Neodenit.ActiveReader.Services
         {
             var words = converterService.GetWords(article);
 
-            wordRepository.Create(words.Cast<Word>());
+            wordRepository.Create(words);
 
             await wordRepository.SaveAsync();
         }

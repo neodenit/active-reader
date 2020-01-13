@@ -15,6 +15,8 @@ namespace Neodenit.ActiveReader.Common.Interfaces
 
         string GetSuffix(string word);
 
+        string NormalizeWord(string word);
+
         IEnumerable<string> GetWords(string text);
 
         IEnumerable<string> GetSpaces(string text);

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Neodenit.ActiveReader.Common.DataModels;
 using Neodenit.ActiveReader.Common.Interfaces;
@@ -18,9 +19,11 @@ namespace Neodenit.ActiveReader.Services
 
         public async Task AddExpressionsFromArticle(Article article)
         {
-            var expressions = statManagerService.GetExpressions(article);
+            IEnumerable<Stat> expressions = statManagerService.GetExpressions(article);
+            IEnumerable<Stat> words = statManagerService.GetWords(article);
             
-            repository.Create(expressions.Cast<Stat>());
+            repository.Create(expressions);
+            repository.Create(words);
 
             await repository.SaveAsync();
         }

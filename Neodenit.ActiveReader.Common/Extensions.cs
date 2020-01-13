@@ -12,18 +12,18 @@ namespace Neodenit.ActiveReader.Common
             Func<TSource, TSuffix> suffixSelector,
             Func<TSource, TPrefix, TSuffix, TResult> resultSelector)
         {
-            var prefixExpression = new Queue<TSource>(source.Take(CoreSettings.Default.PrefixLength));
-            var rest = source.Skip(CoreSettings.Default.PrefixLength);
+            var prefixWords = new Queue<TSource>(source.Take(CoreSettings.Default.PrefixLength));
+            var restWords = source.Skip(CoreSettings.Default.PrefixLength);
 
-            foreach (var word in rest)
+            foreach (var word in restWords)
             {
-                var prefix = prefixSelector(prefixExpression);
+                var prefix = prefixSelector(prefixWords);
                 var suffix = suffixSelector(word);
 
                 yield return resultSelector(word, prefix, suffix);
 
-                prefixExpression.Enqueue(word);
-                prefixExpression.Dequeue();
+                prefixWords.Enqueue(word);
+                prefixWords.Dequeue();
             }
         }
     }
