@@ -25,15 +25,6 @@ namespace Neodenit.ActiveReader.Common {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(",")]
-        public string PrefixDelimiter {
-            get {
-                return ((string)(this["PrefixDelimiter"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("2")]
         public int PrefixLength {
             get {

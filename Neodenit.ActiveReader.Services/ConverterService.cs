@@ -65,7 +65,7 @@ namespace Neodenit.ActiveReader.Services
         }
 
         public string GetPrefix(IEnumerable<string> words) =>
-            string.Join(CoreSettings.Default.PrefixDelimiter, words.Select(NormalizeWord));
+            string.Join(Constants.PrefixDelimiter, words.Select(NormalizeWord));
 
         public string GetSuffix(string word) =>
             NormalizeWord(word);
@@ -80,6 +80,6 @@ namespace Neodenit.ActiveReader.Services
             word.ToLowerInvariant();
 
         public IEnumerable<string> SplitPrefix(string prefix) =>
-            prefix.Split(new string[] { CoreSettings.Default.PrefixDelimiter }, StringSplitOptions.None);
+            prefix.Split(new[] { Constants.PrefixDelimiter }, StringSplitOptions.None);
     }
 }

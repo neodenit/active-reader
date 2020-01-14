@@ -2,9 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Neodenit.ActiveReader.Common" GeneratedClassName="CoreSettings">
   <Profiles />
   <Settings>
-    <Setting Name="PrefixDelimiter" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">,</Value>
-    </Setting>
     <Setting Name="PrefixLength" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">2</Value>
     </Setting>
