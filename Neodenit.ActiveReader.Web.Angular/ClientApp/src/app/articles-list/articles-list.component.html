@@ -6,6 +6,6 @@
   <button (click)="startAdding()">Add new article</button>
 </div>
 
-<ul *ngFor="let article of articles">
-  <li><a [routerLink]="['article', article.id]">{{ article.title }}</a> <a tabindex="0" (click)="remove(article)" class="delete">&times;</a></li>
+<ul>
+  <li *ngFor="let article of articles"><a [routerLink]="['article', article.id]">{{ article.title }}</a> <a tabindex="0" (click)="remove(article)" class="delete">&times;</a></li>
 </ul>

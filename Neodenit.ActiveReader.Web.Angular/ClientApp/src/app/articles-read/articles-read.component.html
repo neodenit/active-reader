@@ -4,8 +4,8 @@
 
 <div class="multiline">{{ startText }}</div>
 
-<ul *ngFor="let choice of choices">
-  <li><a tabindex="0" (click)="check(choice)">{{ choice }}</a></li>
+<ul>
+  <li *ngFor="let choice of choices"><a tabindex="0" (click)="check(choice)">{{ choice }}</a></li>
 </ul>
 
 <a routerLink="/">Back to list</a>
