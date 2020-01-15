@@ -1,22 +1,21 @@
-<h2>Add new article</h2>
+<div class="card">
+  <div class="card-header">Add New Article</div>
+  <div class="card-body">
 
-<div>
-  <label>Title</label>
-</div>
+    <div class="form-group">
+      <label for="articleTitle">Title</label>
+      <input id="articleTitle" class="form-control" [(ngModel)]="newArticleTitle" />
+    </div>
 
-<div>
-  <input [(ngModel)]="newArticleTitle" />
-</div>
+    <div class="form-group">
+      <label for="articleText">Text</label>
+      <textarea id="articleText" class="form-control" [(ngModel)]="newArticleText"></textarea>
+    </div>
 
-<div>
-  <label>Text</label>
-</div>
+    <div class="form-group">
+      <button class="btn btn-success mr-1" (click)="add()">OK</button>
+      <button class="btn btn-outline-secondary" (click)="cancel()">Cancel</button>
+    </div>
 
-<div>
-  <textarea  [(ngModel)]="newArticleText"></textarea>
-</div>
-
-<div>
-  <button (click)="add()">OK</button>
-  <button (click)="cancel()">Cancel</button>
+  </div>
 </div>
