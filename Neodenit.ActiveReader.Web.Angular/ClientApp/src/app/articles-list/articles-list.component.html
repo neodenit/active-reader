@@ -3,9 +3,13 @@
 </div>
 
 <div *ngIf="!isAdding">
-  <button class="btn btn-primary mb-1" (click)="startAdding()">Add New Article</button>
+  <div class="row">
+    <div class="col-sm-auto">
+      <button class="btn btn-primary btn-block" (click)="startAdding()">Add New Article</button>
+    </div>
+  </div>
 </div>
 
-<ul class="list-group">
-  <li *ngFor="let article of articles" class="list-group-item d-flex justify-content-between align-items-center"><a [routerLink]="['article', article.id]">{{ article.title }}</a> <a tabindex="0" (click)="remove(article)" class="delete">&times;</a></li>
+<ul class="list-group mt-2">
+  <li *ngFor="let article of articles" class="list-group-item d-flex justify-content-between align-items-center"><a [routerLink]="['article', article.id]">{{ article.title }}</a> <a tabindex="0" (click)="remove(article)" class="close">&times;</a></li>
 </ul>

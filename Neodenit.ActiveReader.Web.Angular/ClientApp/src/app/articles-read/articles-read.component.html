@@ -4,8 +4,12 @@
 
 <div class="multiline mb-2">{{ startText }}</div>
 
-<ul class="list-group list-group-horizontal">
-  <li *ngFor="let choice of choices" class="list-group-item"><a tabindex="0" (click)="check(choice)">{{ choice }}</a></li>
-</ul>
+<div class="list-group list-group-horizontal-sm">
+  <a *ngFor="let choice of choices" class="list-group-item list-group-item-action" (click)="check(choice)">{{ choice }}</a>
+</div>
 
-<a class="btn btn-outline-secondary mt-2" routerLink="/">Back to List</a>
+<div class="row">
+  <div class="col-sm-auto">
+    <a class="btn btn-outline-secondary btn-block mt-2" routerLink="/">Back to List</a>
+  </div>
+</div>
