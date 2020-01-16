@@ -16,14 +16,16 @@ export class ArticlesCreateComponent {
   constructor(private http: HttpClient, @Inject("BASE_URL") private baseUrl: string) { }
 
   add() {
-    let data = {
-      title: this.newArticleTitle,
-      text: this.newArticleText
-    };
+    if (this.newArticleTitle && this.newArticleText) {
+      let data = {
+        title: this.newArticleTitle,
+        text: this.newArticleText
+      };
 
-    this.http.post<Article>(`${this.baseUrl}articles`, data).subscribe(
-      article => this.close.emit(article),
-      error => console.error(error));
+      this.http.post<Article>(`${this.baseUrl}articles`, data).subscribe(
+        article => this.close.emit(article),
+        error => console.error(error));
+    }
   }
 
   cancel() {
