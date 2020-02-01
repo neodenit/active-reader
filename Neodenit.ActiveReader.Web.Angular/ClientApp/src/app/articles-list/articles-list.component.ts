@@ -1,15 +1,17 @@
-import { Component, Inject } from "@angular/core";
+import { Component, Inject, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: "articles-list",
   templateUrl: "./articles-list.component.html"
 })
-export class ArticlesListComponent {
+export class ArticlesListComponent implements OnInit {
   articles: Article[];
   isAdding: boolean;
 
-  constructor(private http: HttpClient, @Inject("BASE_URL") private baseUrl: string) {
+  constructor(private http: HttpClient, @Inject("BASE_URL") private baseUrl: string) { }
+
+  ngOnInit() {
     this.http.get<Article[]>(`${this.baseUrl}articles`).subscribe(
       data => this.articles = data,
       error => console.error(error));
