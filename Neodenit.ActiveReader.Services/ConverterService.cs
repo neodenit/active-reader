@@ -12,8 +12,8 @@ namespace Neodenit.ActiveReader.Services
     {
         public IEnumerable<Word> GetWords(Article article)
         {
-            var words = GetWords(article.Text);
-            var spaces = GetSpaces(article.Text);
+            IEnumerable<string> words = GetWords(article.Text);
+            IEnumerable<string> spaces = GetSpaces(article.Text);
             var pairsCount = words.Count();
             var positions = Enumerable.Range(1, pairsCount);
 
@@ -50,9 +50,8 @@ namespace Neodenit.ActiveReader.Services
             }
         }
 
-        public IEnumerable<Stat> GetExpressions(IEnumerable<Word> words)
-        {
-            return words.GetPairs(
+        public IEnumerable<Stat> GetExpressions(IEnumerable<Word> words) =>
+            words.GetPairs(
                 w => GetPrefix(w.Select(x => x.CorrectedWord)),
                 w => GetSuffix(w.CorrectedWord),
                 (word, prefix, suffix) => new Stat
@@ -62,7 +61,6 @@ namespace Neodenit.ActiveReader.Services
                     ArticleID = word.ArticleID,
                     SuffixPosition = word.Position
                 });
-        }
 
         public string GetPrefix(IEnumerable<string> words) =>
             string.Join(Constants.PrefixDelimiter, words.Select(NormalizeWord));

@@ -62,7 +62,7 @@ namespace Neodenit.ActiveReader.Services
 
         public async Task UpdatePositionAsync(int articleId, int position)
         {
-            var article = await repository.GetAsync(articleId);
+            Article article = await repository.GetAsync(articleId);
 
             article.Position = position;
 

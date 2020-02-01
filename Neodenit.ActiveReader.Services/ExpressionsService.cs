@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Neodenit.ActiveReader.Common.DataModels;
 using Neodenit.ActiveReader.Common.Interfaces;

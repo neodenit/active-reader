@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Neodenit.ActiveReader.Common.DataModels;
 using Neodenit.ActiveReader.Common.Interfaces;
 
@@ -18,7 +19,7 @@ namespace Neodenit.ActiveReader.Services
 
         public async Task AddWordsFromArticle(Article article)
         {
-            var words = converterService.GetWords(article);
+            IEnumerable<Word> words = converterService.GetWords(article);
 
             wordRepository.Create(words);
 

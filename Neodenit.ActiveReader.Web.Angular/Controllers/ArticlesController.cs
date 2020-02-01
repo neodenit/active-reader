@@ -38,7 +38,6 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
         public async Task<ActionResult<ArticleViewModel>> Get(int id)
         {
             ArticleViewModel article = await articlesService.GetAsync(id);
-
             return Ok(article);
         }
 

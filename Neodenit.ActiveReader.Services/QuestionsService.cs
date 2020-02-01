@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Neodenit.ActiveReader.Common;
@@ -30,14 +31,14 @@ namespace Neodenit.ActiveReader.Services
 
             var lastPosition = Math.Max(position, article.Position);
 
-            var words = wordRepository.GetAll()
-                                      .Where(w => w.ArticleID == articleID)
-                                      .OrderBy(w => w.Position);
+            IEnumerable<Word> words = wordRepository.GetAll()
+                .Where(w => w.ArticleID == articleID)
+                .OrderBy(w => w.Position);
 
-            var expressions = converterService.GetExpressions(words)
+            IEnumerable<Stat> expressions = converterService.GetExpressions(words)
                                        .Where(e => e.SuffixPosition >= lastPosition);
 
-            var statistics = await statRepository.GetByArticleAsync(articleID);
+            IEnumerable<Stat> statistics = await statRepository.GetByArticleAsync(articleID);
 
             foreach (var expression in expressions)
             {
@@ -55,7 +56,7 @@ namespace Neodenit.ActiveReader.Services
                         .Select(v => v.Suffix);
 
                     var wordsForText = words.Where(w => w.Position < expression.SuffixPosition);
-                    var text = converterService.GetText(wordsForText);
+                    string text = converterService.GetText(wordsForText);
 
                     var question = new QuestionViewModel
                     {

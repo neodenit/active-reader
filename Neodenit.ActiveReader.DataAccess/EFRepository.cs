@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -18,25 +17,13 @@ namespace Neodenit.ActiveReader.DataAccess
             dbSet = dbContext.Set<T>();
         }
 
-        public IEnumerable<T> GetAll()
-        {
-            return dbSet.ToList();
-        }
+        public IEnumerable<T> GetAll() => dbSet.ToList();
 
-        public async Task<IEnumerable<T>> GetAllAsync()
-        {
-            return await dbSet.ToListAsync();
-        }
+        public async Task<IEnumerable<T>> GetAllAsync() => await dbSet.ToListAsync();
 
-        public T Get(int id)
-        {
-            return dbSet.Find(id);
-        }
+        public T Get(int id) => dbSet.Find(id);
 
-        public async Task<T> GetAsync(int id)
-        {
-            return await dbSet.FindAsync(id);
-        }
+        public async Task<T> GetAsync(int id) => await dbSet.FindAsync(id);
 
         public void Create(T entity)
         {
@@ -63,10 +50,7 @@ namespace Neodenit.ActiveReader.DataAccess
             dbContext.SaveChanges();
         }
 
-        public Task SaveAsync()
-        {
-            return dbContext.SaveChangesAsync();
-        }
+        public Task SaveAsync() => dbContext.SaveChangesAsync();
 
         public void Dispose()
         {
