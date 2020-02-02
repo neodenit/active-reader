@@ -14,7 +14,7 @@ namespace Neodenit.ActiveReader.DataAccess.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.0")
+                .HasAnnotation("ProductVersion", "3.1.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -29,6 +29,9 @@ namespace Neodenit.ActiveReader.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Position")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PrefixLength")
                         .HasColumnType("int");
 
                     b.Property<string>("Text")

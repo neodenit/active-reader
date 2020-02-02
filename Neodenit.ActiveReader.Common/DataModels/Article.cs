@@ -11,5 +11,7 @@
         public string Owner { get; set; }
 
         public int Position { get; set; }
+
+        public int PrefixLength { get; set; }
     }
 }
