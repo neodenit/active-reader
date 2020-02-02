@@ -35,7 +35,7 @@ namespace Neodenit.ActiveReader.Services
                 .Where(w => w.ArticleID == articleID)
                 .OrderBy(w => w.Position);
 
-            IEnumerable<Stat> expressions = converterService.GetExpressions(words)
+            IEnumerable<Stat> expressions = converterService.GetExpressions(words, article.PrefixLength)
                                        .Where(e => e.SuffixPosition >= lastPosition);
 
             IEnumerable<Stat> statistics = await statRepository.GetByArticleAsync(articleID);

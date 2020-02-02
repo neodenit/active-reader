@@ -50,7 +50,7 @@ namespace Neodenit.ActiveReader.Services
             }
         }
 
-        public IEnumerable<Stat> GetExpressions(IEnumerable<Word> words) =>
+        public IEnumerable<Stat> GetExpressions(IEnumerable<Word> words, int prefixLength) =>
             words.GetPairs(
                 w => GetPrefix(w.Select(x => x.CorrectedWord)),
                 w => GetSuffix(w.CorrectedWord),
@@ -60,7 +60,8 @@ namespace Neodenit.ActiveReader.Services
                     Suffix = suffix,
                     ArticleID = word.ArticleID,
                     SuffixPosition = word.Position
-                });
+                },
+                prefixLength);
 
         public string GetPrefix(IEnumerable<string> words) =>
             string.Join(Constants.PrefixDelimiter, words.Select(NormalizeWord));

@@ -9,7 +9,7 @@ namespace Neodenit.ActiveReader.Common.Interfaces
 
         string GetText(IEnumerable<Word> words);
 
-        IEnumerable<Stat> GetExpressions(IEnumerable<Word> words);
+        IEnumerable<Stat> GetExpressions(IEnumerable<Word> words, int prefixLength);
 
         string GetPrefix(IEnumerable<string> words);
 

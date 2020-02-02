@@ -10,10 +10,11 @@ namespace Neodenit.ActiveReader.Common
             this IEnumerable<TSource> source,
             Func<IEnumerable<TSource>, TPrefix> prefixSelector,
             Func<TSource, TSuffix> suffixSelector,
-            Func<TSource, TPrefix, TSuffix, TResult> resultSelector)
+            Func<TSource, TPrefix, TSuffix, TResult> resultSelector,
+            int prefixLength)
         {
-            var prefixWords = new Queue<TSource>(source.Take(CoreSettings.Default.PrefixLength));
-            var restWords = source.Skip(CoreSettings.Default.PrefixLength);
+            var prefixWords = new Queue<TSource>(source.Take(prefixLength));
+            var restWords = source.Skip(prefixLength);
 
             foreach (var word in restWords)
             {

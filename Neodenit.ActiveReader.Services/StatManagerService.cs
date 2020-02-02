@@ -23,7 +23,8 @@ namespace Neodenit.ActiveReader.Services
                 converterService.GetPrefix,
                 converterService.GetSuffix,
                 (word, prefix, suffix) =>
-                    new KeyValuePair<string, string>(prefix, suffix)
+                    new KeyValuePair<string, string>(prefix, suffix),
+                article.PrefixLength
             );
 
             var statDict = new Dictionary<KeyValuePair<string, string>, int>();

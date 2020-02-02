@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Neodenit.ActiveReader.Common;
 using Neodenit.ActiveReader.Common.DataModels;
 using Neodenit.ActiveReader.Common.Interfaces;
 using Neodenit.ActiveReader.Common.ViewModels;
@@ -25,6 +26,8 @@ namespace Neodenit.ActiveReader.Services
         public async Task CreateAsync(ArticleViewModel articleViewModel)
         {
             var article = mapper.Map<Article>(articleViewModel);
+
+            article.PrefixLength = CoreSettings.Default.PrefixLength;
 
             repository.Create(article);
 
