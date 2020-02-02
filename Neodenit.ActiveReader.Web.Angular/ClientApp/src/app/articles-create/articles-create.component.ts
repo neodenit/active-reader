@@ -1,6 +1,6 @@
 import { Component, Inject, EventEmitter, Output } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Article } from "../articles-list/articles-list.component";
+import { IArticle } from "../models/IArticle";
 
 @Component({
   selector: "articles-create",
@@ -11,7 +11,7 @@ export class ArticlesCreateComponent {
   newArticleText: string;
 
   @Output()
-  close: EventEmitter<Article> = new EventEmitter()
+  close: EventEmitter<IArticle> = new EventEmitter()
 
   constructor(private http: HttpClient, @Inject("BASE_URL") private baseUrl: string) { }
 
@@ -22,7 +22,7 @@ export class ArticlesCreateComponent {
         text: this.newArticleText
       };
 
-      this.http.post<Article>(`${this.baseUrl}articles`, data).subscribe(
+      this.http.post<IArticle>(`${this.baseUrl}articles`, data).subscribe(
         article => this.close.emit(article),
         error => console.error(error));
     }

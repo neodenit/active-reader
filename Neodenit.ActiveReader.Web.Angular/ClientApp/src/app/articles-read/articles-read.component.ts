@@ -1,14 +1,15 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Article } from "../articles-list/articles-list.component";
 import { ActivatedRoute } from "@angular/router";
+import { IArticle } from "../models/IArticle";
+import { IQuestion } from "../models/IQuestion";
 
 @Component({
   selector: "articles-read",
   templateUrl: "./articles-read.component.html"
 })
 export class ArticlesReadComponent implements OnInit {
-  article: Article;
+  article: IArticle;
   score: number;
   scoreStyle: string;
   position: number;
@@ -25,7 +26,7 @@ export class ArticlesReadComponent implements OnInit {
     let idParam = this.route.snapshot.paramMap.get("id");
     let id = parseInt(idParam);
 
-    this.http.get<Article>(`${this.baseUrl}articles/${id}`).subscribe(
+    this.http.get<IArticle>(`${this.baseUrl}articles/${id}`).subscribe(
       data => this.article = data,
       error => console.error(error));
 
@@ -47,22 +48,15 @@ export class ArticlesReadComponent implements OnInit {
   }
 
   getQuestion(articleId: number, nextPosition: number) {
-    this.http.get<Question>(`${this.baseUrl}questions/article/${articleId}/position/${nextPosition}`).subscribe(
+    this.http.get<IQuestion>(`${this.baseUrl}questions/article/${articleId}/position/${nextPosition}`).subscribe(
       data => {
         this.position = data.answerPosition;
         this.startText = data.startingWords;
         this.choices = data.variants;
         this.answer = data.answer;
 
-        this.http.post<Question>(`${this.baseUrl}articles/${articleId}/position/${data.answerPosition}`, null).subscribe();
+        this.http.post<IQuestion>(`${this.baseUrl}articles/${articleId}/position/${data.answerPosition}`, null).subscribe();
       },
       error => console.error(error));
   }
-}
-
-interface Question {
-  answerPosition: number;
-  startingWords: string;
-  variants: string[];
-  answer: string;
 }
