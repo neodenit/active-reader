@@ -47,7 +47,7 @@ namespace Neodenit.ActiveReader.Services
                     ArticleID = article.ID,
                     Prefix = stat.Key.Key,
                     Suffix = stat.Key.Value,
-                    Count = stat.Value,
+                    Count = stat.Value
                 });
 
             return result;
@@ -78,7 +78,7 @@ namespace Neodenit.ActiveReader.Services
                 {
                     ArticleID = article.ID,
                     Suffix = stat.Key,
-                    Count = stat.Value,
+                    Count = stat.Value
                 });
 
             return result;

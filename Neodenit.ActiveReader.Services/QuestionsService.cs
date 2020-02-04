@@ -64,7 +64,7 @@ namespace Neodenit.ActiveReader.Services
                         AnswerPosition = expression.SuffixPosition,
                         ArticleID = expression.ArticleID,
                         Variants = bestVariants,
-                        StartingWords = text,
+                        StartingWords = text
                     };
 
                     return question;
@@ -77,7 +77,7 @@ namespace Neodenit.ActiveReader.Services
                 AnswerPosition = 0,
                 ArticleID = articleID,
                 Variants = null,
-                StartingWords = converterService.GetText(words),
+                StartingWords = converterService.GetText(words)
             };
         }
     }

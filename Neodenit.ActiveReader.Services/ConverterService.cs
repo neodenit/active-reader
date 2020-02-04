@@ -29,7 +29,7 @@ namespace Neodenit.ActiveReader.Services
                 OriginalWord = ws.Word,
                 CorrectedWord = NormalizeWord(ws.Word),
                 NextSpace = ws.Space,
-                ArticleID = article.ID,
+                ArticleID = article.ID
             });
 
             return result;
