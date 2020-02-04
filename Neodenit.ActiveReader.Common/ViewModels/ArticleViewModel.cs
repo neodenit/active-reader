@@ -8,6 +8,8 @@
 
         public string Text { get; set; }
 
+        public int PrefixLength { get; set; }
+
         public string Owner { get; set; }
     }
 }

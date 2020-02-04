@@ -27,8 +27,6 @@ namespace Neodenit.ActiveReader.Services
         {
             var article = mapper.Map<Article>(articleViewModel);
 
-            article.PrefixLength = CoreSettings.Default.PrefixLength;
-
             repository.Create(article);
 
             await repository.SaveAsync();

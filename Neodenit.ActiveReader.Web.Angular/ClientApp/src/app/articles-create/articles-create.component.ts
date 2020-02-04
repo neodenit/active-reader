@@ -9,6 +9,8 @@ import { IArticle } from "../models/IArticle";
 export class ArticlesCreateComponent {
   newArticleTitle: string;
   newArticleText: string;
+  prefixLength = "2";
+  prefixLengthOptions = ["1", "2", "3"];
 
   @Output()
   close: EventEmitter<IArticle> = new EventEmitter()
@@ -19,7 +21,8 @@ export class ArticlesCreateComponent {
     if (this.newArticleTitle && this.newArticleText) {
       let data = {
         title: this.newArticleTitle,
-        text: this.newArticleText
+        text: this.newArticleText,
+        prefixLength: parseInt(this.prefixLength)
       };
 
       this.http.post<IArticle>(`${this.baseUrl}articles`, data).subscribe(

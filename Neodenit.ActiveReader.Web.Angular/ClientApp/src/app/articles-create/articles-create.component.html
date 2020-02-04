@@ -13,6 +13,14 @@
     </div>
 
     <div class="form-group">
+      <p>Markov chain prefix length</p>
+      <div class="form-check form-check-inline" *ngFor="let option of prefixLengthOptions">
+        <input class="form-check-input" type="radio" name="prefixLengthOptions" id="prefixLength{{option}}" [(ngModel)]="prefixLength" [value]="option" />
+        <label class="form-check-label" for="prefixLength{{option}}">{{option}}</label>
+      </div>
+    </div>
+
+    <div class="form-group">
       <div class="row justify-content-between">
         <div class="col-sm-auto mb-1 mb-sm-0">
           <button class="btn btn-success btn-block" (click)="add()">OK</button>
