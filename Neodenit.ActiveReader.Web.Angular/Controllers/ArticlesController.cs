@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Neodenit.ActiveReader.Common;
 using Neodenit.ActiveReader.Common.Interfaces;
 using Neodenit.ActiveReader.Common.ViewModels;
 using Neodenit.ActiveReader.Web.Angular.Models;
@@ -39,6 +40,12 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
         {
             ArticleViewModel article = await articlesService.GetAsync(id);
             return Ok(article);
+        }
+
+        [HttpGet("defaultprefixlength")]
+        public ActionResult<int> GetPrefixLenght()
+        {
+            return CoreSettings.Default.PrefixLength;
         }
 
         [HttpPost]
