@@ -2,40 +2,48 @@
   <div class="card-header text-white">Add New Article</div>
   <div class="card-body bg-light">
 
-    <div class="form-group">
-      <label for="articleTitle">Title</label>
-      <input id="articleTitle" class="form-control" [(ngModel)]="newArticleTitle" />
-    </div>
+    <form #form="ngForm">
+      <div class="form-group">
+        <label for="articleTitle">Title</label>
+        <input #title="ngModel" id="articleTitle" name="articleTitle" class="form-control" [(ngModel)]="newArticleTitle" required />
+        <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert alert-danger">
+          Title is required.
+        </div>
+      </div>
 
-    <div class="form-group">
-      <label for="articleText">Text</label>
-      <textarea id="articleText" class="form-control" [(ngModel)]="newArticleText"></textarea>
-    </div>
+      <div class="form-group">
+        <label for="articleText">Text</label>
+        <textarea #text="ngModel" id="articleText" name="articleText" class="form-control" [(ngModel)]="newArticleText" required></textarea>
+        <div *ngIf="text.invalid && (text.dirty || text.touched)" class="alert alert-danger">
+          Text is required.
+        </div>
+      </div>
 
-    <div class="form-group">
-      <p>Markov chain prefix length</p>
-      <div class="row">
-        <div class="col-sm-4">
-          <div class="btn-group btn-group-toggle btn-block">
-            <label *ngFor="let option of prefixLengthOptions" class="btn btn-outline-secondary" [ngClass]="{'active': prefixLength === option}">
-              <input type="radio" name="prefixLengthOptions" [(ngModel)]="prefixLength" [value]="option" />
-              {{option}}
-            </label>
+      <div class="form-group">
+        <p>Markov chain prefix length</p>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="btn-group btn-group-toggle btn-block">
+              <label *ngFor="let option of prefixLengthOptions" class="btn btn-outline-secondary" [ngClass]="{'active': prefixLength === option}">
+                <input type="radio" name="prefixLengthOptions" [(ngModel)]="prefixLength" [value]="option" />
+                {{option}}
+              </label>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <div class="row justify-content-between">
-        <div class="col-sm-auto mb-1 mb-sm-0">
-          <button class="btn btn-success btn-block" (click)="add()">OK</button>
-        </div>
-        <div class="col-sm-auto">
-          <button class="btn btn-outline-secondary btn-block" (click)="cancel()">Cancel</button>
+      <div class="form-group">
+        <div class="row justify-content-between">
+          <div class="col-sm-auto mb-1 mb-sm-0">
+            <button class="btn btn-success btn-block" (click)="add(form)">OK</button>
+          </div>
+          <div class="col-sm-auto">
+            <button class="btn btn-outline-secondary btn-block" (click)="cancel()">Cancel</button>
+          </div>
         </div>
       </div>
-    </div>
+    </form>
 
   </div>
 </div>
