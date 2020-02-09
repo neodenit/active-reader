@@ -2,7 +2,7 @@
 {
     public class ArticleViewModel
     {
-        public int ID { get; set; }
+        public int? ID { get; set; }
 
         public string Title { get; set; }
 

@@ -25,13 +25,13 @@ export class ArticlesCreateComponent implements OnInit {
 
   add(form: NgForm) {
     if (form.valid) {
-      let data = {
+      let article: IArticle = {
         title: this.newArticleTitle,
         text: this.newArticleText,
         prefixLength: parseInt(this.prefixLength)
       };
 
-      this.http.post<IArticle>(`${this.baseUrl}articles`, data).subscribe(
+      this.http.post<IArticle>(`${this.baseUrl}articles`, article).subscribe(
         article => this.close.emit(article),
         error => console.error(error));
     } else {

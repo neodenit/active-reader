@@ -1,5 +1,6 @@
 export interface IArticle {
-    id: number;
-    title: string;
-    text: string;
+  id?: number;
+  title: string;
+  text: string;
+  prefixLength: number;
 }
