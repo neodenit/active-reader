@@ -10,7 +10,7 @@ namespace Neodenit.ActiveReader.Common.Interfaces
 
         Task<ArticleViewModel> GetAsync(int id);
 
-        Task CreateAsync(ArticleViewModel articleViewModel);
+        Task<ArticleViewModel> CreateAsync(ArticleViewModel articleViewModel, string userName);
 
         Task DeleteAsync(int id);
 

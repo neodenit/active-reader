@@ -59,11 +59,9 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var user = await userManager.FindByIdAsync(userId);
 
-            article.Owner = user.UserName;
+            ArticleViewModel newArticle = await articlesService.CreateAsync(article, user.UserName);
 
-            await articlesService.CreateAsync(article);
-
-            return CreatedAtRoute("GetArticle", new { id = article.ID }, article);
+            return CreatedAtRoute("GetArticle", new { id = newArticle.ID }, newArticle);
         }
 
         [HttpPost("{id}/position/{position}")]

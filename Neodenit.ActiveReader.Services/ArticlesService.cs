@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using Neodenit.ActiveReader.Common;
 using Neodenit.ActiveReader.Common.DataModels;
 using Neodenit.ActiveReader.Common.Interfaces;
 using Neodenit.ActiveReader.Common.ViewModels;
@@ -23,19 +22,23 @@ namespace Neodenit.ActiveReader.Services
             this.expressionsService = expressionsService ?? throw new System.ArgumentNullException(nameof(expressionsService));
         }
 
-        public async Task CreateAsync(ArticleViewModel articleViewModel)
+        public async Task<ArticleViewModel> CreateAsync(ArticleViewModel articleViewModel, string userName)
         {
-            var article = mapper.Map<Article>(articleViewModel);
+            var article = mapper.Map<ArticleViewModel, Article>(
+                articleViewModel,
+                opt => opt.AfterMap((src, dest) => dest.Owner = userName));
 
             repository.Create(article);
 
             await repository.SaveAsync();
 
-            articleViewModel.ID = article.ID;
-
             await expressionsService.AddExpressionsFromArticle(article);
 
             await wordsService.AddWordsFromArticle(article);
+
+            var viewModel = mapper.Map<ArticleViewModel>(article);
+            return viewModel;
+
         }
 
         public async Task DeleteAsync(int id)
