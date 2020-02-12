@@ -59,4 +59,11 @@ export class ArticlesReadComponent implements OnInit {
       },
       error => console.error(error));
   }
+
+  navigateToPosition(position: number) {
+    this.score = 0;
+    this.scoreStyle = "";
+
+    this.getQuestion(this.article.id, position);
+  }
 }

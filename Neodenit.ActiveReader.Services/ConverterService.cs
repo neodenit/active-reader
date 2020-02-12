@@ -14,8 +14,9 @@ namespace Neodenit.ActiveReader.Services
         {
             IEnumerable<string> words = GetWords(article.Text);
             IEnumerable<string> spaces = GetSpaces(article.Text);
+
             var pairsCount = words.Count();
-            var positions = Enumerable.Range(1, pairsCount);
+            var positions = Enumerable.Range(Constants.StartingPosition, pairsCount);
 
             var wordsSpaces = words
                 .Zip(spaces, (word, space) =>

@@ -1,5 +1,7 @@
 <h2 *ngIf="article">{{ article.title }}</h2>
 
+<articles-navigation *ngIf="article" [articleId]="article.id" (navigate)="navigateToPosition($event)"></articles-navigation>
+
 <h3 [class]="scoreStyle">Score: {{ score }}</h3>
 
 <div class="multiline mb-2">{{ startText }}</div>

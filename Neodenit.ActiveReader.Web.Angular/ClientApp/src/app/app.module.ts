@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { ArticlesListComponent } from './articles-list/articles-list.component';
 import { ArticlesCreateComponent } from './articles-create/articles-create.component';
 import { ArticlesReadComponent } from './articles-read/articles-read.component';
+import { ArticlesNavigationComponent } from './articles-navigation/articles-navigation.component';
 import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.module';
 import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
@@ -21,7 +22,8 @@ import { AuthorizeInterceptor } from 'src/api-authorization/authorize.intercepto
     HomeComponent,
     ArticlesListComponent,
     ArticlesCreateComponent,
-    ArticlesReadComponent
+    ArticlesReadComponent,
+    ArticlesNavigationComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

@@ -76,6 +76,14 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
 
             return Ok();
         }
+        
+        [HttpPost("navigate")]
+        public async Task<ActionResult> Navigate([FromBody] int id)
+        {
+            await articlesService.UpdatePositionAsync(id, Constants.StartingPosition);
+
+            return Ok(Constants.StartingPosition);
+        }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<ArticleViewModel>> Delete(int id)

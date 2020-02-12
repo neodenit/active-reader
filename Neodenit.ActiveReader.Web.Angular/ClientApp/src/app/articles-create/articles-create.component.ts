@@ -14,14 +14,15 @@ export class ArticlesCreateComponent implements OnInit {
   prefixLengthOptions = ["1", "2", "3"];
 
   @Output()
-  close: EventEmitter<IArticle> = new EventEmitter()
+  close: EventEmitter<IArticle> = new EventEmitter();
 
   constructor(private http: HttpClient, @Inject("BASE_URL") private baseUrl: string) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.http.get<number>(`${this.baseUrl}articles/defaultprefixlength`).subscribe(
       data => this.prefixLength = data.toString(),
-      error => console.error(error));  }
+      error => console.error(error));
+  }
 
   add(form: NgForm) {
     if (form.valid) {
