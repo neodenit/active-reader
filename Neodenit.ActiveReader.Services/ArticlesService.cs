@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Neodenit.ActiveReader.Common;
 using Neodenit.ActiveReader.Common.DataModels;
+using Neodenit.ActiveReader.Common.Enums;
 using Neodenit.ActiveReader.Common.Interfaces;
 using Neodenit.ActiveReader.Common.ViewModels;
 
@@ -62,6 +65,26 @@ namespace Neodenit.ActiveReader.Services
             Article article = await repository.GetAsync(id);
             var viewModel = mapper.Map<ArticleViewModel>(article);
             return viewModel;
+        }
+
+        public async Task<int> Navigate(NavigationViewModel model)
+        {
+            Article article = await repository.GetAsync(model.ArticleId);
+
+            int newPosition = model.Target switch
+            {
+                NavigationTarget.Start => Constants.StartingPosition,
+                NavigationTarget.Previous => await wordsService.GetPreviousPosition(model.ArticleId, article.Position),
+                NavigationTarget.Next => await wordsService.GetNextPosition(model.ArticleId, article.Position),
+                NavigationTarget.End => await wordsService.GetEndPosition(model.ArticleId, article.Position),
+                _ => throw new NotImplementedException()
+            };
+
+            article.Position = newPosition;
+
+            await repository.SaveAsync();
+
+            return newPosition;
         }
 
         public async Task UpdatePositionAsync(int articleId, int position)

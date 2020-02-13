@@ -4,6 +4,8 @@
     {
         public const string PrefixDelimiter = " ";
 
+        public const char LineBreak = '\n';
+
         public const int StartingPosition = 1;
     }
 }
