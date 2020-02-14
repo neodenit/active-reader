@@ -32,7 +32,7 @@ import { AuthorizeInterceptor } from 'src/api-authorization/authorize.intercepto
     ApiAuthorizationModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'article/:id', component: ArticlesReadComponent, pathMatch: 'full' }
+      { path: 'article/:id', component: ArticlesReadComponent, pathMatch: 'full', canActivate: [AuthorizeGuard] }
     ])
   ],
   providers: [
