@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Neodenit.ActiveReader.Common;
 using Neodenit.ActiveReader.Common.Interfaces;
 using Neodenit.ActiveReader.Common.ViewModels;
-using Neodenit.ActiveReader.Web.Angular.Models;
 
 namespace Neodenit.ActiveReader.Web.Angular.Controllers
 {
@@ -17,21 +14,16 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
     public class ArticlesController : ControllerBase
     {
         private readonly IArticlesService articlesService;
-        private readonly UserManager<ApplicationUser> userManager;
 
-        public ArticlesController(IArticlesService articlesService, UserManager<ApplicationUser> userManager)
+        public ArticlesController(IArticlesService articlesService)
         {
             this.articlesService = articlesService ?? throw new System.ArgumentNullException(nameof(articlesService));
-            this.userManager = userManager ?? throw new System.ArgumentNullException(nameof(userManager));
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ArticleViewModel>>> Get()
         {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var user = await userManager.FindByIdAsync(userId);
-
-            IEnumerable<ArticleViewModel> articles = await articlesService.GetArticlesAsync(user.UserName);
+            IEnumerable<ArticleViewModel> articles = await articlesService.GetArticlesAsync(User.Identity.Name);
             return Ok(articles);
         }
 
@@ -56,10 +48,7 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
                 return BadRequest(ModelState);
             }
 
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var user = await userManager.FindByIdAsync(userId);
-
-            ArticleViewModel newArticle = await articlesService.CreateAsync(article, user.UserName);
+            ArticleViewModel newArticle = await articlesService.CreateAsync(article, User.Identity.Name);
 
             return CreatedAtRoute("GetArticle", new { id = newArticle.ID }, newArticle);
         }

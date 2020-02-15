@@ -40,7 +40,8 @@ namespace Neodenit.ActiveReader.Web.Angular
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, IdentityDbContext>();
+                .AddApiAuthorization<ApplicationUser, IdentityDbContext>()
+                .AddProfileService<ProfileService>();
 
             services.Configure<IdentityOptions>(options =>
             {
