@@ -60,6 +60,13 @@ namespace Neodenit.ActiveReader.Services
             return viewModel;
         }
 
+        public ArticleViewModel Get(int id)
+        {
+            Article article = repository.Get(id);
+            var viewModel = mapper.Map<ArticleViewModel>(article);
+            return viewModel;
+        }
+
         public async Task<ArticleViewModel> GetAsync(int id)
         {
             Article article = await repository.GetAsync(id);

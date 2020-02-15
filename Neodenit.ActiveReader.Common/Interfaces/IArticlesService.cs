@@ -8,6 +8,8 @@ namespace Neodenit.ActiveReader.Common.Interfaces
     {
         Task<IEnumerable<ArticleViewModel>> GetArticlesAsync(string userName);
 
+        ArticleViewModel Get(int id);
+
         Task<ArticleViewModel> GetAsync(int id);
 
         Task<ArticleViewModel> CreateAsync(ArticleViewModel articleViewModel, string userName);

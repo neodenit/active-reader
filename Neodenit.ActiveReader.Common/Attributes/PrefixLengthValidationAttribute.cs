@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Neodenit.ActiveReader.Common
+namespace Neodenit.ActiveReader.Common.Attributes
 {
     public class PrefixLengthValidationAttribute: ValidationAttribute
     {
