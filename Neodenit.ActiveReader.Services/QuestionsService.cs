@@ -12,11 +12,11 @@ namespace Neodenit.ActiveReader.Services
     public class QuestionsService : IQuestionsService
     {
         private readonly IStatRepository statRepository;
-        private readonly IRepository<Word> wordRepository;
+        private readonly IWordRepository wordRepository;
         private readonly IArticlesRepository articlesRepository;
         private readonly IConverterService converterService;
 
-        public QuestionsService(IStatRepository statRepository, IRepository<Word> wordRepository, IArticlesRepository articlesRepository, IConverterService converterService)
+        public QuestionsService(IStatRepository statRepository, IWordRepository wordRepository, IArticlesRepository articlesRepository, IConverterService converterService)
         {
             this.statRepository = statRepository ?? throw new ArgumentNullException(nameof(statRepository));
             this.wordRepository = wordRepository ?? throw new ArgumentNullException(nameof(wordRepository));
@@ -31,11 +31,10 @@ namespace Neodenit.ActiveReader.Services
 
             var lastPosition = Math.Max(position, article.Position);
 
-            IEnumerable<Word> words = wordRepository.GetAll()
-                .Where(w => w.ArticleID == articleID)
-                .OrderBy(w => w.Position);
+            IEnumerable<Word> articleWords = await wordRepository.GetByArticleAsync(articleID);
+            var orderedWords = articleWords.OrderBy(w => w.Position);
 
-            IEnumerable<Stat> expressions = converterService.GetExpressions(words, article.PrefixLength)
+            IEnumerable<Stat> expressions = converterService.GetExpressions(orderedWords, article.PrefixLength)
                                        .Where(e => e.SuffixPosition >= lastPosition);
 
             IEnumerable<Stat> statistics = await statRepository.GetByArticleAsync(articleID);
@@ -55,7 +54,7 @@ namespace Neodenit.ActiveReader.Services
                         .OrderBy(_ => Guid.NewGuid())
                         .Select(v => v.Suffix);
 
-                    var wordsForText = words.Where(w => w.Position < expression.SuffixPosition);
+                    var wordsForText = orderedWords.Where(w => w.Position < expression.SuffixPosition);
                     string text = converterService.GetText(wordsForText);
 
                     var question = new QuestionViewModel
@@ -77,7 +76,7 @@ namespace Neodenit.ActiveReader.Services
                 AnswerPosition = 0,
                 ArticleID = articleID,
                 Variants = null,
-                StartingWords = converterService.GetText(words)
+                StartingWords = converterService.GetText(orderedWords)
             };
         }
     }
