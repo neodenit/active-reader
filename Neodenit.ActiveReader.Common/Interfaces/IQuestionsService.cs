@@ -5,6 +5,6 @@ namespace Neodenit.ActiveReader.Common.Interfaces
 {
     public interface IQuestionsService
     {
-        Task<QuestionViewModel> GetQuestionAsync(int articleID, int lastAnswerPosition);
+        Task<QuestionViewModel> GetQuestionAsync(int articleId, int lastAnswerPosition);
     }
 }

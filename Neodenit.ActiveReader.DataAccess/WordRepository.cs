@@ -12,6 +12,6 @@ namespace Neodenit.ActiveReader.DataAccess
         public WordRepository(DbContext dbContext) : base(dbContext) { }
 
         public async Task<IEnumerable<Word>> GetByArticleAsync(int articleId) =>
-            await dbSet.Where(x => x.ArticleID == articleId).ToListAsync();
+            await dbSet.Where(x => x.ArticleId == articleId).ToListAsync();
     }
 }

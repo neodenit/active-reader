@@ -25,19 +25,19 @@ namespace Neodenit.ActiveReader.Services
             this.converterService = converterService ?? throw new ArgumentNullException(nameof(converterService));
         }
 
-        public async Task<QuestionViewModel> GetQuestionAsync(int articleID, int position)
+        public async Task<QuestionViewModel> GetQuestionAsync(int articleId, int position)
         {
-            Article article = await articlesRepository.GetAsync(articleID);
+            Article article = await articlesRepository.GetAsync(articleId);
 
             var lastPosition = Math.Max(position, article.Position);
 
-            IEnumerable<Word> articleWords = await wordRepository.GetByArticleAsync(articleID);
+            IEnumerable<Word> articleWords = await wordRepository.GetByArticleAsync(articleId);
             var orderedWords = articleWords.OrderBy(w => w.Position);
 
             IEnumerable<Stat> expressions = converterService.GetExpressions(orderedWords, article.PrefixLength)
                                        .Where(e => e.SuffixPosition >= lastPosition);
 
-            IEnumerable<Stat> statistics = await statRepository.GetByArticleAsync(articleID);
+            IEnumerable<Stat> statistics = await statRepository.GetByArticleAsync(articleId);
 
             foreach (var expression in expressions)
             {
@@ -61,7 +61,7 @@ namespace Neodenit.ActiveReader.Services
                     {
                         Answer = expression.Suffix,
                         AnswerPosition = expression.SuffixPosition,
-                        ArticleID = expression.ArticleID,
+                        ArticleId = expression.ArticleId,
                         Variants = bestVariants,
                         StartingWords = text
                     };
@@ -74,7 +74,7 @@ namespace Neodenit.ActiveReader.Services
             {
                 Answer = null,
                 AnswerPosition = 0,
-                ArticleID = articleID,
+                ArticleId = articleId,
                 Variants = null,
                 StartingWords = converterService.GetText(orderedWords)
             };

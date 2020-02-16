@@ -44,7 +44,7 @@ namespace Neodenit.ActiveReader.Services
             var result = statDict.Select(stat =>
                 new Stat
                 {
-                    ArticleID = article.ID,
+                    ArticleId = article.Id,
                     Prefix = stat.Key.Key,
                     Suffix = stat.Key.Value,
                     Count = stat.Value
@@ -76,7 +76,7 @@ namespace Neodenit.ActiveReader.Services
             var result = statDict.Select(stat =>
                 new Stat
                 {
-                    ArticleID = article.ID,
+                    ArticleId = article.Id,
                     Suffix = stat.Key,
                     Count = stat.Value
                 });

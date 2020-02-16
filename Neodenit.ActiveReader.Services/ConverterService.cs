@@ -30,7 +30,7 @@ namespace Neodenit.ActiveReader.Services
                 OriginalWord = ws.Word,
                 CorrectedWord = NormalizeWord(ws.Word),
                 NextSpace = ws.Space,
-                ArticleID = article.ID
+                ArticleId = article.Id
             });
 
             return result;
@@ -59,7 +59,7 @@ namespace Neodenit.ActiveReader.Services
                 {
                     Prefix = prefix,
                     Suffix = suffix,
-                    ArticleID = word.ArticleID,
+                    ArticleId = word.ArticleId,
                     SuffixPosition = word.Position
                 },
                 prefixLength);

@@ -11,10 +11,10 @@ namespace Neodenit.ActiveReader.DataAccess
     {
         public StatRepository(DbContext dbContext) : base(dbContext) { }
 
-        public async Task<IEnumerable<Stat>> GetByArticleAsync(int articleID) =>
-            await dbSet.Where(x => x.ArticleID == articleID).ToListAsync();
+        public async Task<IEnumerable<Stat>> GetByArticleAsync(int articleId) =>
+            await dbSet.Where(x => x.ArticleId == articleId).ToListAsync();
 
-        public Task<Stat> GetByPrefixSuffixArticleAsync(string prefix, string suffix, int articleID) =>
-            dbSet.SingleOrDefaultAsync(x => x.Prefix == prefix && x.Suffix == suffix && x.ArticleID == articleID);
+        public Task<Stat> GetByPrefixSuffixArticleAsync(string prefix, string suffix, int articleId) =>
+            dbSet.SingleOrDefaultAsync(x => x.Prefix == prefix && x.Suffix == suffix && x.ArticleId == articleId);
     }
 }
