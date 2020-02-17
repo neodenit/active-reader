@@ -1,7 +1,7 @@
-import { Component, Inject, Input, Output, EventEmitter } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { NavigationTarget } from "../models/NavigationTarget";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { INavigation } from "../models/INavigation";
+import { NavigationTarget } from "../models/NavigationTarget";
+import { HttpClientService } from "../shared/services/http-client.service";
 
 @Component({
   selector: "articles-navigation",
@@ -15,7 +15,7 @@ export class ArticlesNavigationComponent {
 
   navigationTarget = NavigationTarget;
 
-  constructor(private http: HttpClient, @Inject("BASE_URL") private baseUrl: string) { }
+  constructor(private http: HttpClientService) { }
 
   navigateTo(target: NavigationTarget) {
     let navigation: INavigation = {
@@ -23,8 +23,8 @@ export class ArticlesNavigationComponent {
       Target: target
     };
 
-    this.http.post<number>(`${this.baseUrl}articles/navigate`, navigation).subscribe(
-      position => this.navigate.emit(position),
-      error => console.error(error));
+    this.http.post<number>("articles/navigate",
+      navigation,
+      position => this.navigate.emit(position));
   }
 }

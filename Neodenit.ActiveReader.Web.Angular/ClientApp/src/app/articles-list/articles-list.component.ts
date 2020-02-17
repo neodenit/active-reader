@@ -1,6 +1,6 @@
-import { Component, Inject, OnInit } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { Component, OnInit } from "@angular/core";
 import { IArticle } from "../models/IArticle";
+import { HttpClientService } from "../shared/services/http-client.service";
 
 @Component({
   selector: "articles-list",
@@ -10,12 +10,10 @@ export class ArticlesListComponent implements OnInit {
   articles: IArticle[];
   isAdding: boolean;
 
-  constructor(private http: HttpClient, @Inject("BASE_URL") private baseUrl: string) { }
+  constructor(private http: HttpClientService) { }
 
   ngOnInit() {
-    this.http.get<IArticle[]>(`${this.baseUrl}articles`).subscribe(
-      data => this.articles = data,
-      error => console.error(error));
+    this.http.get<IArticle[]>("articles", data => this.articles = data);
   }
 
   startAdding() {
@@ -31,8 +29,7 @@ export class ArticlesListComponent implements OnInit {
   }
 
   remove(article: IArticle) {
-    this.http.delete<IArticle>(`${this.baseUrl}articles/${article.id}`).subscribe(
-      () => this.articles = this.articles.filter(x => x.id !== article.id),
-      error => console.error(error));
+    this.http.delete(`articles/${article.id}`,
+      () => this.articles = this.articles.filter(x => x.id !== article.id));
   }
 }

@@ -1,7 +1,7 @@
-import { Component, Inject, EventEmitter, Output, OnInit } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { IArticle } from "../models/IArticle";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { NgForm } from "@angular/forms";
+import { IArticle } from "../models/IArticle";
+import { HttpClientService } from "../shared/services/http-client.service";
 
 @Component({
   selector: "articles-create",
@@ -16,12 +16,11 @@ export class ArticlesCreateComponent implements OnInit {
   @Output()
   close: EventEmitter<IArticle> = new EventEmitter();
 
-  constructor(private http: HttpClient, @Inject("BASE_URL") private baseUrl: string) { }
+  constructor(private http: HttpClientService) { }
 
   ngOnInit() {
-    this.http.get<number>(`${this.baseUrl}articles/defaultprefixlength`).subscribe(
-      data => this.prefixLength = data.toString(),
-      error => console.error(error));
+    this.http.get<number>("articles/defaultprefixlength",
+      data => this.prefixLength = data.toString());
   }
 
   add(form: NgForm) {
@@ -32,9 +31,7 @@ export class ArticlesCreateComponent implements OnInit {
         prefixLength: parseInt(this.prefixLength)
       };
 
-      this.http.post<IArticle>(`${this.baseUrl}articles`, article).subscribe(
-        article => this.close.emit(article),
-        error => console.error(error));
+      this.http.post<IArticle>("articles", article, newArticle => this.close.emit(newArticle));
     } else {
       form.control.markAllAsTouched();
     }

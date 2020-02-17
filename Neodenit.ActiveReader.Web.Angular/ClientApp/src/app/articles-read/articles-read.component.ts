@@ -1,8 +1,8 @@
-import { Component, Inject, OnInit } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { IArticle } from "../models/IArticle";
 import { IQuestion } from "../models/IQuestion";
+import { HttpClientService } from "../shared/services/http-client.service";
 
 @Component({
   selector: "articles-read",
@@ -17,7 +17,7 @@ export class ArticlesReadComponent implements OnInit {
   choices: string[];
   answer: string;
 
-  constructor(private http: HttpClient, @Inject("BASE_URL") private baseUrl: string, private route: ActivatedRoute) {
+  constructor(private http: HttpClientService, private route: ActivatedRoute) {
     this.position = 1;
     this.score = 0;
   }
@@ -26,9 +26,7 @@ export class ArticlesReadComponent implements OnInit {
     let idParam = this.route.snapshot.paramMap.get("id");
     let id = parseInt(idParam);
 
-    this.http.get<IArticle>(`${this.baseUrl}articles/${id}`).subscribe(
-      data => this.article = data,
-      error => console.error(error));
+    this.http.get<IArticle>(`articles/${id}`, data => this.article = data);
 
     this.getQuestion(id, this.position);
   }
@@ -48,17 +46,16 @@ export class ArticlesReadComponent implements OnInit {
   }
 
   getQuestion(articleId: number, nextPosition: number) {
-    this.http.get<IQuestion>(`${this.baseUrl}questions/article/${articleId}/position/${nextPosition}`).subscribe(
+    this.http.get<IQuestion>(`questions/article/${articleId}/position/${nextPosition}`,
       data => {
         this.position = data.answerPosition;
         this.startText = data.startingWords;
         this.choices = data.variants;
         this.answer = data.answer;
 
-        this.http.post<IQuestion>(`${this.baseUrl}articles/${articleId}/position/${data.answerPosition}`, null).subscribe();
-      },
-      error => console.error(error));
-  }
+        this.http.post<IQuestion>(`articles/${articleId}/position/${data.answerPosition}`, null, null);
+      });
+    }
 
   navigateToPosition(position: number) {
     this.score = 0;

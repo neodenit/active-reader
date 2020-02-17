@@ -14,6 +14,7 @@ import { ArticlesNavigationComponent } from './articles-navigation/articles-navi
 import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.module';
 import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
+import { HttpClientService } from './shared/services/http-client.service';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { AuthorizeInterceptor } from 'src/api-authorization/authorize.intercepto
     ])
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
+    HttpClientService
   ],
   bootstrap: [AppComponent]
 })
