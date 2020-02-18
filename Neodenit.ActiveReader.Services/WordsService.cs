@@ -36,7 +36,7 @@ namespace Neodenit.ActiveReader.Services
             var lineBreaks = orderedWords.Where(w => w.NextSpace.Contains(Constants.LineBreak) && w.Position <= position);
 
             var lastLineBreak = lineBreaks.Reverse().Skip(1).FirstOrDefault();
-            var newPosition = lastLineBreak?.Position ?? Constants.StartingPosition;
+            var newPosition = lastLineBreak?.Position + 1 ?? Constants.StartingPosition;
             return newPosition;
         }
 
