@@ -20,7 +20,7 @@ namespace Neodenit.ActiveReader.DataAccess.Migrations
 
             modelBuilder.Entity("Neodenit.ActiveReader.Common.DataModels.Article", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -40,19 +40,19 @@ namespace Neodenit.ActiveReader.DataAccess.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Articles");
                 });
 
             modelBuilder.Entity("Neodenit.ActiveReader.Common.DataModels.Stat", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ArticleID")
+                    b.Property<int>("ArticleId")
                         .HasColumnType("int");
 
                     b.Property<int>("Count")
@@ -64,21 +64,21 @@ namespace Neodenit.ActiveReader.DataAccess.Migrations
                     b.Property<string>("Suffix")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
-                    b.HasIndex("ArticleID");
+                    b.HasIndex("ArticleId");
 
                     b.ToTable("Statistics");
                 });
 
             modelBuilder.Entity("Neodenit.ActiveReader.Common.DataModels.Word", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ArticleID")
+                    b.Property<int>("ArticleId")
                         .HasColumnType("int");
 
                     b.Property<string>("CorrectedWord")
@@ -93,9 +93,9 @@ namespace Neodenit.ActiveReader.DataAccess.Migrations
                     b.Property<int>("Position")
                         .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
-                    b.HasIndex("ArticleID");
+                    b.HasIndex("ArticleId");
 
                     b.ToTable("Words");
                 });
@@ -104,7 +104,7 @@ namespace Neodenit.ActiveReader.DataAccess.Migrations
                 {
                     b.HasOne("Neodenit.ActiveReader.Common.DataModels.Article", "Article")
                         .WithMany()
-                        .HasForeignKey("ArticleID")
+                        .HasForeignKey("ArticleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -113,7 +113,7 @@ namespace Neodenit.ActiveReader.DataAccess.Migrations
                 {
                     b.HasOne("Neodenit.ActiveReader.Common.DataModels.Article", "Article")
                         .WithMany()
-                        .HasForeignKey("ArticleID")
+                        .HasForeignKey("ArticleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
