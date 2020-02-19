@@ -25,6 +25,9 @@ namespace Neodenit.ActiveReader.DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("MaxChoices")
+                        .HasColumnType("int");
+
                     b.Property<string>("Owner")
                         .HasColumnType("nvarchar(max)");
 

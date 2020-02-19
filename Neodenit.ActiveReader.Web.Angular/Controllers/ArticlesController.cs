@@ -37,11 +37,13 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
             return Ok(article);
         }
 
-        [HttpGet("defaultprefixlength")]
-        public ActionResult<int> GetPrefixLenght()
-        {
-            return CoreSettings.Default.PrefixLength;
-        }
+        [HttpGet("defaultsettings")]
+        public ActionResult<DefaultSettingsViewModel> GetDefaultSettings() =>
+            new DefaultSettingsViewModel
+            {
+                PrefixLength = CoreSettings.Default.PrefixLength,
+                MaxChoices = CoreSettings.Default.MaxChoices
+            };
 
         [ValidateModel]
         [HttpPost]

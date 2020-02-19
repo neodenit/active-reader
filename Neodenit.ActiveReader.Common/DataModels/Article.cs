@@ -13,5 +13,7 @@
         public int Position { get; set; }
 
         public int PrefixLength { get; set; }
+
+        public int MaxChoices { get; set; }
     }
 }

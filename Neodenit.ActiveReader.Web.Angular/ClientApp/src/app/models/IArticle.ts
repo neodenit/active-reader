@@ -3,4 +3,5 @@ export interface IArticle {
   title: string;
   text: string;
   prefixLength: number;
+  maxChoices: number;
 }

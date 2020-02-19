@@ -50,7 +50,7 @@ namespace Neodenit.ActiveReader.Services
                         .OrderByDescending(x => x.Suffix == expression.Suffix)
                         .ThenByDescending(x => x.Count)
                         .ThenBy(_ => Guid.NewGuid())
-                        .Take(CoreSettings.Default.MaxChoices)
+                        .Take(article.MaxChoices)
                         .OrderBy(_ => Guid.NewGuid())
                         .Select(v => v.Suffix);
 

@@ -18,5 +18,7 @@ namespace Neodenit.ActiveReader.Common.ViewModels
 
         [PrefixLengthValidation]
         public int PrefixLength { get; set; }
+
+        public int MaxChoices { get; set; }
     }
 }
