@@ -5,6 +5,6 @@ namespace Neodenit.ActiveReader.Common.Interfaces
 {
     public interface IExpressionsService
     {
-        Task AddExpressionsFromArticle(Article article);
+        Task AddExpressionsFromArticleAsync(Article article);
     }
 }

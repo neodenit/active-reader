@@ -5,7 +5,7 @@ namespace Neodenit.ActiveReader.Common.Interfaces
 {
     public interface IWordsService
     {
-        Task AddWordsFromArticle(Article article);
+        Task AddWordsFromArticleAsync(Article article);
 
         Task<int> GetPreviousPosition(int articleId, int position);
 

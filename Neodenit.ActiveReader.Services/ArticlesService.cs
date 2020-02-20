@@ -31,13 +31,13 @@ namespace Neodenit.ActiveReader.Services
                 articleViewModel,
                 opt => opt.AfterMap((src, dest) => dest.Owner = userName));
 
-            repository.Create(article);
+            await repository.CreateAsync(article);
 
             await repository.SaveAsync();
 
-            await expressionsService.AddExpressionsFromArticle(article);
+            await expressionsService.AddExpressionsFromArticleAsync(article);
 
-            await wordsService.AddWordsFromArticle(article);
+            await wordsService.AddWordsFromArticleAsync(article);
 
             var viewModel = mapper.Map<ArticleViewModel>(article);
             return viewModel;

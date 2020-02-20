@@ -16,13 +16,13 @@ namespace Neodenit.ActiveReader.Services
             this.statManagerService = statManagerService;
         }
 
-        public async Task AddExpressionsFromArticle(Article article)
+        public async Task AddExpressionsFromArticleAsync(Article article)
         {
             IEnumerable<Stat> expressions = statManagerService.GetExpressions(article);
             IEnumerable<Stat> words = statManagerService.GetWords(article);
-            
-            repository.Create(expressions);
-            repository.Create(words);
+
+            await repository.CreateAsync(expressions);
+            await repository.CreateAsync(words);
 
             await repository.SaveAsync();
         }

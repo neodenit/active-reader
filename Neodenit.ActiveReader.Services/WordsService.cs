@@ -19,11 +19,11 @@ namespace Neodenit.ActiveReader.Services
             this.converterService = converterService;
         }
 
-        public async Task AddWordsFromArticle(Article article)
+        public async Task AddWordsFromArticleAsync(Article article)
         {
             IEnumerable<Word> words = converterService.GetWords(article);
 
-            wordRepository.Create(words);
+            await wordRepository.CreateAsync(words);
 
             await wordRepository.SaveAsync();
         }
