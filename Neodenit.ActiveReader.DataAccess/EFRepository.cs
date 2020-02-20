@@ -30,14 +30,24 @@ namespace Neodenit.ActiveReader.DataAccess
             dbSet.Add(entity);
         }
 
+        public async Task CreateAsync(T entity)
+        {
+            await dbSet.AddAsync(entity);
+        }
+
         public void Create(IEnumerable<T> entities)
         {
             dbSet.AddRange(entities);
         }
 
+        public async Task CreateAsync(IEnumerable<T> entities)
+        {
+            await dbSet.AddRangeAsync(entities);
+        }
+
         public void Update(T entity)
         {
-            dbContext.Entry(entity).State = EntityState.Modified;
+            dbContext.Update(entity);
         }
 
         public void Delete(T entity)
@@ -51,10 +61,5 @@ namespace Neodenit.ActiveReader.DataAccess
         }
 
         public Task SaveAsync() => dbContext.SaveChangesAsync();
-
-        public void Dispose()
-        {
-            dbContext.Dispose();
-        }
     }
 }

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Neodenit.ActiveReader.Common.Interfaces
 {
-    public interface IRepository<T> : IDisposable
+    public interface IRepository<T>
     {
         IEnumerable<T> GetAll();
 
@@ -17,7 +15,11 @@ namespace Neodenit.ActiveReader.Common.Interfaces
 
         void Create(T entity);
 
+        Task CreateAsync(T entity);
+
         void Create(IEnumerable<T> entities);
+
+        Task CreateAsync(IEnumerable<T> entities);
 
         void Update(T entity);
 
