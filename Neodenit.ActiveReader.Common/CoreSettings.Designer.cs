@@ -40,5 +40,14 @@ namespace Neodenit.ActiveReader.Common {
                 return ((int)(this["MaxChoices"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CountWords {
+            get {
+                return ((bool)(this["CountWords"]));
+            }
+        }
     }
 }

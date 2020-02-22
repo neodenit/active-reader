@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Neodenit.ActiveReader.Common;
 using Neodenit.ActiveReader.Common.DataModels;
 using Neodenit.ActiveReader.Common.Interfaces;
 
@@ -19,10 +20,13 @@ namespace Neodenit.ActiveReader.Services
         public async Task AddExpressionsFromArticleAsync(Article article)
         {
             IEnumerable<Stat> expressions = statManagerService.GetExpressions(article);
-            IEnumerable<Stat> words = statManagerService.GetWords(article);
-
             await repository.CreateAsync(expressions);
-            await repository.CreateAsync(words);
+
+            if (CoreSettings.Default.CountWords)
+            {
+                IEnumerable<Stat> words = statManagerService.GetWords(article);
+                await repository.CreateAsync(words);
+            }
 
             await repository.SaveAsync();
         }
