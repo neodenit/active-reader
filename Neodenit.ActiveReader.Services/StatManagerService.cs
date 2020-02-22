@@ -27,27 +27,15 @@ namespace Neodenit.ActiveReader.Services
                 article.PrefixLength
             );
 
-            var statDict = new Dictionary<KeyValuePair<string, string>, int>();
-
-            foreach (var pair in pairs)
-            {
-                if (statDict.TryGetValue(pair, out var count))
-                {
-                    statDict[pair]++;
-                }
-                else
-                {
-                    statDict[pair] = 1;
-                }
-            }
+            var statDict = pairs.GroupBy(p => p).Select(p => new { Pair = p.Key, Count = p.Count()});
 
             var result = statDict.Select(stat =>
                 new Stat
                 {
                     ArticleId = article.Id,
-                    Prefix = stat.Key.Key,
-                    Suffix = stat.Key.Value,
-                    Count = stat.Value
+                    Prefix = stat.Pair.Key,
+                    Suffix = stat.Pair.Value,
+                    Count = stat.Count
                 });
 
             return result;
@@ -59,26 +47,14 @@ namespace Neodenit.ActiveReader.Services
 
             var normalizedWords = words.Select(w => converterService.NormalizeWord(w));
 
-            var statDict = new Dictionary<string, int>();
-
-            foreach (var word in normalizedWords)
-            {
-                if (statDict.TryGetValue(word, out var count))
-                {
-                    statDict[word]++;
-                }
-                else
-                {
-                    statDict[word] = 1;
-                }
-            }
+            var statDict = normalizedWords.GroupBy(w => w).Select(w => new { Word = w.Key, Count = w.Count() });
 
             var result = statDict.Select(stat =>
                 new Stat
                 {
                     ArticleId = article.Id,
-                    Suffix = stat.Key,
-                    Count = stat.Value
+                    Suffix = stat.Word,
+                    Count = stat.Count
                 });
 
             return result;
