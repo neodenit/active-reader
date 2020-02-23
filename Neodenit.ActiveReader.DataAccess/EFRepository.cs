@@ -60,6 +60,9 @@ namespace Neodenit.ActiveReader.DataAccess
             dbContext.SaveChanges();
         }
 
-        public Task SaveAsync() => dbContext.SaveChangesAsync();
+        public async Task SaveAsync()
+        {
+            await dbContext.SaveChangesAsync();
+        }
     }
 }

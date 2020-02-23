@@ -14,7 +14,7 @@ namespace Neodenit.ActiveReader.DataAccess
         public async Task<IEnumerable<Stat>> GetByArticleAsync(int articleId) =>
             await dbSet.Where(x => x.ArticleId == articleId).ToListAsync();
 
-        public Task<Stat> GetByPrefixSuffixArticleAsync(string prefix, string suffix, int articleId) =>
-            dbSet.SingleOrDefaultAsync(x => x.Prefix == prefix && x.Suffix == suffix && x.ArticleId == articleId);
+        public async Task<Stat> GetByPrefixSuffixArticleAsync(string prefix, string suffix, int articleId) =>
+            await dbSet.SingleOrDefaultAsync(x => x.Prefix == prefix && x.Suffix == suffix && x.ArticleId == articleId);
     }
 }
