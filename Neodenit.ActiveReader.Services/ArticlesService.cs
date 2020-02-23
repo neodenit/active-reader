@@ -29,7 +29,11 @@ namespace Neodenit.ActiveReader.Services
         {
             var article = mapper.Map<ArticleViewModel, Article>(
                 articleViewModel,
-                opt => opt.AfterMap((src, dest) => dest.Owner = userName));
+                opt => opt.AfterMap((src, dest) =>
+                {
+                    dest.Owner = userName;
+                    dest.Position = Constants.StartingPosition;
+                }));
 
             await repository.CreateAsync(article);
 
