@@ -8,8 +8,8 @@ namespace Neodenit.ActiveReader.Common.Attributes
         {
             var prefixLength = (int)value;
 
-            var minPrefixLength = 1;
-            var maxPrefixLength = CoreSettings.Default.PrefixLength;
+            var minPrefixLength = CoreSettings.Default.PrefixLengthMinOption;
+            var maxPrefixLength = CoreSettings.Default.PrefixLengthMaxOption;
 
             var isValid = minPrefixLength <= prefixLength && prefixLength <= maxPrefixLength;
             return isValid;

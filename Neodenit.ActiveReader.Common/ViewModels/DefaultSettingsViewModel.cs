@@ -4,6 +4,10 @@
     {
         public int PrefixLength { get; set; }
 
+        public int PrefixLengthMinOption { get; set; }
+
+        public int PrefixLengthMaxOption { get; set; }
+
         public int MaxChoices { get; set; }
     }
 }

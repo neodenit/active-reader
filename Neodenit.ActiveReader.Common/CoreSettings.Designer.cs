@@ -49,5 +49,23 @@ namespace Neodenit.ActiveReader.Common {
                 return ((bool)(this["CountWords"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int PrefixLengthMinOption {
+            get {
+                return ((int)(this["PrefixLengthMinOption"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public int PrefixLengthMaxOption {
+            get {
+                return ((int)(this["PrefixLengthMaxOption"]));
+            }
+        }
     }
 }

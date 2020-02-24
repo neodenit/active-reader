@@ -1,8 +1,9 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { IArticle } from "../models/IArticle";
-import { HttpClientService } from "../shared/services/http-client.service";
 import { IDefaultSettings } from "../models/IDefaultSettings";
+import { ArrayHelperService } from "../shared/services/array-helper.service";
+import { HttpClientService } from "../shared/services/http-client.service";
 
 @Component({
   selector: "articles-create",
@@ -15,18 +16,19 @@ export class ArticlesCreateComponent implements OnInit {
   prefixLength: string;
   maxChoices: string;
 
-  prefixLengthOptions = ["1", "2", "3"];
+  prefixLengthOptions: string[];
   maxChoicesOptions = ["3", "4", "5"];
 
   @Output()
   close: EventEmitter<IArticle> = new EventEmitter();
 
-  constructor(private http: HttpClientService) { }
+  constructor(private http: HttpClientService, private arrayHelper: ArrayHelperService) { }
 
   ngOnInit() {
     this.http.get<IDefaultSettings>("articles/defaultsettings",
       data => {
         this.prefixLength = data.prefixLength.toString();
+        this.prefixLengthOptions = this.arrayHelper.range(data.prefixLengthMinOption, data.prefixLengthMaxOption).map(x => x.toString());
         this.maxChoices = data.maxChoices.toString();
       });
   }
