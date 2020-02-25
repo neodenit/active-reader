@@ -4,4 +4,5 @@ export interface IArticle {
   text: string;
   prefixLength: number;
   maxChoices: number;
+  ignoreCase: boolean;
 }

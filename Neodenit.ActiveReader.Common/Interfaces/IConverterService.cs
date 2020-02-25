@@ -9,13 +9,13 @@ namespace Neodenit.ActiveReader.Common.Interfaces
 
         string GetText(IEnumerable<Word> words);
 
-        IEnumerable<Stat> GetExpressions(IEnumerable<Word> words, int prefixLength);
+        IEnumerable<Stat> GetExpressions(IEnumerable<Word> words, int prefixLength, bool ignoreCase);
 
-        string GetPrefix(IEnumerable<string> words);
+        string GetPrefix(IEnumerable<string> words, bool ignoreCase);
 
-        string GetSuffix(string word);
+        string GetSuffix(string word, bool ignoreCase);
 
-        string NormalizeWord(string word);
+        string NormalizeWord(string word, bool ignoreCase);
 
         IEnumerable<string> GetWords(string text);
 

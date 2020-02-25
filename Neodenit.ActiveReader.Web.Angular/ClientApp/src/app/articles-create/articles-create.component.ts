@@ -15,12 +15,12 @@ export class ArticlesCreateComponent implements OnInit {
 
   prefixLength: string;
   maxChoices: string;
+  ignoreCase = false;
 
   prefixLengthOptions: string[];
   maxChoicesOptions = ["3", "4", "5"];
 
-  @Output()
-  close: EventEmitter<IArticle> = new EventEmitter();
+  @Output() close: EventEmitter<IArticle> = new EventEmitter();
 
   constructor(private http: HttpClientService, private arrayHelper: ArrayHelperService) { }
 
@@ -39,7 +39,8 @@ export class ArticlesCreateComponent implements OnInit {
         title: this.newArticleTitle,
         text: this.newArticleText,
         prefixLength: parseInt(this.prefixLength),
-        maxChoices: parseInt(this.maxChoices)
+        maxChoices: parseInt(this.maxChoices),
+        ignoreCase: this.ignoreCase
       };
 
       this.http.post<IArticle>("articles", article, newArticle => this.close.emit(newArticle));

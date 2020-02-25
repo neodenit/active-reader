@@ -20,8 +20,8 @@ namespace Neodenit.ActiveReader.Services
             IEnumerable<string> words = converterService.GetWords(article.Text);
 
             IEnumerable<KeyValuePair<string, string>> pairs = words.GetPairs(
-                converterService.GetPrefix,
-                converterService.GetSuffix,
+                w => converterService.GetPrefix(w, article.IgnoreCase),
+                w => converterService.GetSuffix(w, article.IgnoreCase),
                 (word, prefix, suffix) =>
                     new KeyValuePair<string, string>(prefix, suffix),
                 article.PrefixLength
@@ -45,7 +45,7 @@ namespace Neodenit.ActiveReader.Services
         {
             IEnumerable<string> words = converterService.GetWords(article.Text);
 
-            var normalizedWords = words.Select(w => converterService.NormalizeWord(w));
+            var normalizedWords = words.Select(w => converterService.NormalizeWord(w, article.IgnoreCase));
 
             var statDict = normalizedWords.GroupBy(w => w).Select(w => new { Word = w.Key, Count = w.Count() });
 

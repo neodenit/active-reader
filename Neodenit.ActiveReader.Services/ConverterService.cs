@@ -28,7 +28,7 @@ namespace Neodenit.ActiveReader.Services
             {
                 Position = ws.Position,
                 OriginalWord = ws.Word,
-                CorrectedWord = NormalizeWord(ws.Word),
+                CorrectedWord = NormalizeWord(ws.Word, article.IgnoreCase),
                 NextSpace = ws.Space,
                 ArticleId = article.Id
             });
@@ -51,10 +51,10 @@ namespace Neodenit.ActiveReader.Services
             }
         }
 
-        public IEnumerable<Stat> GetExpressions(IEnumerable<Word> words, int prefixLength) =>
+        public IEnumerable<Stat> GetExpressions(IEnumerable<Word> words, int prefixLength, bool ignoreCase) =>
             words.GetPairs(
-                w => GetPrefix(w.Select(x => x.CorrectedWord)),
-                w => GetSuffix(w.CorrectedWord),
+                w => GetPrefix(w.Select(x => x.CorrectedWord), ignoreCase),
+                w => GetSuffix(w.CorrectedWord, ignoreCase),
                 (word, prefix, suffix) => new Stat
                 {
                     Prefix = prefix,
@@ -64,11 +64,11 @@ namespace Neodenit.ActiveReader.Services
                 },
                 prefixLength);
 
-        public string GetPrefix(IEnumerable<string> words) =>
-            string.Join(Constants.PrefixDelimiter, words.Select(NormalizeWord));
+        public string GetPrefix(IEnumerable<string> words, bool ignoreCase) =>
+            string.Join(Constants.PrefixDelimiter, words.Select(w => NormalizeWord(w, ignoreCase)));
 
-        public string GetSuffix(string word) =>
-            NormalizeWord(word);
+        public string GetSuffix(string word, bool ignoreCase) =>
+            NormalizeWord(word, ignoreCase);
 
         public IEnumerable<string> GetSpaces(string text) =>
             Regex.Split(text, @"\w+").Skip(1);
@@ -76,10 +76,10 @@ namespace Neodenit.ActiveReader.Services
         public IEnumerable<string> GetWords(string text) =>
             Regex.Split(text, @"\W+");
 
-        public string NormalizeWord(string word) =>
-            word.ToLowerInvariant();
+        public string NormalizeWord(string word, bool ignoreCase) =>
+            ignoreCase ? word.ToLowerInvariant() : word;
 
         public IEnumerable<string> SplitPrefix(string prefix) =>
-            prefix.Split(new[] { Constants.PrefixDelimiter }, StringSplitOptions.None);
+            prefix.Split(Constants.PrefixDelimiter);
     }
 }
