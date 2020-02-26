@@ -8,10 +8,10 @@ namespace Neodenit.ActiveReader.Common.Attributes
         {
             var prefixLength = (int)value;
 
-            var minPrefixLength = CoreSettings.Default.PrefixLengthMinOption;
-            var maxPrefixLength = CoreSettings.Default.PrefixLengthMaxOption;
+            var minLength = CoreSettings.Default.PrefixLengthMinOption;
+            var maxLength = CoreSettings.Default.PrefixLengthMaxOption;
 
-            var isValid = minPrefixLength <= prefixLength && prefixLength <= maxPrefixLength;
+            var isValid = minLength <= prefixLength && prefixLength <= maxLength;
             return isValid;
         }
     }
