@@ -18,7 +18,7 @@ export class ArticlesCreateComponent implements OnInit {
   ignoreCase = false;
 
   prefixLengthOptions: string[];
-  maxChoicesOptions = ["3", "4", "5"];
+  maxChoicesOptions: string[];
 
   @Output() close: EventEmitter<IArticle> = new EventEmitter();
 
@@ -29,6 +29,7 @@ export class ArticlesCreateComponent implements OnInit {
       data => {
         this.prefixLength = data.prefixLength.toString();
         this.prefixLengthOptions = this.arrayHelper.range(data.prefixLengthMinOption, data.prefixLengthMaxOption).map(x => x.toString());
+        this.maxChoicesOptions = this.arrayHelper.range(data.maxChoicesMinOption, data.maxChoicesMaxOption).map(x => x.toString());
         this.maxChoices = data.maxChoices.toString();
       });
   }

@@ -3,4 +3,6 @@ export interface IDefaultSettings {
   prefixLengthMinOption: number;
   prefixLengthMaxOption: number;
   maxChoices: number;
+  maxChoicesMinOption: number;
+  maxChoicesMaxOption: number;
 }

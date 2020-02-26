@@ -44,7 +44,9 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
                 PrefixLength = CoreSettings.Default.PrefixLength,
                 PrefixLengthMinOption = CoreSettings.Default.PrefixLengthMinOption,
                 PrefixLengthMaxOption = CoreSettings.Default.PrefixLengthMaxOption,
-                MaxChoices = CoreSettings.Default.MaxChoices
+                MaxChoices = CoreSettings.Default.MaxChoices,
+                MaxChoicesMinOption = CoreSettings.Default.MaxChoicesMinOption,
+                MaxChoicesMaxOption = CoreSettings.Default.MaxChoicesMaxOption
             };
 
         [ValidateModel]

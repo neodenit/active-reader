@@ -9,5 +9,9 @@
         public int PrefixLengthMaxOption { get; set; }
 
         public int MaxChoices { get; set; }
+
+        public int MaxChoicesMinOption { get; set; }
+
+        public int MaxChoicesMaxOption { get; set; }
     }
 }
