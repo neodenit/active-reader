@@ -17,9 +17,9 @@ namespace Neodenit.ActiveReader.Common.Interfaces
 
         string NormalizeWord(string word, bool ignoreCase);
 
-        IEnumerable<string> GetWords(string text);
+        IEnumerable<string> GetWords(string text, bool ignorePunctuation);
 
-        IEnumerable<string> GetSpaces(string text);
+        IEnumerable<string> GetSpaces(string text, bool ignorePunctuation);
 
         IEnumerable<string> SplitPrefix(string prefix);
     }

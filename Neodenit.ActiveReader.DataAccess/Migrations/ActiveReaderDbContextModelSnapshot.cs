@@ -28,6 +28,9 @@ namespace Neodenit.ActiveReader.DataAccess.Migrations
                     b.Property<bool>("IgnoreCase")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IgnorePunctuation")
+                        .HasColumnType("bit");
+
                     b.Property<int>("MaxChoices")
                         .HasColumnType("int");
 

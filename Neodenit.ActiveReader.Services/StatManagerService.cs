@@ -17,7 +17,7 @@ namespace Neodenit.ActiveReader.Services
 
         public IEnumerable<Stat> GetExpressions(Article article)
         {
-            IEnumerable<string> words = converterService.GetWords(article.Text);
+            IEnumerable<string> words = converterService.GetWords(article.Text, article.IgnorePunctuation);
 
             IEnumerable<KeyValuePair<string, string>> pairs = words.GetPairs(
                 w => converterService.GetPrefix(w, article.IgnoreCase),
@@ -43,7 +43,7 @@ namespace Neodenit.ActiveReader.Services
 
         public IEnumerable<Stat> GetWords(Article article)
         {
-            IEnumerable<string> words = converterService.GetWords(article.Text);
+            IEnumerable<string> words = converterService.GetWords(article.Text, article.IgnorePunctuation);
 
             var normalizedWords = words.Select(w => converterService.NormalizeWord(w, article.IgnoreCase));
 

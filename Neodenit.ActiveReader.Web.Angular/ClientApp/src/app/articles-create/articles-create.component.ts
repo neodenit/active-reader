@@ -16,6 +16,7 @@ export class ArticlesCreateComponent implements OnInit {
   prefixLength: string;
   maxChoices: string;
   ignoreCase = false;
+  ignorePunctuation = false;
 
   prefixLengthOptions: string[];
   maxChoicesOptions: string[];
@@ -41,7 +42,8 @@ export class ArticlesCreateComponent implements OnInit {
         text: this.newArticleText,
         prefixLength: parseInt(this.prefixLength),
         maxChoices: parseInt(this.maxChoices),
-        ignoreCase: this.ignoreCase
+        ignoreCase: this.ignoreCase,
+        ignorePunctuation: this.ignorePunctuation
       };
 
       this.http.post<IArticle>("articles", article, newArticle => this.close.emit(newArticle));

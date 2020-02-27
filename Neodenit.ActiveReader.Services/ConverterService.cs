@@ -12,8 +12,8 @@ namespace Neodenit.ActiveReader.Services
     {
         public IEnumerable<Word> GetWords(Article article)
         {
-            IEnumerable<string> words = GetWords(article.Text);
-            IEnumerable<string> spaces = GetSpaces(article.Text);
+            IEnumerable<string> words = GetWords(article.Text, article.IgnorePunctuation);
+            IEnumerable<string> spaces = GetSpaces(article.Text, article.IgnorePunctuation);
 
             var pairsCount = words.Count();
             var positions = Enumerable.Range(Constants.StartingPosition, pairsCount);
@@ -70,11 +70,11 @@ namespace Neodenit.ActiveReader.Services
         public string GetSuffix(string word, bool ignoreCase) =>
             NormalizeWord(word, ignoreCase);
 
-        public IEnumerable<string> GetSpaces(string text) =>
-            Regex.Split(text, @"\w+").Skip(1);
+        public IEnumerable<string> GetSpaces(string text, bool ignorePunctuation) =>
+            Regex.Split(text, ignorePunctuation ?  @"\w+" : @"\S+").Skip(1);
 
-        public IEnumerable<string> GetWords(string text) =>
-            Regex.Split(text, @"\W+");
+        public IEnumerable<string> GetWords(string text, bool ignorePunctuation) =>
+            Regex.Split(text, ignorePunctuation ? @"\W+" : @"\s+");
 
         public string NormalizeWord(string word, bool ignoreCase) =>
             ignoreCase ? word.ToLowerInvariant() : word;

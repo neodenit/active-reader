@@ -23,5 +23,7 @@ namespace Neodenit.ActiveReader.Common.ViewModels
         public int MaxChoices { get; set; }
 
         public bool IgnoreCase { get; set; }
+
+        public bool IgnorePunctuation { get; set; }
     }
 }
