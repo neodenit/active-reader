@@ -1,13 +1,22 @@
-<h2 *ngIf="article">{{ article.title }}</h2>
+<div class="row d-flex justify-content-sm-between sticky-top bg-white pt-2 pb-2 pb-sm-0">
+  <div class="col-sm-auto">
+    <h2 *ngIf="article">{{ article.title }}</h2>
+  </div>
 
-<articles-navigation *ngIf="article" [articleId]="article.id" (navigate)="navigateToPosition($event)"></articles-navigation>
+  <div class="col-sm-auto">
+    <h3 [class]="scoreStyle">Score: {{ score }}</h3>
+  </div>
 
-<h3 [class]="scoreStyle">Score: {{ score }}</h3>
+  <div class="col-sm-auto">
+    <articles-navigation *ngIf="article" [articleId]="article.id" (navigate)="navigateToPosition($event)"></articles-navigation>
+  </div>
+</div>
 
 <div class="multiline mb-2">{{ startText }}</div>
 
 <div class="list-group list-group-horizontal-sm">
-  <a *ngFor="let choice of choices" class="list-group-item list-group-item-action" (click)="check(choice)">{{ choice }}</a>
+  <a *ngFor="let choice of choices" class="list-group-item list-group-item-action"
+     (click)="check(choice)">{{ choice }}</a>
 </div>
 
 <div class="row">
