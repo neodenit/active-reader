@@ -43,6 +43,9 @@ namespace Neodenit.ActiveReader.DataAccess.Migrations
                     b.Property<int>("PrefixLength")
                         .HasColumnType("int");
 
+                    b.Property<int>("State")
+                        .HasColumnType("int");
+
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
 

@@ -33,15 +33,27 @@ namespace Neodenit.ActiveReader.Services
                 {
                     dest.Owner = userName;
                     dest.Position = Constants.StartingPosition;
+                    dest.State = ArticleState.Processing;
                 }));
 
             await repository.CreateAsync(article);
-
             await repository.SaveAsync();
 
-            await expressionsService.AddExpressionsFromArticleAsync(article);
+            try
+            {
+                await expressionsService.AddExpressionsFromArticleAsync(article);
 
-            await wordsService.AddWordsFromArticleAsync(article);
+                await wordsService.AddWordsFromArticleAsync(article);
+            }
+            catch (Exception)
+            {
+                article.State = ArticleState.Failed;
+                await repository.SaveAsync();
+                throw;
+            }
+
+            article.State = ArticleState.Processed;
+            await repository.SaveAsync();
 
             var viewModel = mapper.Map<ArticleViewModel>(article);
             return viewModel;

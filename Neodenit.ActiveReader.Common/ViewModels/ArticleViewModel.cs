@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Neodenit.ActiveReader.Common.Attributes;
+using Neodenit.ActiveReader.Common.Enums;
 
 namespace Neodenit.ActiveReader.Common.ViewModels
 {
@@ -25,5 +26,7 @@ namespace Neodenit.ActiveReader.Common.ViewModels
         public bool IgnoreCase { get; set; }
 
         public bool IgnorePunctuation { get; set; }
+
+        public ArticleState State { get; set; }
     }
 }

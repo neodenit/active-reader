@@ -1,4 +1,6 @@
-﻿namespace Neodenit.ActiveReader.Common.DataModels
+﻿using Neodenit.ActiveReader.Common.Enums;
+
+namespace Neodenit.ActiveReader.Common.DataModels
 {
     public class Article
     {
@@ -19,5 +21,7 @@
         public bool IgnoreCase { get; set; }
 
         public bool IgnorePunctuation { get; set; }
+
+        public ArticleState State { get; set; }
     }
 }

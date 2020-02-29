@@ -4,6 +4,7 @@ import { IArticle } from "../models/IArticle";
 import { IDefaultSettings } from "../models/IDefaultSettings";
 import { ArrayHelperService } from "../shared/services/array-helper.service";
 import { HttpClientService } from "../shared/services/http-client.service";
+import { ArticleState } from "../models/ArticleState";
 
 @Component({
   selector: "articles-create",
@@ -22,6 +23,7 @@ export class ArticlesCreateComponent implements OnInit {
   maxChoicesOptions: string[];
 
   @Output() close: EventEmitter<IArticle> = new EventEmitter();
+  @Output() update: EventEmitter<void> = new EventEmitter();
 
   constructor(private http: HttpClientService, private arrayHelper: ArrayHelperService) { }
 
@@ -43,16 +45,19 @@ export class ArticlesCreateComponent implements OnInit {
         prefixLength: parseInt(this.prefixLength),
         maxChoices: parseInt(this.maxChoices),
         ignoreCase: this.ignoreCase,
-        ignorePunctuation: this.ignorePunctuation
+        ignorePunctuation: this.ignorePunctuation,
+        state: ArticleState.Processing
       };
 
-      this.http.post<IArticle>("articles", article, newArticle => this.close.emit(newArticle));
+      this.http.post<IArticle>("articles", article, () => this.update.emit());
+
+      this.close.emit(article);
     } else {
       form.control.markAllAsTouched();
     }
   }
 
   cancel() {
-    this.close.emit(null);
+    this.close.emit();
   }
 }

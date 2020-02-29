@@ -1,3 +1,5 @@
+import { ArticleState } from "./ArticleState";
+
 export interface IArticle {
   id?: number;
   title: string;
@@ -6,4 +8,5 @@ export interface IArticle {
   maxChoices: number;
   ignoreCase: boolean;
   ignorePunctuation: boolean;
+  state: ArticleState;
 }
