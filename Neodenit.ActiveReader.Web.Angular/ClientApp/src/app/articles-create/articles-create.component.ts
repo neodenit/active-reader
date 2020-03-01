@@ -51,13 +51,23 @@ export class ArticlesCreateComponent implements OnInit {
 
       this.http.post<IArticle>("articles", article, () => this.update.emit());
 
+      this.reset(form);
       this.close.emit(article);
     } else {
       form.control.markAllAsTouched();
     }
   }
 
-  cancel() {
+  cancel(form: NgForm) {
+    this.reset(form);
     this.close.emit();
+  }
+
+  private reset(form: NgForm) {
+    this.newArticleTitle = "";
+    this.newArticleText = "";
+
+    form.control.markAsPristine();
+    form.control.markAsUntouched();
   }
 }
