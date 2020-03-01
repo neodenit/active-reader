@@ -64,6 +64,11 @@ namespace Neodenit.ActiveReader.Services
         {
             Article article = await repository.GetAsync(id);
 
+            if (article.State == ArticleState.Processing)
+            {
+                throw new InvalidOperationException();
+            }
+
             repository.Delete(article);
 
             await repository.SaveAsync();
@@ -93,6 +98,11 @@ namespace Neodenit.ActiveReader.Services
         public async Task<int> Navigate(NavigationViewModel model)
         {
             Article article = await repository.GetAsync(model.ArticleId);
+
+            if (article.State != ArticleState.Processed)
+            {
+                throw new InvalidOperationException();
+            }
 
             int newPosition = model.Target switch
             {

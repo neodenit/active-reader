@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Neodenit.ActiveReader.Common;
 using Neodenit.ActiveReader.Common.DataModels;
+using Neodenit.ActiveReader.Common.Enums;
 using Neodenit.ActiveReader.Common.Interfaces;
 using Neodenit.ActiveReader.Common.ViewModels;
 
@@ -28,6 +29,11 @@ namespace Neodenit.ActiveReader.Services
         public async Task<QuestionViewModel> GetQuestionAsync(int articleId, int position)
         {
             Article article = await articlesRepository.GetAsync(articleId);
+
+            if (article.State != ArticleState.Processed)
+            {
+                throw new InvalidOperationException();
+            }
 
             var lastPosition = Math.Max(position, article.Position);
 
