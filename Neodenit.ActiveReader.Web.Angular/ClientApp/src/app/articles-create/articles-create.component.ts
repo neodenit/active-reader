@@ -22,6 +22,8 @@ export class ArticlesCreateComponent implements OnInit {
   prefixLengthOptions: string[];
   maxChoicesOptions: string[];
 
+  showAdvancedOptions: boolean;
+
   @Output() close: EventEmitter<IArticle> = new EventEmitter();
   @Output() update: EventEmitter<void> = new EventEmitter();
 
@@ -63,9 +65,15 @@ export class ArticlesCreateComponent implements OnInit {
     this.close.emit();
   }
 
+  toggleAdvancedOptions() {
+    this.showAdvancedOptions = !this.showAdvancedOptions;
+  }
+
   private reset(form: NgForm) {
     this.newArticleTitle = "";
     this.newArticleText = "";
+
+    this.showAdvancedOptions = false;
 
     form.control.markAsPristine();
     form.control.markAsUntouched();

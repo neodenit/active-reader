@@ -20,20 +20,6 @@
       </div>
 
       <div class="form-group">
-        <p>Markov chain prefix length</p>
-        <div class="row">
-          <div class="col-sm-auto">
-            <div ngbRadioGroup class="btn-group btn-group-toggle btn-block" name="prefixLengthOptions" [(ngModel)]="prefixLength">
-              <label ngbButtonLabel *ngFor="let option of prefixLengthOptions" class="btn btn-outline-secondary">
-                <input ngbButton type="radio" [value]="option" />
-                {{option}}
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group">
         <p>Maximum number of choices</p>
         <div class="row">
           <div class="col-sm-auto">
@@ -47,22 +33,49 @@
         </div>
       </div>
 
-      <div class="row mb-1">
+      <div class="row mb-2">
         <div class="col-sm-auto">
-          <div class="btn-group-toggle">
-            <label ngbButtonLabel class="btn btn-outline-secondary btn-block">
-              <input ngbButton type="checkbox" name="ignoreCase" [(ngModel)]="ignoreCase" /> Ignore Letter Case
-            </label>
-          </div>
+          <a class="btn btn-outline-secondary btn-block" (click)="toggleAdvancedOptions()">
+            Advanced Options
+          </a>
         </div>
       </div>
+      <div [ngbCollapse]="!showAdvancedOptions">
+        <div class="card mb-2">
+          <div class="card-body">
+            <div class="form-group">
+              <p>Markov chain prefix length</p>
+              <div class="row">
+                <div class="col-sm-auto">
+                  <div ngbRadioGroup class="btn-group btn-group-toggle btn-block" name="prefixLengthOptions" [(ngModel)]="prefixLength">
+                    <label ngbButtonLabel *ngFor="let option of prefixLengthOptions" class="btn btn-outline-secondary">
+                      <input ngbButton type="radio" [value]="option" />
+                      {{option}}
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-      <div class="row mb-1">
-        <div class="col-sm-auto">
-          <div class="btn-group-toggle">
-            <label ngbButtonLabel class="btn btn-outline-secondary btn-block">
-              <input ngbButton type="checkbox" name="ignorePunctuation" [(ngModel)]="ignorePunctuation" /> Ignore Punctuation
-            </label>
+            <div class="row mb-1">
+              <div class="col-sm-auto">
+                <div class="btn-group-toggle">
+                  <label ngbButtonLabel class="btn btn-outline-secondary btn-block">
+                    <input ngbButton type="checkbox" name="ignoreCase" [(ngModel)]="ignoreCase" /> Ignore Letter Case
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-1">
+              <div class="col-sm-auto">
+                <div class="btn-group-toggle">
+                  <label ngbButtonLabel class="btn btn-outline-secondary btn-block">
+                    <input ngbButton type="checkbox" name="ignorePunctuation" [(ngModel)]="ignorePunctuation" /> Ignore Punctuation
+                  </label>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
