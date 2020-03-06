@@ -1,23 +1,32 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output, ViewChild } from "@angular/core";
 import { NgForm } from "@angular/forms";
+import { ArticleState } from "../models/ArticleState";
 import { IArticle } from "../models/IArticle";
 import { IDefaultSettings } from "../models/IDefaultSettings";
 import { ArrayHelperService } from "../shared/services/array-helper.service";
 import { HttpClientService } from "../shared/services/http-client.service";
-import { ArticleState } from "../models/ArticleState";
 
 @Component({
   selector: "articles-create",
   templateUrl: "./articles-create.component.html"
 })
 export class ArticlesCreateComponent implements OnInit {
+  @ViewChild("form", { static: false }) form: NgForm;
+
   newArticleTitle: string;
   newArticleText: string;
 
   prefixLength: string;
   maxChoices: string;
-  ignoreCase = false;
-  ignorePunctuation = false;
+  ignoreCase: boolean;
+  ignorePunctuation: boolean;
+
+  defaultArticleTitle = "";
+  defaultArticleText = "";
+  defaultPrefixLength: string;
+  defaultMaxChoices: string;
+  defaultIgnoreCaseState = false;
+  defaultIgnorePunctuationState = false;
 
   prefixLengthOptions: string[];
   maxChoicesOptions: string[];
@@ -32,15 +41,18 @@ export class ArticlesCreateComponent implements OnInit {
   ngOnInit() {
     this.http.get<IDefaultSettings>("articles/defaultsettings",
       data => {
-        this.prefixLength = data.prefixLength.toString();
         this.prefixLengthOptions = this.arrayHelper.range(data.prefixLengthMinOption, data.prefixLengthMaxOption).map(x => x.toString());
         this.maxChoicesOptions = this.arrayHelper.range(data.maxChoicesMinOption, data.maxChoicesMaxOption).map(x => x.toString());
-        this.maxChoices = data.maxChoices.toString();
+
+        this.defaultPrefixLength = data.prefixLength.toString();
+        this.defaultMaxChoices = data.maxChoices.toString();
+
+        this.reset();
       });
   }
 
-  add(form: NgForm) {
-    if (form.valid) {
+  add() {
+    if (this.form.valid) {
       let article: IArticle = {
         title: this.newArticleTitle,
         text: this.newArticleText,
@@ -53,15 +65,15 @@ export class ArticlesCreateComponent implements OnInit {
 
       this.http.post<IArticle>("articles", article, () => this.update.emit());
 
-      this.reset(form);
+      this.reset();
       this.close.emit(article);
     } else {
-      form.control.markAllAsTouched();
+      this.form.control.markAllAsTouched();
     }
   }
 
-  cancel(form: NgForm) {
-    this.reset(form);
+  cancel() {
+    this.reset();
     this.close.emit();
   }
 
@@ -69,13 +81,19 @@ export class ArticlesCreateComponent implements OnInit {
     this.showAdvancedOptions = !this.showAdvancedOptions;
   }
 
-  private reset(form: NgForm) {
-    this.newArticleTitle = "";
-    this.newArticleText = "";
+  private reset() {
+    this.newArticleTitle = this.defaultArticleTitle;
+    this.newArticleText = this.defaultArticleText;
+
+    this.prefixLength = this.defaultPrefixLength;
+    this.maxChoices = this.defaultMaxChoices;
+
+    this.ignoreCase = this.defaultIgnoreCaseState;
+    this.ignorePunctuation = this.defaultIgnorePunctuationState;
 
     this.showAdvancedOptions = false;
 
-    form.control.markAsPristine();
-    form.control.markAsUntouched();
+    this.form.control.markAsPristine();
+    this.form.control.markAsUntouched();
   }
 }
