@@ -128,5 +128,16 @@ namespace Neodenit.ActiveReader.Services
 
             await repository.SaveAsync();
         }
+
+        public DefaultSettingsViewModel GetDefaultSettings() =>
+            new DefaultSettingsViewModel
+            {
+                PrefixLength = CoreSettings.Default.PrefixLength,
+                PrefixLengthMinOption = CoreSettings.Default.PrefixLengthMinOption,
+                PrefixLengthMaxOption = CoreSettings.Default.PrefixLengthMaxOption,
+                MaxChoices = CoreSettings.Default.MaxChoices,
+                MaxChoicesMinOption = CoreSettings.Default.MaxChoicesMinOption,
+                MaxChoicesMaxOption = CoreSettings.Default.MaxChoicesMaxOption
+            };
     }
 }

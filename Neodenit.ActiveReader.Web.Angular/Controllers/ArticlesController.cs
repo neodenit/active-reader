@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Neodenit.ActiveReader.Common;
 using Neodenit.ActiveReader.Common.Attributes;
 using Neodenit.ActiveReader.Common.Interfaces;
 using Neodenit.ActiveReader.Common.ViewModels;
@@ -39,15 +38,7 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
 
         [HttpGet("defaultsettings")]
         public ActionResult<DefaultSettingsViewModel> GetDefaultSettings() =>
-            new DefaultSettingsViewModel
-            {
-                PrefixLength = CoreSettings.Default.PrefixLength,
-                PrefixLengthMinOption = CoreSettings.Default.PrefixLengthMinOption,
-                PrefixLengthMaxOption = CoreSettings.Default.PrefixLengthMaxOption,
-                MaxChoices = CoreSettings.Default.MaxChoices,
-                MaxChoicesMinOption = CoreSettings.Default.MaxChoicesMinOption,
-                MaxChoicesMaxOption = CoreSettings.Default.MaxChoicesMaxOption
-            };
+            articlesService.GetDefaultSettings();
 
         [ValidateModel]
         [HttpPost]
