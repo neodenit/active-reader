@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,8 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
         public async Task<ActionResult<IEnumerable<ArticleViewModel>>> Get()
         {
             IEnumerable<ArticleViewModel> articles = await articlesService.GetArticlesAsync(User.Identity.Name);
-            return Ok(articles);
+            var sortedArticles = articles.OrderBy(a => a.Title);
+            return Ok(sortedArticles);
         }
 
         [ValidateModel]
