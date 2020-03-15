@@ -10,10 +10,12 @@ namespace Neodenit.ActiveReader.Common.ViewModels
 
         public int AnswerPosition { get; set; }
 
-        public string StartingWords { get; set; }
+        public string StartingText { get; set; }
 
-        public IEnumerable<string> Variants { get; set; }
+        public string NewText { get; set; }
 
-        public string Answer { get; set; }
+        public IEnumerable<string> Choices { get; set; }
+
+        public string CorrectAnswer { get; set; }
     }
 }

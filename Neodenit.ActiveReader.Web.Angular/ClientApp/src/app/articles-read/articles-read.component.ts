@@ -13,9 +13,10 @@ export class ArticlesReadComponent implements OnInit {
   score: number;
   scoreStyle: string;
   position: number;
-  startText: string;
+  startingText: string;
+  newText: string;
   choices: string[];
-  answer: string;
+  correctAnswer: string;
 
   constructor(private http: HttpClientService, private route: ActivatedRoute) {
     this.position = 1;
@@ -32,7 +33,7 @@ export class ArticlesReadComponent implements OnInit {
   }
 
   check(answer: string) {
-    if (answer === this.answer) {
+    if (answer === this.correctAnswer) {
       this.score++;
       this.scoreStyle = "right";
 
@@ -49,12 +50,13 @@ export class ArticlesReadComponent implements OnInit {
     this.http.get<IQuestion>(`questions/article/${articleId}/position/${nextPosition}`,
       data => {
         this.position = data.answerPosition;
-        this.startText = data.startingWords;
-        this.choices = data.variants;
-        this.answer = data.answer;
-
-        this.http.post<IQuestion>(`articles/${articleId}/position/${data.answerPosition}`, null, null);
+        this.startingText = data.startingText;
+        this.newText = data.newText;
+        this.choices = data.choices;
+        this.correctAnswer = data.correctAnswer;
       });
+
+      this.http.post<IQuestion>(`articles/${articleId}/position/${nextPosition}`, null, null);
     }
 
   navigateToPosition(position: number) {

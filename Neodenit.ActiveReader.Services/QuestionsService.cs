@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Neodenit.ActiveReader.Common;
 using Neodenit.ActiveReader.Common.DataModels;
 using Neodenit.ActiveReader.Common.Enums;
 using Neodenit.ActiveReader.Common.Interfaces;
@@ -47,12 +46,12 @@ namespace Neodenit.ActiveReader.Services
 
             foreach (var expression in expressions)
             {
-                var variants = statistics.Where(s => s.Prefix == expression.Prefix);
-                var variantsCount = variants.Count();
+                var choices = statistics.Where(s => s.Prefix == expression.Prefix);
+                var choicesCount = choices.Count();
 
-                if (variantsCount > 1)
+                if (choicesCount > 1)
                 {
-                    var bestVariants = variants
+                    var bestChoices = choices
                         .OrderByDescending(x => x.Suffix == expression.Suffix)
                         .ThenByDescending(x => x.Count)
                         .ThenBy(_ => Guid.NewGuid())
@@ -60,16 +59,23 @@ namespace Neodenit.ActiveReader.Services
                         .OrderBy(_ => Guid.NewGuid())
                         .Select(v => v.Suffix);
 
-                    var wordsForText = orderedWords.Where(w => w.Position < expression.SuffixPosition);
-                    string text = converterService.GetText(wordsForText);
+                    var correctedPosition = lastPosition - 1;
+
+                    var startingWords = orderedWords.Where(w => w.Position < correctedPosition);
+                    var newWords = orderedWords.Where(w => w.Position >= correctedPosition && w.Position < expression.SuffixPosition);
+
+                    string startingText = converterService.GetText(startingWords);
+                    string newText = converterService.GetText(newWords);
+                    
 
                     var question = new QuestionViewModel
                     {
-                        Answer = expression.Suffix,
+                        CorrectAnswer = expression.Suffix,
                         AnswerPosition = expression.SuffixPosition,
                         ArticleId = expression.ArticleId,
-                        Variants = bestVariants,
-                        StartingWords = text
+                        Choices = bestChoices,
+                        StartingText = startingText,
+                        NewText = newText
                     };
 
                     return question;
@@ -78,11 +84,9 @@ namespace Neodenit.ActiveReader.Services
 
             return new QuestionViewModel
             {
-                Answer = null,
                 AnswerPosition = 0,
                 ArticleId = articleId,
-                Variants = null,
-                StartingWords = converterService.GetText(orderedWords)
+                StartingText = converterService.GetText(orderedWords)
             };
         }
     }

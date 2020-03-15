@@ -1,6 +1,7 @@
-﻿export interface IQuestion {
-    answerPosition: number;
-    startingWords: string;
-    variants: string[];
-    answer: string;
+export interface IQuestion {
+  answerPosition: number;
+  startingText: string;
+  newText: string;
+  choices: string[];
+  correctAnswer: string;
 }

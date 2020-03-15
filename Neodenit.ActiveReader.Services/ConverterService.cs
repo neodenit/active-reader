@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Neodenit.ActiveReader.Common;
@@ -21,8 +20,8 @@ namespace Neodenit.ActiveReader.Services
             var wordsSpaces = words
                 .Zip(spaces, (word, space) =>
                     new { word, space })
-                .Zip(positions, (wordSpace, i) =>
-                    new { Word = wordSpace.word, Space = wordSpace.space, Position = i });
+                .Zip(positions, (wordSpace, position) =>
+                    new { Word = wordSpace.word, Space = wordSpace.space, Position = position });
 
             var result = wordsSpaces.Select(ws => new Word
             {
