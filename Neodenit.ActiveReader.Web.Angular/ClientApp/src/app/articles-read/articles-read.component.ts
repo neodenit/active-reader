@@ -11,7 +11,6 @@ import { HttpClientService } from "../shared/services/http-client.service";
 export class ArticlesReadComponent implements OnInit {
   article: IArticle;
   score: number;
-  scoreStyle: string;
   position: number;
   startingText: string;
   newText: string;
@@ -20,7 +19,7 @@ export class ArticlesReadComponent implements OnInit {
 
   constructor(private http: HttpClientService, private route: ActivatedRoute) {
     this.position = 1;
-    this.score = 0;
+    this.score = null;
   }
 
   ngOnInit(): void {
@@ -35,13 +34,12 @@ export class ArticlesReadComponent implements OnInit {
   check(answer: string) {
     if (answer === this.correctAnswer) {
       this.score++;
-      this.scoreStyle = "right";
 
       let nextPosition = this.position + 1;
       this.getQuestion(this.article.id, nextPosition);
     } else {
       this.score--;
-      this.scoreStyle = "wrong";
+
       this.choices = this.choices.filter(x => x !== answer);
     }
   }
@@ -60,8 +58,7 @@ export class ArticlesReadComponent implements OnInit {
     }
 
   navigateToPosition(position: number) {
-    this.score = 0;
-    this.scoreStyle = "";
+    this.score = null;
 
     this.getQuestion(this.article.id, position);
   }
