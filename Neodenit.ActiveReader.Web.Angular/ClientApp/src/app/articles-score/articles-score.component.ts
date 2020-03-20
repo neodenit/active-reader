@@ -9,11 +9,15 @@ export class ArticlesScoreComponent implements OnChanges {
 
   scoreStyle: string;
 
+  readonly resetClass = "";
+  readonly rightAnswerClass = "right";
+  readonly wrongAnswerClass = "wrong";
+
   ngOnChanges(changes: SimpleChanges): void {
     this.scoreStyle = changes.score.currentValue === null
-      ? ""
+      ? this.resetClass
       : changes.score.currentValue > changes.score.previousValue
-        ? "right"
-        : "wrong";
+        ? this.rightAnswerClass
+        : this.wrongAnswerClass;
   }
 }
