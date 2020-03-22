@@ -11,6 +11,8 @@ export class ArticlesListComponent implements OnInit {
   articles: IArticle[];
   isAdding: boolean;
 
+  articleId: number;
+
   articleState = ArticleState;
 
   constructor(private http: HttpClientService) { }
@@ -20,6 +22,7 @@ export class ArticlesListComponent implements OnInit {
   }
 
   startAdding() {
+    this.articleId = null;
     this.isAdding = true;
   }
 
@@ -33,6 +36,11 @@ export class ArticlesListComponent implements OnInit {
 
   updateList() {
     this.getArticles();
+  }
+
+  edit(article: IArticle) {
+    this.articleId = article.id;
+    this.isAdding = true;
   }
 
   remove(article: IArticle) {

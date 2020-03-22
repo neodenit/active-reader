@@ -13,7 +13,7 @@ export class ArticlesScoreComponent implements OnChanges {
   readonly rightAnswerClass = "right";
   readonly wrongAnswerClass = "wrong";
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges) {
     this.scoreStyle = changes.score.currentValue === null
       ? this.resetClass
       : changes.score.currentValue > changes.score.previousValue

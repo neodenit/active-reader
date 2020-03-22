@@ -1,5 +1,5 @@
 <div class="card bg-primary">
-  <div class="card-header text-white">Add New Article</div>
+  <div class="card-header text-white">{{ pageTitle }}</div>
   <div class="card-body bg-light">
 
     <form #form="ngForm">
@@ -83,7 +83,7 @@
       <div class="form-group">
         <div class="row justify-content-between">
           <div class="col-sm-auto mb-1 mb-sm-0">
-            <button class="btn btn-success btn-block" (click)="add()">OK</button>
+            <button class="btn btn-success btn-block" (click)="save()">OK</button>
           </div>
           <div class="col-sm-auto">
             <button class="btn btn-outline-secondary btn-block" (click)="cancel()">Cancel</button>

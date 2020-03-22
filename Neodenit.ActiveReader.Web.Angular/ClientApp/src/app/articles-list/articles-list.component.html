@@ -1,5 +1,5 @@
 <div [hidden]="!isAdding">
-  <articles-create (close)="finishAdding($event)" (update)="updateList()"></articles-create>
+  <articles-create [articleId]="articleId" (close)="finishAdding($event)" (update)="updateList()"></articles-create>
 </div>
 
 <div *ngIf="!isAdding">
@@ -12,7 +12,11 @@
 
 <ul class="list-group mt-2">
   <li *ngFor="let article of articles" class="list-group-item d-flex justify-content-between align-items-center">
-    <a *ngIf="article.state === articleState.Processed" [routerLink]="['article', article.id]">{{ article.title }}</a>
+    <span>
+      <a *ngIf="article.state === articleState.Processed" [routerLink]="['article', article.id]" class="pr-3">{{ article.title }}</a>
+      <a *ngIf="article.state === articleState.Processed" tabindex="0" (click)="edit(article)" class="oi oi-pencil text-primary text-decoration-none"></a>
+    </span>
+
     <a *ngIf="article.state === articleState.Processed" tabindex="0" (click)="remove(article)" class="oi oi-x text-danger text-decoration-none"></a>
 
     <span *ngIf="article.state === articleState.Processing">{{ article.title }} &ndash; processing...</span>
