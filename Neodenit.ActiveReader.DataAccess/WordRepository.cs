@@ -13,5 +13,8 @@ namespace Neodenit.ActiveReader.DataAccess
 
         public async Task<IEnumerable<Word>> GetByArticleAsync(int articleId) =>
             await dbSet.Where(x => x.ArticleId == articleId).ToListAsync();
+
+        public void DeleteFromArticle(int articleId) =>
+            dbSet.RemoveRange(dbSet.Where(x => x.ArticleId == articleId));
     }
 }

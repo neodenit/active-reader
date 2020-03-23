@@ -21,5 +21,7 @@ namespace Neodenit.ActiveReader.Common.Interfaces
         Task<int> Navigate(NavigationViewModel model);
 
         DefaultSettingsViewModel GetDefaultSettings();
+
+        Task UpdateAsync(ArticleViewModel article, string userName);
     }
 }

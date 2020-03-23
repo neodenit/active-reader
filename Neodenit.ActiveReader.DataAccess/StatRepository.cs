@@ -16,5 +16,8 @@ namespace Neodenit.ActiveReader.DataAccess
 
         public async Task<Stat> GetByPrefixSuffixArticleAsync(string prefix, string suffix, int articleId) =>
             await dbSet.SingleOrDefaultAsync(x => x.Prefix == prefix && x.Suffix == suffix && x.ArticleId == articleId);
+
+        public void DeleteFromArticle(int articleId) =>
+            dbSet.RemoveRange(dbSet.Where(x => x.ArticleId == articleId));
     }
 }

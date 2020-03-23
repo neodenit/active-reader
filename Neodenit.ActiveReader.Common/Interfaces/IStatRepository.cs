@@ -9,5 +9,7 @@ namespace Neodenit.ActiveReader.Common.Interfaces
         Task<Stat> GetByPrefixSuffixArticleAsync(string prefix, string suffix, int articleId);
 
         Task<IEnumerable<Stat>> GetByArticleAsync(int articleId);
+
+        void DeleteFromArticle(int articleId);
     }
 }

@@ -59,5 +59,12 @@ namespace Neodenit.ActiveReader.Services
             var newPosition = lastWord.Position + 1;
             return newPosition;
         }
+
+        public async Task DeleteWordsFromArticleAsync(int articleId)
+        {
+            wordRepository.DeleteFromArticle(articleId);
+
+            await wordRepository.SaveAsync();
+        }
     }
 }

@@ -28,8 +28,13 @@ export class ArticlesListComponent implements OnInit {
 
   finishAdding(article: IArticle) {
     this.isAdding = false;
+    this.articleId = null;
 
     if (article) {
+      if (article.id) {
+        this.articles = this.articles.filter(a => a.id !== article.id);
+      }
+
       this.articles.push(article);
     }
   }

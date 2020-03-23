@@ -107,7 +107,21 @@ export class ArticlesCreateComponent implements OnInit, OnChanges {
   }
 
   updateArticle() {
+    let article: IArticle = {
+      id: this.articleId,
+      title: this.newArticleTitle,
+      text: this.newArticleText,
+      prefixLength: parseInt(this.prefixLength),
+      maxChoices: parseInt(this.maxChoices),
+      ignoreCase: this.ignoreCase,
+      ignorePunctuation: this.ignorePunctuation,
+      state: ArticleState.Processing
+    };
 
+    this.http.put<IArticle>("articles", article, () => this.update.emit());
+
+    this.reset();
+    this.close.emit(article);
   }
 
   cancel() {

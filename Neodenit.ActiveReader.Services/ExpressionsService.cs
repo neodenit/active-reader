@@ -8,10 +8,10 @@ namespace Neodenit.ActiveReader.Services
 {
     public class ExpressionsService : IExpressionsService
     {
-        private readonly IRepository<Stat> repository;
+        private readonly IStatRepository repository;
         private readonly IStatManagerService statManagerService;
 
-        public ExpressionsService(IRepository<Stat> repository, IStatManagerService statManagerService)
+        public ExpressionsService(IStatRepository repository, IStatManagerService statManagerService)
         {
             this.repository = repository;
             this.statManagerService = statManagerService;
@@ -27,6 +27,13 @@ namespace Neodenit.ActiveReader.Services
                 IEnumerable<Stat> words = statManagerService.GetWords(article);
                 await repository.CreateAsync(words);
             }
+
+            await repository.SaveAsync();
+        }
+
+        public async Task DeleteExpressionsFromArticleAsync(int articleId)
+        {
+            repository.DeleteFromArticle(articleId);
 
             await repository.SaveAsync();
         }

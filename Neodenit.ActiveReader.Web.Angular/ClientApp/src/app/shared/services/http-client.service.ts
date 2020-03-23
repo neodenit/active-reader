@@ -19,6 +19,12 @@ export class HttpClientService {
       error => this.handleError(error));
   }
 
+  put<T>(localUrl: string, body: any, callback: (data: void) => void) {
+    this.http.put<T>(`${this.baseUrl}${localUrl}`, body).subscribe(
+      () => callback && callback(),
+      error => this.handleError(error));
+  }
+
   delete(localUrl: string, callback: (data: void) => void) {
     this.http.delete(`${this.baseUrl}${localUrl}`).subscribe(
       () => callback && callback(),

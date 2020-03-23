@@ -45,9 +45,10 @@ namespace Neodenit.ActiveReader.DataAccess
             await dbSet.AddRangeAsync(entities);
         }
 
-        public void Update(T entity)
+        public async Task UpdateAsync(T entity, int id)
         {
-            dbContext.Update(entity);
+            var originalEntity = await dbSet.FindAsync(id);
+            dbContext.Entry(originalEntity).CurrentValues.SetValues(entity);
         }
 
         public void Delete(T entity)

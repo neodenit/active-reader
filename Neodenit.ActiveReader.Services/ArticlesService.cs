@@ -57,7 +57,6 @@ namespace Neodenit.ActiveReader.Services
 
             var viewModel = mapper.Map<ArticleViewModel>(article);
             return viewModel;
-
         }
 
         public async Task DeleteAsync(int id)
@@ -139,5 +138,39 @@ namespace Neodenit.ActiveReader.Services
                 MaxChoicesMinOption = CoreSettings.Default.MaxChoicesMinOption,
                 MaxChoicesMaxOption = CoreSettings.Default.MaxChoicesMaxOption
             };
+
+        public async Task UpdateAsync(ArticleViewModel articleViewModel, string userName)
+        {
+            var article = mapper.Map<ArticleViewModel, Article>(
+                articleViewModel,
+                opt => opt.AfterMap((src, dest) =>
+                {
+                    dest.Owner = userName;
+                    dest.Position = Constants.StartingPosition;
+                    dest.State = ArticleState.Processing;
+                }));
+
+            await repository.UpdateAsync(article, article.Id);
+            await repository.SaveAsync();
+
+            try
+            {
+                await expressionsService.DeleteExpressionsFromArticleAsync(article.Id);
+                await expressionsService.AddExpressionsFromArticleAsync(article);
+
+                await wordsService.DeleteWordsFromArticleAsync(article.Id);
+                await wordsService.AddWordsFromArticleAsync(article);
+            }
+            catch (Exception)
+            {
+                article.State = ArticleState.Failed;
+                await repository.SaveAsync();
+                throw;
+            }
+
+            article.State = ArticleState.Processed;
+            await repository.UpdateAsync(article, article.Id);
+            await repository.SaveAsync();
+        }
     }
 }

@@ -12,5 +12,7 @@ namespace Neodenit.ActiveReader.Common.Interfaces
         Task<int> GetNextPosition(int articleId, int position);
 
         Task<int> GetEndPosition(int articleId, int position);
+
+        Task DeleteWordsFromArticleAsync(int articleId);
     }
 }

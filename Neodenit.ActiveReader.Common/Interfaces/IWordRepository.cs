@@ -7,5 +7,7 @@ namespace Neodenit.ActiveReader.Common.Interfaces
     public interface IWordRepository : IRepository<Word>
     {
         Task<IEnumerable<Word>> GetByArticleAsync(int articleId);
+
+        void DeleteFromArticle(int articleId);
     }
 }

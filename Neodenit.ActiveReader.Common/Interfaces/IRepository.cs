@@ -21,7 +21,7 @@ namespace Neodenit.ActiveReader.Common.Interfaces
 
         Task CreateAsync(IEnumerable<T> entities);
 
-        void Update(T entity);
+        Task UpdateAsync(T entity, int id);
 
         void Delete(T entity);
 

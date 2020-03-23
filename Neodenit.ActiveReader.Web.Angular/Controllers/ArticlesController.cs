@@ -59,6 +59,15 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
 
             return Ok();
         }
+
+        [ValidateModel]
+        [HttpPut]
+        public async Task<ActionResult> Put(ArticleViewModel article)
+        {
+            await articlesService.UpdateAsync(article, User.Identity.Name);
+
+            return Ok();
+        }
         
         [ValidateModel]
         [HttpPost("navigate")]
