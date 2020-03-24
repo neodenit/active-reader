@@ -13,9 +13,17 @@
 
       <div class="form-group">
         <label for="articleText">Text</label>
-        <textarea #text="ngModel" id="articleText" name="articleText" class="form-control" [(ngModel)]="newArticleText" required></textarea>
-        <div *ngIf="text.invalid && (text.dirty || text.touched)" class="alert alert-danger">
-          Text is required.
+        <div class="d-block d-sm-none">
+          <textarea #textMobile="ngModel" id="articleTextMobile" name="articleTextMobile" class="form-control" rows="3" [(ngModel)]="newArticleText" required></textarea>
+          <div *ngIf="textMobile.invalid && (textMobile.dirty || textMobile.touched)" class="alert alert-danger">
+            Text is required.
+          </div>
+        </div>
+        <div class="d-none d-sm-block">
+          <textarea #textDesktop="ngModel" id="articleText" name="articleText" class="form-control" rows="10" [(ngModel)]="newArticleText" required></textarea>
+          <div *ngIf="textDesktop.invalid && (textDesktop.dirty || textDesktop.touched)" class="alert alert-danger">
+            Text is required.
+          </div>
         </div>
       </div>
 
