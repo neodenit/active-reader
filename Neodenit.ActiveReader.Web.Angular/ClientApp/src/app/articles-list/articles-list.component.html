@@ -12,9 +12,9 @@
 
 <ul class="list-group mt-2">
   <li *ngFor="let article of articles" class="list-group-item d-flex justify-content-between align-items-center">
-    <span>
-      <a *ngIf="article.state === articleState.Processed" [routerLink]="['article', article.id]" class="pr-3">{{ article.title }}</a>
-      <a *ngIf="article.state === articleState.Processed" tabindex="0" (click)="edit(article)" class="oi oi-pencil text-primary text-decoration-none"></a>
+    <span *ngIf="article.state === articleState.Processed">
+      <a [routerLink]="['article', article.id]" class="pr-3">{{ article.title }}</a>
+      <a tabindex="0" (click)="edit(article)" class="oi oi-pencil text-primary text-decoration-none"></a>
     </span>
 
     <a *ngIf="article.state === articleState.Processed" tabindex="0" (click)="remove(article)" class="oi oi-x text-danger text-decoration-none"></a>
