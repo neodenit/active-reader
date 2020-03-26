@@ -164,6 +164,7 @@ namespace Neodenit.ActiveReader.Services
             catch (Exception)
             {
                 article.State = ArticleState.Failed;
+                await repository.UpdateAsync(article, article.Id);
                 await repository.SaveAsync();
                 throw;
             }
