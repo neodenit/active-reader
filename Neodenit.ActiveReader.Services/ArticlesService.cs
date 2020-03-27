@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.Extensions.Logging;
 using Neodenit.ActiveReader.Common;
 using Neodenit.ActiveReader.Common.DataModels;
 using Neodenit.ActiveReader.Common.Enums;
@@ -16,13 +17,15 @@ namespace Neodenit.ActiveReader.Services
         private readonly IArticlesRepository repository;
         private readonly IWordsService wordsService;
         private readonly IExpressionsService expressionsService;
+        private readonly ILogger<ArticlesService> logger;
 
-        public ArticlesService(IMapper mapper, IArticlesRepository repository, IWordsService wordsService, IExpressionsService expressionsService)
+        public ArticlesService(IMapper mapper, IArticlesRepository repository, IWordsService wordsService, IExpressionsService expressionsService, ILogger<ArticlesService> logger)
         {
             this.mapper = mapper ?? throw new System.ArgumentNullException(nameof(mapper));
             this.repository = repository ?? throw new System.ArgumentNullException(nameof(repository));
             this.wordsService = wordsService ?? throw new System.ArgumentNullException(nameof(wordsService));
             this.expressionsService = expressionsService ?? throw new System.ArgumentNullException(nameof(expressionsService));
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<ArticleViewModel> CreateAsync(ArticleViewModel articleViewModel, string userName)
@@ -45,8 +48,10 @@ namespace Neodenit.ActiveReader.Services
 
                 await wordsService.AddWordsFromArticleAsync(article);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.LogError(ex, string.Empty);
+
                 article.State = ArticleState.Failed;
                 await repository.SaveAsync();
                 throw;
@@ -161,8 +166,10 @@ namespace Neodenit.ActiveReader.Services
                 await wordsService.DeleteWordsFromArticleAsync(article.Id);
                 await wordsService.AddWordsFromArticleAsync(article);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.LogError(ex, string.Empty);
+
                 article.State = ArticleState.Failed;
                 await repository.UpdateAsync(article, article.Id);
                 await repository.SaveAsync();

@@ -18,6 +18,7 @@ namespace Neodenit.ActiveReader.Web.Angular
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .ConfigureLogging(logging => logging.AddAzureWebAppDiagnostics())
                 .UseStartup<Startup>();
     }
 }
