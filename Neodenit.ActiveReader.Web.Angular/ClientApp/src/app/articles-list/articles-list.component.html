@@ -17,9 +17,9 @@
       <a tabindex="0" (click)="edit(article)" class="oi oi-pencil text-primary text-decoration-none"></a>
     </span>
 
-    <a *ngIf="article.state === articleState.Processed" tabindex="0" (click)="remove(article)" class="oi oi-x text-danger text-decoration-none"></a>
-
     <span *ngIf="article.state === articleState.Processing">{{ article.title }} &ndash; processing...</span>
     <span *ngIf="article.state === articleState.Failed">{{ article.title }} &ndash; failed.</span>
+
+    <a *ngIf="article.state !== articleState.Processing" tabindex="0" (click)="remove(article)" class="oi oi-x text-danger text-decoration-none"></a>
   </li>
 </ul>
