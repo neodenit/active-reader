@@ -180,5 +180,33 @@ namespace Neodenit.ActiveReader.Services
             await repository.UpdateAsync(article, article.Id);
             await repository.SaveAsync();
         }
+
+        public async Task RestartUpdateAsync(int id)
+        {
+            Article article = repository.Get(id);
+
+            article.State = ArticleState.Processing;
+            await repository.SaveAsync();
+
+            try
+            {
+                await expressionsService.DeleteExpressionsFromArticleAsync(article.Id);
+                await expressionsService.AddExpressionsFromArticleAsync(article);
+
+                await wordsService.DeleteWordsFromArticleAsync(article.Id);
+                await wordsService.AddWordsFromArticleAsync(article);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, string.Empty);
+
+                article.State = ArticleState.Failed;
+                await repository.SaveAsync();
+                throw;
+            }
+
+            article.State = ArticleState.Processed;
+            await repository.SaveAsync();
+        }
     }
 }

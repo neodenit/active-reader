@@ -23,5 +23,7 @@ namespace Neodenit.ActiveReader.Common.Interfaces
         DefaultSettingsViewModel GetDefaultSettings();
 
         Task UpdateAsync(ArticleViewModel article, string userName);
+
+        Task RestartUpdateAsync(int id);
     }
 }

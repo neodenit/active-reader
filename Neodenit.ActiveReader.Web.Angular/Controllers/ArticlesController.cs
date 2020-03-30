@@ -61,6 +61,15 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
         }
 
         [ValidateModel]
+        [HttpPost("{id}/restart")]
+        public async Task<ActionResult> Post([CheckOwner]int id)
+        {
+            await articlesService.RestartUpdateAsync(id);
+
+            return Ok();
+        }
+
+        [ValidateModel]
         [HttpPut]
         public async Task<ActionResult> Put(ArticleViewModel article)
         {

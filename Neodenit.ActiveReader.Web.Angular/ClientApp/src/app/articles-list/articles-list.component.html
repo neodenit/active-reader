@@ -20,6 +20,9 @@
     <span *ngIf="article.state === articleState.Processing">{{ article.title }} &ndash; processing...</span>
     <span *ngIf="article.state === articleState.Failed">{{ article.title }} &ndash; failed.</span>
 
-    <a *ngIf="article.state !== articleState.Processing" tabindex="0" (click)="remove(article)" class="oi oi-x text-danger text-decoration-none"></a>
+    <span>
+      <a *ngIf="article.state === articleState.Failed" tabindex="0" (click)="restart(article)" class="oi oi-loop text-primary text-decoration-none pr-3"></a>
+      <a *ngIf="article.state !== articleState.Processing" tabindex="0" (click)="remove(article)" class="oi oi-x text-danger text-decoration-none"></a>
+    </span>
   </li>
 </ul>

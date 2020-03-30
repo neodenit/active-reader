@@ -48,6 +48,14 @@ export class ArticlesListComponent implements OnInit {
     this.isAdding = true;
   }
 
+  restart(article: IArticle) {
+    article.state = ArticleState.Processing;
+
+    this.http.post(`articles/${article.id}/restart`,
+      null,
+      () => this.getArticles());
+  }
+
   remove(article: IArticle) {
     this.http.delete(`articles/${article.id}`,
       () => this.articles = this.articles.filter(x => x.id !== article.id));
