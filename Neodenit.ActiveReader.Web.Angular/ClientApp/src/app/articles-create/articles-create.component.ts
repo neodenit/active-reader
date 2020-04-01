@@ -100,7 +100,7 @@ export class ArticlesCreateComponent implements OnInit, OnChanges {
       state: ArticleState.Processing
     };
 
-    this.http.post<IArticle>("articles", article, () => this.update.emit());
+    this.http.post<IArticle>("articles", article, () => this.update.emit(), () => this.update.emit());
 
     this.reset();
     this.close.emit(article);
