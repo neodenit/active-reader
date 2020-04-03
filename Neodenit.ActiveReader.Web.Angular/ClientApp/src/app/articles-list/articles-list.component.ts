@@ -15,6 +15,8 @@ export class ArticlesListComponent implements OnInit {
 
   articleState = ArticleState;
 
+  refreshInterval = 1000;
+
   constructor(private http: HttpClientService) { }
 
   ngOnInit() {
@@ -62,6 +64,12 @@ export class ArticlesListComponent implements OnInit {
   }
 
   private getArticles() {
-    this.http.get<IArticle[]>("articles", data => this.articles = data);
+    this.http.get<IArticle[]>("articles", data => {
+      this.articles = data;
+
+      if (this.articles.some(x => x.state === ArticleState.Processing)) {
+        setTimeout(() => this.getArticles(), this.refreshInterval);
+      }
+    });
   }
 }
