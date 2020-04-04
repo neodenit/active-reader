@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Ether.WeightedSelector;
 using Neodenit.ActiveReader.Common.DataModels;
 using Neodenit.ActiveReader.Common.Enums;
 using Neodenit.ActiveReader.Common.Interfaces;
@@ -51,13 +52,45 @@ namespace Neodenit.ActiveReader.Services
 
                 if (choicesCount > 1)
                 {
-                    var bestChoices = choices
-                        .OrderByDescending(x => x.Suffix == expression.Suffix)
+                    static IEnumerable<string> GetWeightedChoices(string correctAnswer, IEnumerable<Stat> allChoices, int maxChoices)
+                    {
+                        var selector = new WeightedSelector<string>();
+
+                        var weightedStat = allChoices.Where(c => c.Suffix != correctAnswer).Select(c => new WeightedItem<string>(c.Suffix, c.Count));
+
+                        selector.Add(weightedStat);
+
+                        var result = selector.SelectMultiple(maxChoices);
+                        return result;
+                    }
+
+                    static IEnumerable<string> GetBestChoices(string correctAnswer, IEnumerable<Stat> allChoices, int maxChoices)
+                    {
+                        if (allChoices.Count() <= maxChoices)
+                        {
+                            var result = allChoices.Select(c => c.Suffix).OrderBy(_ => Guid.NewGuid());
+                            return result;
+                        }
+                        else
+                        {
+                            var altChoicesCount = maxChoices - 1;
+                            var altChoices = GetWeightedChoices(correctAnswer, allChoices, altChoicesCount);
+
+                            var result = altChoices.Append(correctAnswer).OrderBy(_ => Guid.NewGuid());
+                            return result;
+                        }
+                    }
+
+                    static IEnumerable<string> GetBestChoicesLegacy(string correctAnswer, IEnumerable<Stat> allChoices, int maxChoices) =>
+                        allChoices
+                        .OrderByDescending(x => x.Suffix == correctAnswer)
                         .ThenByDescending(x => x.Count)
                         .ThenBy(_ => Guid.NewGuid())
-                        .Take(article.MaxChoices)
+                        .Take(maxChoices)
                         .OrderBy(_ => Guid.NewGuid())
-                        .Select(v => v.Suffix);
+                        .Select(c => c.Suffix);
+
+                    var bestChoices = GetBestChoices(expression.Suffix, choices, article.MaxChoices);
 
                     var correctedPosition = lastPosition - 1;
 
