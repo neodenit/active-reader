@@ -44,9 +44,9 @@ namespace Neodenit.ActiveReader.Common {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool CountWords {
+        public bool CountSuffixes {
             get {
-                return ((bool)(this["CountWords"]));
+                return ((bool)(this["CountSuffixes"]));
             }
         }
         
@@ -83,6 +83,15 @@ namespace Neodenit.ActiveReader.Common {
         public int MaxChoicesMaxOption {
             get {
                 return ((int)(this["MaxChoicesMaxOption"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CountPrefixes {
+            get {
+                return ((bool)(this["CountPrefixes"]));
             }
         }
     }

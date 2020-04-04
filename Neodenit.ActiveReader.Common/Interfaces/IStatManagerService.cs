@@ -5,8 +5,10 @@ namespace Neodenit.ActiveReader.Common.Interfaces
 {
     public interface IStatManagerService
     {
-        IEnumerable<Stat> GetExpressions(Article article);
+        IEnumerable<Stat> GetExpressionStat(Article article);
 
-        IEnumerable<Stat> GetWords(Article article);
+        IEnumerable<Stat> GetPrefixStat(Article article);
+
+        IEnumerable<Stat> GetSuffixStat(Article article);
     }
 }

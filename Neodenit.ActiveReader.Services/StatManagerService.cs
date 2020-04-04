@@ -15,7 +15,7 @@ namespace Neodenit.ActiveReader.Services
             this.converterService = converterService;
         }
 
-        public IEnumerable<Stat> GetExpressions(Article article)
+        public IEnumerable<Stat> GetExpressionStat(Article article)
         {
             IEnumerable<string> words = converterService.GetWords(article.Text, article.IgnorePunctuation);
 
@@ -41,19 +41,48 @@ namespace Neodenit.ActiveReader.Services
             return result;
         }
 
-        public IEnumerable<Stat> GetWords(Article article)
+        public IEnumerable<Stat> GetPrefixStat(Article article)
         {
             IEnumerable<string> words = converterService.GetWords(article.Text, article.IgnorePunctuation);
 
-            var normalizedWords = words.Select(w => converterService.NormalizeWord(w, article.IgnoreCase));
+            IEnumerable<string> prefixes = words.GetPairs(
+                w => converterService.GetPrefix(w, article.IgnoreCase),
+                w => string.Empty,
+                (word, prefix, suffix) => prefix,
+                article.PrefixLength
+            );
 
-            var statDict = normalizedWords.GroupBy(w => w).Select(w => new { Word = w.Key, Count = w.Count() });
+            var statDict = prefixes.GroupBy(p => p).Select(p => new { Prefix = p.Key, Count = p.Count() });
 
             var result = statDict.Select(stat =>
                 new Stat
                 {
                     ArticleId = article.Id,
-                    Suffix = stat.Word,
+                    Prefix = stat.Prefix,
+                    Count = stat.Count
+                });
+
+            return result;
+        }
+
+        public IEnumerable<Stat> GetSuffixStat(Article article)
+        {
+            IEnumerable<string> words = converterService.GetWords(article.Text, article.IgnorePunctuation);
+
+            IEnumerable<string> pairs = words.GetPairs(
+                w => string.Empty,
+                w => converterService.GetSuffix(w, article.IgnoreCase),
+                (word, prefix, suffix) => suffix,
+                article.PrefixLength
+            );
+
+            var statDict = pairs.GroupBy(p => p).Select(p => new { Suffix = p.Key, Count = p.Count() });
+
+            var result = statDict.Select(stat =>
+                new Stat
+                {
+                    ArticleId = article.Id,
+                    Suffix = stat.Suffix,
                     Count = stat.Count
                 });
 

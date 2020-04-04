@@ -19,13 +19,19 @@ namespace Neodenit.ActiveReader.Services
 
         public async Task AddExpressionsFromArticleAsync(Article article)
         {
-            IEnumerable<Stat> expressions = statManagerService.GetExpressions(article);
+            IEnumerable<Stat> expressions = statManagerService.GetExpressionStat(article);
             await repository.CreateAsync(expressions);
 
-            if (CoreSettings.Default.CountWords)
+            if (CoreSettings.Default.CountPrefixes)
             {
-                IEnumerable<Stat> words = statManagerService.GetWords(article);
-                await repository.CreateAsync(words);
+                IEnumerable<Stat> prefixes = statManagerService.GetPrefixStat(article);
+                await repository.CreateAsync(prefixes);
+            }
+
+            if (CoreSettings.Default.CountSuffixes)
+            {
+                IEnumerable<Stat> suffixes = statManagerService.GetSuffixStat(article);
+                await repository.CreateAsync(suffixes);
             }
 
             await repository.SaveAsync();

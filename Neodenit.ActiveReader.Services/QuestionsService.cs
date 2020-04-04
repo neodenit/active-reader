@@ -47,7 +47,7 @@ namespace Neodenit.ActiveReader.Services
 
             foreach (var expression in expressions)
             {
-                var choices = statistics.Where(s => s.Prefix == expression.Prefix);
+                var choices = statistics.Where(s => s.Prefix == expression.Prefix && !string.IsNullOrEmpty(s.Suffix));
                 var choicesCount = choices.Count();
 
                 if (choicesCount > 1)
