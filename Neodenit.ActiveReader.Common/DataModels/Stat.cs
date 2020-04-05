@@ -17,6 +17,9 @@ namespace Neodenit.ActiveReader.Common.DataModels
         public int Count { get; set; }
 
         [NotMapped]
+        public double Probability { get; set; }
+
+        [NotMapped]
         public int SuffixPosition { get; set; }
     }
 }
