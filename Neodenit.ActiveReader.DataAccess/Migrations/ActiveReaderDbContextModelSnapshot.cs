@@ -25,6 +25,9 @@ namespace Neodenit.ActiveReader.DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("AnswerLength")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IgnoreCase")
                         .HasColumnType("bit");
 

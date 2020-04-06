@@ -16,6 +16,8 @@ namespace Neodenit.ActiveReader.Common.DataModels
 
         public int PrefixLength { get; set; }
 
+        public int AnswerLength { get; set; }
+
         public int MaxChoices { get; set; }
 
         public bool IgnoreCase { get; set; }
