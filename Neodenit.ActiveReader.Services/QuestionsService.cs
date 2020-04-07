@@ -53,7 +53,7 @@ namespace Neodenit.ActiveReader.Services
 
                 if (choicesCount > 1)
                 {
-                    var bestChoices = GetBestChoices(expression.Suffix, choices, article.MaxChoices);
+                    var bestChoices = GetBestChoices(expression.Suffix, choices, article.MaxChoices, article.AnswerLength);
 
                     var correctedPosition = lastPosition - 1;
 
@@ -120,11 +120,19 @@ namespace Neodenit.ActiveReader.Services
             return result;
         }
 
-        private IEnumerable<string> GetWeightedChoices(string correctAnswer, IEnumerable<Stat> allChoices, int maxChoices)
+        private IEnumerable<string> GetWeightedChoices(string correctAnswer, IEnumerable<Stat> allChoices, int maxChoices, int answerLength)
         {
+            var precision = Math.Pow(10, CoreSettings.Default.PrecisionOrder);
+
+            var getWeight = answerLength > 1
+               ? s => (int)(s.Probability * precision)
+               : (Func<Stat, int>)(s => s.Count);
+
             var selector = new WeightedSelector<string>();
 
-            var weightedStat = allChoices.Where(c => c.Suffix != correctAnswer).Select(c => new WeightedItem<string>(c.Suffix, c.Count));
+            var weightedStat = allChoices
+                .Where(c => c.Suffix != correctAnswer)
+                .Select(c => new WeightedItem<string>(c.Suffix, getWeight(c)));
 
             selector.Add(weightedStat);
 
@@ -132,7 +140,7 @@ namespace Neodenit.ActiveReader.Services
             return result;
         }
 
-        private IEnumerable<string> GetBestChoices(string correctAnswer, IEnumerable<Stat> allChoices, int maxChoices)
+        private IEnumerable<string> GetBestChoices(string correctAnswer, IEnumerable<Stat> allChoices, int maxChoices, int answerLength)
         {
             if (allChoices.Count() <= maxChoices)
             {
@@ -142,7 +150,7 @@ namespace Neodenit.ActiveReader.Services
             else
             {
                 var altChoicesCount = maxChoices - 1;
-                var altChoices = GetWeightedChoices(correctAnswer, allChoices, altChoicesCount);
+                var altChoices = GetWeightedChoices(correctAnswer, allChoices, altChoicesCount, answerLength);
 
                 var result = altChoices.Append(correctAnswer).OrderBy(_ => Guid.NewGuid());
                 return result;
