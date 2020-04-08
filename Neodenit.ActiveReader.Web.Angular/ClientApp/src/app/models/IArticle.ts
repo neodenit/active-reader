@@ -5,6 +5,7 @@ export interface IArticle {
   title: string;
   text: string;
   prefixLength: number;
+  answerLength: number;
   maxChoices: number;
   ignoreCase: boolean;
   ignorePunctuation: boolean;

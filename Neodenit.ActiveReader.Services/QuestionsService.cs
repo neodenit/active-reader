@@ -46,16 +46,27 @@ namespace Neodenit.ActiveReader.Services
 
             IEnumerable<Stat> statistics = await statRepository.GetByArticleAsync(articleId);
 
-            foreach (var expression in expressions)
+            var linkedListExpressions = new LinkedList<Stat>(expressions);
+
+            for (var item = linkedListExpressions.First; item != null; item = item.Next)
             {
-                IEnumerable<Stat> choices = GetSingleWordChoices(statistics, expression);
+                var expression = item.Value;
+
+                var correctAnswer = article.AnswerLength > 1
+                    ? GetTwoWordAnswer(expression, item.Next?.Value)
+                    : expression;
+
+                IEnumerable<Stat> choices = article.AnswerLength > 1
+                    ? GetDoubleWordChoices(statistics, correctAnswer)
+                    : GetSingleWordChoices(statistics, expression);
+
                 var choicesCount = choices.Count();
 
                 if (choicesCount > 1)
                 {
-                    var bestChoices = GetBestChoices(expression.Suffix, choices, article.MaxChoices, article.AnswerLength);
+                    var bestChoices = GetBestChoices(correctAnswer.Suffix, choices, article.MaxChoices, article.AnswerLength);
 
-                    var correctedPosition = lastPosition - 1;
+                    var correctedPosition = lastPosition - article.AnswerLength;
 
                     var startingWords = orderedWords.Where(w => w.Position < correctedPosition);
                     var newWords = orderedWords.Where(w => w.Position >= correctedPosition && w.Position < expression.SuffixPosition);
@@ -65,7 +76,7 @@ namespace Neodenit.ActiveReader.Services
 
                     var question = new QuestionViewModel
                     {
-                        CorrectAnswer = expression.Suffix,
+                        CorrectAnswer = article.AnswerLength > 1 ? correctAnswer.Suffix : expression.Suffix,
                         AnswerPosition = expression.SuffixPosition,
                         ArticleId = expression.ArticleId,
                         Choices = bestChoices,
@@ -85,10 +96,10 @@ namespace Neodenit.ActiveReader.Services
             };
         }
 
-        private static IEnumerable<Stat> GetSingleWordChoices(IEnumerable<Stat> statistics, Stat startExpression) =>
+        private IEnumerable<Stat> GetSingleWordChoices(IEnumerable<Stat> statistics, Stat startExpression) =>
             statistics.Where(s => s.Prefix == startExpression.Prefix && !string.IsNullOrEmpty(s.Suffix));
 
-        private static Stat GetNextExpression(Stat expression)
+        private Stat GetNextExpression(Stat expression)
         {
             var words = expression.Prefix.Split(Constants.PrefixDelimiter).Skip(1).Append(expression.Suffix);
             var prefix = string.Join(Constants.PrefixDelimiter, words);
@@ -97,7 +108,17 @@ namespace Neodenit.ActiveReader.Services
             return result;
         }
 
-        private static IEnumerable<Stat> GetDoubleWordChoices(IEnumerable<Stat> statistics, Stat startExpression)
+        private Stat GetTwoWordAnswer(Stat expression, Stat nextExpression)
+        {
+            var result = new Stat
+            {
+                Prefix = expression.Prefix,
+                Suffix = nextExpression == null ? expression.Suffix : $"{expression.Suffix} {nextExpression.Suffix}"
+            };
+            return result;
+        }
+
+        private IEnumerable<Stat> GetDoubleWordChoices(IEnumerable<Stat> statistics, Stat startExpression)
         {
             var firstWordChoices = statistics.Where(s => s.Prefix == startExpression.Prefix && !string.IsNullOrEmpty(s.Suffix));
 
@@ -112,7 +133,7 @@ namespace Neodenit.ActiveReader.Services
             return result;
         }
 
-        private static double GetProbability(IEnumerable<Stat> statistics, Stat stat)
+        private double GetProbability(IEnumerable<Stat> statistics, Stat stat)
         {
             double p1 = statistics.Single(s => s.Prefix == stat.Prefix && s.Suffix == stat.Suffix).Count;
             double p2 = statistics.Single(s => s.Prefix == stat.Prefix && string.IsNullOrEmpty(s.Suffix)).Count;

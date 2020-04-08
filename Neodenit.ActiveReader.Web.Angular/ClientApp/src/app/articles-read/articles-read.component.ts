@@ -35,7 +35,7 @@ export class ArticlesReadComponent implements OnInit {
     if (answer === this.correctAnswer) {
       this.score++;
 
-      let nextPosition = this.position + 1;
+      let nextPosition = this.position + this.article.answerLength;
       this.getQuestion(this.article.id, nextPosition);
     } else {
       this.score--;

@@ -22,6 +22,7 @@ export class ArticlesCreateComponent implements OnInit, OnChanges {
   newArticleText: string;
 
   prefixLength: string;
+  answerLength = "1";
   maxChoices: string;
   ignoreCase: boolean;
   ignorePunctuation: boolean;
@@ -94,6 +95,7 @@ export class ArticlesCreateComponent implements OnInit, OnChanges {
       title: this.newArticleTitle,
       text: this.newArticleText,
       prefixLength: parseInt(this.prefixLength),
+      answerLength: parseInt(this.answerLength),
       maxChoices: parseInt(this.maxChoices),
       ignoreCase: this.ignoreCase,
       ignorePunctuation: this.ignorePunctuation,
@@ -112,6 +114,7 @@ export class ArticlesCreateComponent implements OnInit, OnChanges {
       title: this.newArticleTitle,
       text: this.newArticleText,
       prefixLength: parseInt(this.prefixLength),
+      answerLength: parseInt(this.answerLength),
       maxChoices: parseInt(this.maxChoices),
       ignoreCase: this.ignoreCase,
       ignorePunctuation: this.ignorePunctuation,
