@@ -22,7 +22,7 @@ namespace Neodenit.ActiveReader.Services
             IEnumerable<Stat> expressions = statManagerService.GetExpressionStat(article);
             await repository.CreateAsync(expressions);
 
-            if (CoreSettings.Default.CountPrefixes)
+            if (article.AnswerLength > 1)
             {
                 IEnumerable<Stat> prefixes = statManagerService.GetPrefixStat(article);
                 await repository.CreateAsync(prefixes);

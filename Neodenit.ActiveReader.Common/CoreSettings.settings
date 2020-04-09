@@ -23,9 +23,6 @@
     <Setting Name="MaxChoicesMaxOption" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">5</Value>
     </Setting>
-    <Setting Name="CountPrefixes" Type="System.Boolean" Scope="Application">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
     <Setting Name="PrecisionOrder" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">4</Value>
     </Setting>
