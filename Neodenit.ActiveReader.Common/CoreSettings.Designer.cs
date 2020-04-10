@@ -94,5 +94,32 @@ namespace Neodenit.ActiveReader.Common {
                 return ((int)(this["PrecisionOrder"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int AnswerLength {
+            get {
+                return ((int)(this["AnswerLength"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int AnswerLengthMinOption {
+            get {
+                return ((int)(this["AnswerLengthMinOption"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int AnswerLengthMaxOption {
+            get {
+                return ((int)(this["AnswerLengthMaxOption"]));
+            }
+        }
     }
 }

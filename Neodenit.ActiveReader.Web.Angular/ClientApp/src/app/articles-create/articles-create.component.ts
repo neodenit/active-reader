@@ -22,7 +22,7 @@ export class ArticlesCreateComponent implements OnInit, OnChanges {
   newArticleText: string;
 
   prefixLength: string;
-  answerLength = "1";
+  answerLength: string;
   maxChoices: string;
   ignoreCase: boolean;
   ignorePunctuation: boolean;
@@ -30,11 +30,13 @@ export class ArticlesCreateComponent implements OnInit, OnChanges {
   readonly defaultArticleTitle = "";
   readonly defaultArticleText = "";
   defaultPrefixLength: string;
+  defaultAnswerLength: string;
   defaultMaxChoices: string;
   readonly defaultIgnoreCaseState = false;
   readonly defaultIgnorePunctuationState = false;
 
   prefixLengthOptions: string[];
+  answerLengthOptions: string[];
   maxChoicesOptions: string[];
 
   showAdvancedOptions: boolean;
@@ -50,9 +52,11 @@ export class ArticlesCreateComponent implements OnInit, OnChanges {
     this.http.get<IDefaultSettings>("articles/defaultsettings",
       data => {
         this.prefixLengthOptions = this.arrayHelper.range(data.prefixLengthMinOption, data.prefixLengthMaxOption).map(x => x.toString());
+        this.answerLengthOptions = this.arrayHelper.range(data.answerLengthMinOption, data.answerLengthMaxOption).map(x => x.toString());
         this.maxChoicesOptions = this.arrayHelper.range(data.maxChoicesMinOption, data.maxChoicesMaxOption).map(x => x.toString());
 
         this.defaultPrefixLength = data.prefixLength.toString();
+        this.defaultAnswerLength = data.answerLength.toString();
         this.defaultMaxChoices = data.maxChoices.toString();
 
         this.reset();
@@ -69,6 +73,7 @@ export class ArticlesCreateComponent implements OnInit, OnChanges {
           this.newArticleTitle = article.title;
 
           this.prefixLength = article.prefixLength.toString();
+          this.answerLength = article.answerLength.toString();
           this.maxChoices = article.maxChoices.toString();
           this.ignoreCase = article.ignoreCase;
           this.ignorePunctuation = article.ignorePunctuation;
@@ -141,6 +146,7 @@ export class ArticlesCreateComponent implements OnInit, OnChanges {
     this.newArticleText = this.defaultArticleText;
 
     this.prefixLength = this.defaultPrefixLength;
+    this.answerLength = this.defaultAnswerLength;
     this.maxChoices = this.defaultMaxChoices;
 
     this.ignoreCase = this.defaultIgnoreCaseState;

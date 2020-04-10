@@ -8,6 +8,12 @@
 
         public int PrefixLengthMaxOption { get; set; }
 
+        public int AnswerLength { get; set; }
+
+        public int AnswerLengthMinOption { get; set; }
+
+        public int AnswerLengthMaxOption { get; set; }
+
         public int MaxChoices { get; set; }
 
         public int MaxChoicesMinOption { get; set; }

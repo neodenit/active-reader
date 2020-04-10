@@ -65,6 +65,20 @@
               </div>
             </div>
 
+            <div class="form-group">
+              <p>Answer length</p>
+              <div class="row">
+                <div class="col-sm-auto">
+                  <div ngbRadioGroup class="btn-group btn-group-toggle btn-block" name="answerLengthOptions" [(ngModel)]="answerLength">
+                    <label ngbButtonLabel *ngFor="let option of answerLengthOptions" class="btn btn-outline-secondary">
+                      <input ngbButton type="radio" [value]="option" />
+                      {{option}}
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div class="row mb-1">
               <div class="col-sm-auto">
                 <div class="btn-group-toggle">

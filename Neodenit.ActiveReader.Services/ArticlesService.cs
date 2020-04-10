@@ -139,6 +139,9 @@ namespace Neodenit.ActiveReader.Services
                 PrefixLength = CoreSettings.Default.PrefixLength,
                 PrefixLengthMinOption = CoreSettings.Default.PrefixLengthMinOption,
                 PrefixLengthMaxOption = CoreSettings.Default.PrefixLengthMaxOption,
+                AnswerLength = CoreSettings.Default.AnswerLength,
+                AnswerLengthMinOption = CoreSettings.Default.AnswerLengthMinOption,
+                AnswerLengthMaxOption = CoreSettings.Default.AnswerLengthMaxOption,
                 MaxChoices = CoreSettings.Default.MaxChoices,
                 MaxChoicesMinOption = CoreSettings.Default.MaxChoicesMinOption,
                 MaxChoicesMaxOption = CoreSettings.Default.MaxChoicesMaxOption
