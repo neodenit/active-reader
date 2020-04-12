@@ -71,8 +71,11 @@ namespace Neodenit.ActiveReader.Web.Angular
             services.AddTransient<IArticlesRepository, ArticlesRepository>();
             services.AddTransient<IStatRepository, StatRepository>();
             services.AddTransient<IWordRepository, WordRepository>();
+            services.AddTransient<IImportService, BoilerpipeWebImportService>();
 
             services.AddScoped<DbContext, ActiveReaderDbContext>();
+
+            services.AddSingleton<IHttpClientService>(new HttpClientService());
 
             services.AddAutoMapper(typeof(MappingProfile));
         }
