@@ -16,10 +16,12 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
     public class ArticlesController : ControllerBase
     {
         private readonly IArticlesService articlesService;
+        private readonly IImportService importService;
 
-        public ArticlesController(IArticlesService articlesService)
+        public ArticlesController(IArticlesService articlesService, IImportService importService)
         {
             this.articlesService = articlesService ?? throw new ArgumentNullException(nameof(articlesService));
+            this.importService = importService ?? throw new ArgumentNullException(nameof(importService));
         }
 
         [HttpGet]
@@ -41,6 +43,10 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
         [HttpGet("defaultsettings")]
         public ActionResult<DefaultSettingsViewModel> GetDefaultSettings() =>
             articlesService.GetDefaultSettings();
+
+        [HttpGet("import/{url}")]
+        public async Task<ActionResult<ImportArticleViewModel>> Import(string url) =>
+            await importService.GetTextAndTitleAsync(url);
 
         [ValidateModel]
         [HttpPost]

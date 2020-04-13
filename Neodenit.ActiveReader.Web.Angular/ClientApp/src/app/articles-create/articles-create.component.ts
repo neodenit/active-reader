@@ -5,6 +5,7 @@ import { IArticle } from "../models/IArticle";
 import { IDefaultSettings } from "../models/IDefaultSettings";
 import { ArrayHelperService } from "../shared/services/array-helper.service";
 import { HttpClientService } from "../shared/services/http-client.service";
+import { IImportArticle } from "../models/IImportArticle";
 
 @Component({
   selector: "articles-create",
@@ -20,6 +21,7 @@ export class ArticlesCreateComponent implements OnInit, OnChanges {
 
   newArticleTitle: string;
   newArticleText: string;
+  newArticleUrl: string;
 
   prefixLength: string;
   answerLength: string;
@@ -92,6 +94,17 @@ export class ArticlesCreateComponent implements OnInit, OnChanges {
       }
     } else {
       this.form.control.markAllAsTouched();
+    }
+  }
+
+  import() {
+    if (this.newArticleUrl) {
+      let encoddedUrl = encodeURIComponent(this.newArticleUrl);
+
+      this.http.get<IImportArticle>(`articles/import/${encoddedUrl}`, article => {
+        this.newArticleTitle = article.title;
+        this.newArticleText = article.text;
+      });
     }
   }
 

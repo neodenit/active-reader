@@ -3,6 +3,18 @@
   <div class="card-body bg-light">
 
     <form #form="ngForm">
+      <div class="form-group" *ngIf="!articleId">
+        <label for="articleUrl">Url</label>
+        <div class="row">
+          <div class="col-sm-9 mb-1 mb-sm-0">
+            <input id="articleUrl" name="articleUrl" class="form-control" [(ngModel)]="newArticleUrl" />
+          </div>
+          <div class="col-sm-3">
+            <button class="btn btn-success btn-block" (click)="import()">Import</button>
+          </div>
+        </div>
+      </div>
+
       <div class="form-group">
         <label for="articleTitle">Title</label>
         <input #title="ngModel" id="articleTitle" name="articleTitle" class="form-control" [(ngModel)]="newArticleTitle" required />

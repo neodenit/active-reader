@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Neodenit.ActiveReader.Common.Interfaces;
+using Neodenit.ActiveReader.Common.ViewModels;
 using Newtonsoft.Json;
 
 namespace Neodenit.ActiveReader.Services
@@ -25,10 +26,9 @@ namespace Neodenit.ActiveReader.Services
             this.httpClientWrapper = httpClientWrapper ?? throw new ArgumentNullException(nameof(httpClientWrapper));
         }
 
-        public async Task<(string text, string title)> GetTextAndTitleAsync(string url)
+        public async Task<ImportArticleViewModel> GetTextAndTitleAsync(string escapedUrl)
         {
-            var urlParameter = Uri.EscapeDataString(url);
-            var fullUrl = $"https://boilerpipe-web.appspot.com/extract?url={urlParameter}&output=json";
+            var fullUrl = $"https://boilerpipe-web.appspot.com/extract?url={escapedUrl}&output=json";
 
             var uri = new Uri(fullUrl);
             var response = await httpClientWrapper.GetAsync(uri);
@@ -49,7 +49,8 @@ namespace Neodenit.ActiveReader.Services
             var formattedText = replacements.Aggregate(text, (s, r) =>
                 s.Replace(r.Key, r.Value));
 
-            return (formattedText, title);
+            var result = new ImportArticleViewModel { Title = title, Text = formattedText };
+            return result;
         }
     }
 }
