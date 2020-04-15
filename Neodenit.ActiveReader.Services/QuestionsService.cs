@@ -57,8 +57,8 @@ namespace Neodenit.ActiveReader.Services
                     : expression;
 
                 IEnumerable<Stat> choices = article.AnswerLength > 1
-                    ? GetDoubleWordChoices(statistics, correctAnswer)
-                    : GetSingleWordChoices(statistics, expression);
+                    ? GetDoubleWordChoices(statistics, correctAnswer.Prefix)
+                    : GetSingleWordChoices(statistics, correctAnswer.Prefix);
 
                 var choicesCount = choices.Count();
 
@@ -96,16 +96,14 @@ namespace Neodenit.ActiveReader.Services
             };
         }
 
-        private IEnumerable<Stat> GetSingleWordChoices(IEnumerable<Stat> statistics, Stat startExpression) =>
-            statistics.Where(s => s.Prefix == startExpression.Prefix && !string.IsNullOrEmpty(s.Suffix));
+        private IEnumerable<Stat> GetSingleWordChoices(IEnumerable<Stat> statistics, string prefix) =>
+            statistics.Where(s => s.Prefix == prefix && !string.IsNullOrEmpty(s.Suffix));
 
-        private Stat GetNextExpression(Stat expression)
+        private string GetNextExpressionPrefix(Stat expression)
         {
             var words = expression.Prefix.Split(Constants.PrefixDelimiter).Skip(1).Append(expression.Suffix);
             var prefix = string.Join(Constants.PrefixDelimiter, words);
-
-            var result = new Stat { Prefix = prefix };
-            return result;
+            return prefix;
         }
 
         private Stat GetTwoWordAnswer(Stat expression, Stat nextExpression)
@@ -118,11 +116,11 @@ namespace Neodenit.ActiveReader.Services
             return result;
         }
 
-        private IEnumerable<Stat> GetDoubleWordChoices(IEnumerable<Stat> statistics, Stat startExpression)
+        private IEnumerable<Stat> GetDoubleWordChoices(IEnumerable<Stat> statistics, string prefix)
         {
-            var firstWordChoices = statistics.Where(s => s.Prefix == startExpression.Prefix && !string.IsNullOrEmpty(s.Suffix));
+            var firstWordChoices = statistics.Where(s => s.Prefix == prefix && !string.IsNullOrEmpty(s.Suffix));
 
-            var pairs = firstWordChoices.SelectMany(first => GetSingleWordChoices(statistics, GetNextExpression(first)).Select(second => new KeyValuePair<Stat, Stat>(first, second)));
+            var pairs = firstWordChoices.SelectMany(first => GetSingleWordChoices(statistics, GetNextExpressionPrefix(first)).Select(second => new KeyValuePair<Stat, Stat>(first, second)));
 
             var result = pairs.Select(p => new Stat
             {
