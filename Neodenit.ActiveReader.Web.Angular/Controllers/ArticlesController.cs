@@ -33,8 +33,8 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
         }
 
         [ValidateModel]
-        [HttpGet("{id}", Name = "GetArticle")]
-        public async Task<ActionResult<ArticleViewModel>> Get([CheckOwner]int id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ArticleViewModel>> GetArticle([CheckOwner]int id)
         {
             ArticleViewModel article = await articlesService.GetAsync(id);
             return Ok(article);
@@ -54,7 +54,7 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
         {
             ArticleViewModel newArticle = await articlesService.CreateAsync(article, User.Identity.Name);
 
-            return CreatedAtRoute("GetArticle", new { id = newArticle.ID }, newArticle);
+            return CreatedAtAction(nameof(GetArticle), new { id = newArticle.ID }, newArticle);
         }
 
         [ValidateModel]
