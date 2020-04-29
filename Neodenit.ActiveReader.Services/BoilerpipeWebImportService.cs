@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Neodenit.ActiveReader.Common.Interfaces;
 using Neodenit.ActiveReader.Common.ViewModels;
@@ -10,7 +11,7 @@ namespace Neodenit.ActiveReader.Services
 {
     public class BoilerpipeWebImportService : IImportService
     {
-        private readonly IHttpClientService httpClientWrapper;
+        private readonly HttpClient httpClient;
 
         private readonly Dictionary<string, string> replacements = new Dictionary<string, string>
         {
@@ -21,9 +22,9 @@ namespace Neodenit.ActiveReader.Services
             { " ?", "?" }
         };
 
-        public BoilerpipeWebImportService(IHttpClientService httpClientWrapper)
+        public BoilerpipeWebImportService(IHttpClientFactory httpClientFactory)
         {
-            this.httpClientWrapper = httpClientWrapper ?? throw new ArgumentNullException(nameof(httpClientWrapper));
+            httpClient = httpClientFactory is null ? throw new ArgumentNullException(nameof(httpClientFactory)) : httpClientFactory.CreateClient();
         }
 
         public async Task<ImportArticleViewModel> GetTextAndTitleAsync(string escapedUrl)
@@ -31,7 +32,7 @@ namespace Neodenit.ActiveReader.Services
             var fullUrl = $"https://boilerpipe-web.appspot.com/extract?url={escapedUrl}&output=json";
 
             var uri = new Uri(fullUrl);
-            var response = await httpClientWrapper.GetAsync(uri);
+            var response = await httpClient.GetAsync(uri);
             var jsonString = await response.Content.ReadAsStringAsync();
 
             var json = JsonConvert.DeserializeAnonymousType(jsonString, new

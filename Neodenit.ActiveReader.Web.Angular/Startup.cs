@@ -75,7 +75,7 @@ namespace Neodenit.ActiveReader.Web.Angular
 
             services.AddScoped<DbContext, ActiveReaderDbContext>();
 
-            services.AddSingleton<IHttpClientService>(new HttpClientService());
+            services.AddHttpClient();
 
             services.AddAutoMapper(typeof(MappingProfile));
         }
