@@ -101,7 +101,7 @@ export class ArticlesCreateComponent implements OnInit, OnChanges {
     if (this.newArticleUrl) {
       let encoddedUrl = encodeURIComponent(this.newArticleUrl);
 
-      this.http.get<IImportArticle>(`articles/import/${encoddedUrl}`, article => {
+      this.http.get<IImportArticle>(`articles/import?url=${encoddedUrl}`, article => {
         this.newArticleTitle = article.title;
         this.newArticleText = article.text;
       });

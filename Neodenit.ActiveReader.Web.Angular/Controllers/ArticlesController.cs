@@ -44,8 +44,8 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
         public ActionResult<DefaultSettingsViewModel> GetDefaultSettings() =>
             articlesService.GetDefaultSettings();
 
-        [HttpGet("import/{url}")]
-        public async Task<ActionResult<ImportArticleViewModel>> Import(string url) =>
+        [HttpGet("import")]
+        public async Task<ActionResult<ImportArticleViewModel>> Import([FromQuery] Uri url) =>
             await importService.GetTextAndTitleAsync(url);
 
         [ValidateModel]
@@ -83,7 +83,7 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
 
             return Ok();
         }
-        
+
         [ValidateModel]
         [HttpPost("navigate")]
         public async Task<ActionResult> Navigate(NavigationViewModel model)

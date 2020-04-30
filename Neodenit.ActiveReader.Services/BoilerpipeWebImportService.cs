@@ -27,8 +27,9 @@ namespace Neodenit.ActiveReader.Services
             httpClient = httpClientFactory is null ? throw new ArgumentNullException(nameof(httpClientFactory)) : httpClientFactory.CreateClient();
         }
 
-        public async Task<ImportArticleViewModel> GetTextAndTitleAsync(string escapedUrl)
+        public async Task<ImportArticleViewModel> GetTextAndTitleAsync(Uri url)
         {
+            var escapedUrl = Uri.EscapeDataString(url.AbsoluteUri);
             var fullUrl = $"https://boilerpipe-web.appspot.com/extract?url={escapedUrl}&output=json";
 
             var uri = new Uri(fullUrl);
