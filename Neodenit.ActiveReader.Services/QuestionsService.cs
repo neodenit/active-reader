@@ -52,7 +52,7 @@ namespace Neodenit.ActiveReader.Services
             {
                 var expression = item.Value;
 
-                var correctAnswer = article.AnswerLength > 1
+                Stat correctAnswer = article.AnswerLength > 1
                     ? GetTwoWordAnswer(expression, item.Next?.Value)
                     : expression;
 
@@ -60,7 +60,9 @@ namespace Neodenit.ActiveReader.Services
                     ? GetDoubleWordChoices(statistics, correctAnswer.Prefix)
                     : GetSingleWordChoices(statistics, correctAnswer.Prefix);
 
-                var choicesCount = choices.Count();
+                var choicesCount = article.AnswerLength > 1 && CoreSettings.Default.RandomizeFirstWord
+                    ? GetSingleWordChoices(statistics, correctAnswer.Prefix).Count()
+                    : choices.Count();
 
                 if (choicesCount > 1)
                 {

@@ -121,5 +121,14 @@ namespace Neodenit.ActiveReader.Common {
                 return ((int)(this["AnswerLengthMaxOption"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool RandomizeFirstWord {
+            get {
+                return ((bool)(this["RandomizeFirstWord"]));
+            }
+        }
     }
 }
