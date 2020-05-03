@@ -117,10 +117,6 @@ namespace Neodenit.ActiveReader.Services
                 _ => throw new NotImplementedException()
             };
 
-            article.Position = newPosition;
-
-            await repository.SaveAsync();
-
             return newPosition;
         }
 
