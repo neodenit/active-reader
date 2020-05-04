@@ -29,6 +29,7 @@ export class ArticlesCreateComponent implements OnInit, OnChanges {
   ignoreCase: boolean;
   ignorePunctuation: boolean;
 
+  readonly defaultArticleUrl = "";
   readonly defaultArticleTitle = "";
   readonly defaultArticleText = "";
   defaultPrefixLength: string;
@@ -155,6 +156,8 @@ export class ArticlesCreateComponent implements OnInit, OnChanges {
   }
 
   private reset() {
+    this.newArticleUrl = this.defaultArticleUrl;
+
     this.newArticleTitle = this.defaultArticleTitle;
     this.newArticleText = this.defaultArticleText;
 
