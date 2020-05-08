@@ -16,6 +16,7 @@ export class ArticlesReadComponent implements OnInit {
   newText: string;
   choices: string[];
   correctAnswer: string;
+  showAnswer: boolean;
 
   constructor(private http: HttpClientService, private route: ActivatedRoute) {
     this.position = 1;
@@ -35,6 +36,8 @@ export class ArticlesReadComponent implements OnInit {
     if (answer === this.correctAnswer) {
       this.score++;
 
+      this.showAnswer = true;
+
       let nextPosition = this.position + this.article.answerLength;
       this.getQuestion(this.article.id, nextPosition);
     } else {
@@ -47,6 +50,8 @@ export class ArticlesReadComponent implements OnInit {
   getQuestion(articleId: number, nextPosition: number) {
     this.http.get<IQuestion>(`questions/article/${articleId}/position/${nextPosition}`,
       data => {
+        this.showAnswer = false;
+
         this.position = data.answerPosition;
         this.startingText = data.startingText;
         this.newText = data.newText;
