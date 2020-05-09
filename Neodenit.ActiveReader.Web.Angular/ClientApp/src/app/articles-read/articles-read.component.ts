@@ -33,17 +33,19 @@ export class ArticlesReadComponent implements OnInit {
   }
 
   check(answer: string) {
-    if (answer === this.correctAnswer) {
-      this.score++;
+    if (!this.showAnswer) {
+      if (answer === this.correctAnswer) {
+        this.score++;
 
-      this.showAnswer = true;
+        this.showAnswer = true;
 
-      let nextPosition = this.position + this.article.answerLength;
-      this.getQuestion(this.article.id, nextPosition);
-    } else {
-      this.score--;
+        let nextPosition = this.position + this.article.answerLength;
+        this.getQuestion(this.article.id, nextPosition);
+      } else {
+        this.score--;
 
-      this.choices = this.choices.filter(x => x !== answer);
+        this.choices = this.choices.filter(x => x !== answer);
+      }
     }
   }
 
