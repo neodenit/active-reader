@@ -6,8 +6,6 @@ namespace Neodenit.ActiveReader.Common.Interfaces
 {
     public interface IStatRepository : IRepository<Stat>
     {
-        Task<Stat> GetByPrefixSuffixArticleAsync(string prefix, string suffix, int articleId);
-
         Task<IEnumerable<Stat>> GetByArticleAsync(int articleId);
 
         void DeleteFromArticle(int articleId);
