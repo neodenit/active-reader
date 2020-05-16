@@ -27,7 +27,6 @@ namespace Neodenit.ActiveReader.Services
             {
                 Position = ws.Position,
                 OriginalWord = ws.Word,
-                CorrectedWord = NormalizeWord(ws.Word, article.IgnoreCase),
                 NextSpace = ws.Space,
                 ArticleId = article.Id
             });
@@ -52,8 +51,8 @@ namespace Neodenit.ActiveReader.Services
 
         public IEnumerable<Stat> GetExpressions(IEnumerable<Word> words, int prefixLength, bool ignoreCase) =>
             words.GetPairs(
-                w => GetPrefix(w.Select(x => x.CorrectedWord), ignoreCase),
-                w => GetSuffix(w.CorrectedWord, ignoreCase),
+                w => GetPrefix(w.Select(x => x.OriginalWord), ignoreCase),
+                w => GetSuffix(w.OriginalWord, ignoreCase),
                 (word, prefix, suffix) => new Stat
                 {
                     Prefix = prefix,

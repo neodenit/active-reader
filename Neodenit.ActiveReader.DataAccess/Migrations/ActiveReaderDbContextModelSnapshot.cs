@@ -96,9 +96,6 @@ namespace Neodenit.ActiveReader.DataAccess.Migrations
                     b.Property<int>("ArticleId")
                         .HasColumnType("int");
 
-                    b.Property<string>("CorrectedWord")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("NextSpace")
                         .HasColumnType("nvarchar(max)");
 
