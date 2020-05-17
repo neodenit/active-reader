@@ -26,7 +26,7 @@ namespace Neodenit.ActiveReader.Services
             var result = wordsSpaces.Select(ws => new Word
             {
                 Position = ws.Position,
-                OriginalWord = ws.Word,
+                Text = ws.Word,
                 NextSpace = ws.Space,
                 ArticleId = article.Id
             });
@@ -35,7 +35,7 @@ namespace Neodenit.ActiveReader.Services
         }
 
         public string GetText(IEnumerable<Word> words) =>
-            string.Join(string.Empty, words.Select(w => w.OriginalWord + w.NextSpace));
+            string.Join(string.Empty, words.Select(w => w.Text + w.NextSpace));
 
         public string GetTextAlt(IEnumerable<Word> words) =>
             string.Join(string.Empty, GetTextParts(words));
@@ -44,15 +44,15 @@ namespace Neodenit.ActiveReader.Services
         {
             foreach (var word in words)
             {
-                yield return word.OriginalWord;
+                yield return word.Text;
                 yield return word.NextSpace;
             }
         }
 
         public IEnumerable<Stat> GetExpressions(IEnumerable<Word> words, int prefixLength, bool ignoreCase) =>
             words.GetPairs(
-                w => GetPrefix(w.Select(x => x.OriginalWord), ignoreCase),
-                w => GetSuffix(w.OriginalWord, ignoreCase),
+                w => GetPrefix(w.Select(x => x.Text), ignoreCase),
+                w => GetSuffix(w.Text, ignoreCase),
                 (word, prefix, suffix) => new Stat
                 {
                     Prefix = prefix,

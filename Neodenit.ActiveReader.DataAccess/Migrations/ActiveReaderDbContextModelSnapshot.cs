@@ -99,11 +99,11 @@ namespace Neodenit.ActiveReader.DataAccess.Migrations
                     b.Property<string>("NextSpace")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OriginalWord")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Position")
                         .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

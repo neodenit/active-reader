@@ -10,7 +10,7 @@
 
         public int Position { get; set; }
 
-        public string OriginalWord { get; set; }
+        public string Text { get; set; }
 
         public string NextSpace { get; set; }
     }
