@@ -151,28 +151,37 @@ namespace Neodenit.ActiveReader.Services
                 {
                     dest.Owner = userName;
                     dest.Position = Constants.StartingPosition;
-                    dest.State = ArticleState.Processing;
                 }));
 
-            await repository.UpdateAsync(article, article.Id);
-            await repository.SaveAsync();
+            Article dbArticle = repository.Get(article.Id);
 
-            try
+            if (article.Text != dbArticle.Text ||
+                article.PrefixLength != dbArticle.PrefixLength ||
+                article.AnswerLength != dbArticle.AnswerLength ||
+                article.IgnoreCase != dbArticle.IgnoreCase ||
+                article.IgnorePunctuation != dbArticle.IgnorePunctuation)
             {
-                await expressionsService.DeleteExpressionsFromArticleAsync(article.Id);
-                await expressionsService.AddExpressionsFromArticleAsync(article);
-
-                await wordsService.DeleteWordsFromArticleAsync(article.Id);
-                await wordsService.AddWordsFromArticleAsync(article);
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, string.Empty);
-
-                article.State = ArticleState.Failed;
+                article.State = ArticleState.Processing;
                 await repository.UpdateAsync(article, article.Id);
                 await repository.SaveAsync();
-                throw;
+
+                try
+                {
+                    await expressionsService.DeleteExpressionsFromArticleAsync(article.Id);
+                    await expressionsService.AddExpressionsFromArticleAsync(article);
+
+                    await wordsService.DeleteWordsFromArticleAsync(article.Id);
+                    await wordsService.AddWordsFromArticleAsync(article);
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, string.Empty);
+
+                    article.State = ArticleState.Failed;
+                    await repository.UpdateAsync(article, article.Id);
+                    await repository.SaveAsync();
+                    throw;
+                }
             }
 
             article.State = ArticleState.Processed;
