@@ -33,11 +33,16 @@ export class ArticlesListComponent implements OnInit {
     this.articleId = null;
 
     if (article) {
+      let articles = this.articles.slice();
+
       if (article.id) {
-        this.articles = this.articles.filter(a => a.id !== article.id);
+        articles = articles.filter(a => a.id !== article.id);
       }
 
-      this.articles.push(article);
+      articles.push(article);
+      articles.sort((a, b) => a.title.localeCompare(b.title));
+
+      this.articles = articles;
     }
   }
 
