@@ -10,5 +10,11 @@ namespace Neodenit.ActiveReader.Common.Interfaces
         IEnumerable<Stat> GetPrefixStat(Article article);
 
         IEnumerable<Stat> GetSuffixStat(Article article);
+
+        string GetNextExpressionPrefix(Stat expression);
+
+        double GetProbability(IEnumerable<Stat> statistics, Stat stat);
+
+        IEnumerable<string> GetWeightedChoices(string correctAnswer, IEnumerable<Stat> allChoices, int maxChoices, int answerLength);
     }
 }

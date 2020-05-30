@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Ether.WeightedSelector;
 using Neodenit.ActiveReader.Common;
 using Neodenit.ActiveReader.Common.DataModels;
 using Neodenit.ActiveReader.Common.Interfaces;
@@ -86,6 +88,41 @@ namespace Neodenit.ActiveReader.Services
                     Count = stat.Count
                 });
 
+            return result;
+        }
+
+        public string GetNextExpressionPrefix(Stat expression)
+        {
+            var words = expression.Prefix.Split(Constants.PrefixDelimiter).Skip(1).Append(expression.Suffix);
+            var prefix = string.Join(Constants.PrefixDelimiter, words);
+            return prefix;
+        }
+
+        public double GetProbability(IEnumerable<Stat> statistics, Stat stat)
+        {
+            double p1 = statistics.Single(s => s.Prefix == stat.Prefix && s.Suffix == stat.Suffix).Count;
+            double p2 = statistics.Single(s => s.Prefix == stat.Prefix && string.IsNullOrEmpty(s.Suffix)).Count;
+            var result = p1 / p2;
+            return result;
+        }
+
+        public IEnumerable<string> GetWeightedChoices(string correctAnswer, IEnumerable<Stat> allChoices, int maxChoices, int answerLength)
+        {
+            var precision = Math.Pow(10, CoreSettings.Default.PrecisionOrder);
+
+            var getWeight = answerLength > 1
+               ? s => (int)(s.Probability * precision)
+               : (Func<Stat, int>)(s => s.Count);
+
+            var selector = new WeightedSelector<string>();
+
+            var weightedStat = allChoices
+                .Where(c => c.Suffix != correctAnswer)
+                .Select(c => new WeightedItem<string>(c.Suffix, getWeight(c)));
+
+            selector.Add(weightedStat);
+
+            var result = selector.SelectMultiple(maxChoices);
             return result;
         }
     }
