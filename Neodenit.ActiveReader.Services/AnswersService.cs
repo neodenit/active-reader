@@ -8,11 +8,11 @@ namespace Neodenit.ActiveReader.Services
 {
     public class AnswersService : IAnswersService
     {
-        private readonly IStatManagerService statManagerService;
+        private readonly IStatisticsService statisticsService;
 
-        public AnswersService(IStatManagerService statManagerService)
+        public AnswersService(IStatisticsService statisticsService)
         {
-            this.statManagerService = statManagerService ?? throw new ArgumentNullException(nameof(statManagerService));
+            this.statisticsService = statisticsService ?? throw new ArgumentNullException(nameof(statisticsService));
         }
 
         public IEnumerable<Stat> GetSingleWordChoices(IEnumerable<Stat> statistics, string prefix) =>
@@ -32,12 +32,12 @@ namespace Neodenit.ActiveReader.Services
         {
             var firstWordChoices = statistics.Where(s => s.Prefix == prefix && !string.IsNullOrEmpty(s.Suffix));
 
-            var pairs = firstWordChoices.SelectMany(first => GetSingleWordChoices(statistics, statManagerService.GetNextExpressionPrefix(first)).Select(second => new KeyValuePair<Stat, Stat>(first, second)));
+            var pairs = firstWordChoices.SelectMany(first => GetSingleWordChoices(statistics, statisticsService.GetNextExpressionPrefix(first)).Select(second => new KeyValuePair<Stat, Stat>(first, second)));
 
             var result = pairs.Select(p => new Stat
             {
                 Suffix = $"{p.Key.Suffix} {p.Value.Suffix}",
-                Probability = statManagerService.GetProbability(statistics, p.Key) * statManagerService.GetProbability(statistics, p.Value)
+                Probability = statisticsService.GetProbability(statistics, p.Key) * statisticsService.GetProbability(statistics, p.Value)
             });
 
             return result;
@@ -53,7 +53,7 @@ namespace Neodenit.ActiveReader.Services
             else
             {
                 var altChoicesCount = maxChoices - 1;
-                var altChoices = statManagerService.GetWeightedChoices(correctAnswer, allChoices, altChoicesCount, answerLength);
+                var altChoices = statisticsService.GetWeightedChoices(correctAnswer, allChoices, altChoicesCount, answerLength);
 
                 var result = altChoices.Append(correctAnswer).OrderBy(_ => Guid.NewGuid());
                 return result;

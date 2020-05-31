@@ -9,28 +9,28 @@ namespace Neodenit.ActiveReader.Services
     public class ExpressionsService : IExpressionsService
     {
         private readonly IStatRepository repository;
-        private readonly IStatManagerService statManagerService;
+        private readonly IStatisticsService statisticsService;
 
-        public ExpressionsService(IStatRepository repository, IStatManagerService statManagerService)
+        public ExpressionsService(IStatRepository repository, IStatisticsService statisticsService)
         {
             this.repository = repository;
-            this.statManagerService = statManagerService;
+            this.statisticsService = statisticsService;
         }
 
         public async Task AddExpressionsFromArticleAsync(Article article)
         {
-            IEnumerable<Stat> expressions = statManagerService.GetExpressionStat(article);
+            IEnumerable<Stat> expressions = statisticsService.GetExpressionStat(article);
             await repository.CreateAsync(expressions);
 
             if (article.AnswerLength > 1)
             {
-                IEnumerable<Stat> prefixes = statManagerService.GetPrefixStat(article);
+                IEnumerable<Stat> prefixes = statisticsService.GetPrefixStat(article);
                 await repository.CreateAsync(prefixes);
             }
 
             if (CoreSettings.Default.CountSuffixes)
             {
-                IEnumerable<Stat> suffixes = statManagerService.GetSuffixStat(article);
+                IEnumerable<Stat> suffixes = statisticsService.GetSuffixStat(article);
                 await repository.CreateAsync(suffixes);
             }
 
