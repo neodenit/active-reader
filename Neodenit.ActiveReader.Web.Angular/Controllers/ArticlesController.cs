@@ -28,8 +28,7 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
         public async Task<ActionResult<IEnumerable<ArticleViewModel>>> Get()
         {
             IEnumerable<ArticleViewModel> articles = await articlesService.GetArticlesAsync(User.Identity.Name);
-            var sortedArticles = articles.OrderBy(a => a.Title);
-            return Ok(sortedArticles);
+            return Ok(articles);
         }
 
         [ValidateModel]

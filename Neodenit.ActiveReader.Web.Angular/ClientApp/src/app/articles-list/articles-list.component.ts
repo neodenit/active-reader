@@ -40,9 +40,10 @@ export class ArticlesListComponent implements OnInit {
       }
 
       articles.push(article);
-      articles.sort((a, b) => a.title.localeCompare(b.title));
 
       this.articles = articles;
+
+      this.sortArticles();
     }
   }
 
@@ -72,9 +73,15 @@ export class ArticlesListComponent implements OnInit {
     this.http.get<IArticle[]>("articles", data => {
       this.articles = data;
 
+      this.sortArticles();
+
       if (this.articles.some(x => x.state === ArticleState.Processing)) {
         setTimeout(() => this.getArticles(), this.refreshInterval);
       }
     });
+  }
+
+  private sortArticles() {
+    this.articles = this.articles.sort((a, b) => a.title.localeCompare(b.title));
   }
 }
