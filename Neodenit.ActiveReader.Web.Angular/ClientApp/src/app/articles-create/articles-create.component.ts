@@ -100,7 +100,7 @@ export class ArticlesCreateComponent implements OnInit, OnChanges {
 
   import() {
     if (this.newArticleUrl) {
-      let encoddedUrl = encodeURIComponent(this.newArticleUrl);
+      const encoddedUrl = encodeURIComponent(this.newArticleUrl);
 
       this.http.get<IImportArticle>(`articles/import?url=${encoddedUrl}`, article => {
         this.newArticleTitle = article.title;
@@ -110,7 +110,7 @@ export class ArticlesCreateComponent implements OnInit, OnChanges {
   }
 
   createArticle() {
-    let article: IArticle = {
+    const article: IArticle = {
       title: this.newArticleTitle,
       text: this.newArticleText,
       prefixLength: parseInt(this.prefixLength),
@@ -128,7 +128,7 @@ export class ArticlesCreateComponent implements OnInit, OnChanges {
   }
 
   updateArticle() {
-    let article: IArticle = {
+    const article: IArticle = {
       id: this.articleId,
       title: this.newArticleTitle,
       text: this.newArticleText,

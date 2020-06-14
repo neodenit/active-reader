@@ -24,8 +24,8 @@ export class ArticlesReadComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let idParam = this.route.snapshot.paramMap.get("id");
-    let id = parseInt(idParam);
+    const idParam = this.route.snapshot.paramMap.get("id");
+    const id = parseInt(idParam);
 
     this.http.get<IArticle>(`articles/${id}`, data => this.article = data);
 

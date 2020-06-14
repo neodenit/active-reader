@@ -18,7 +18,7 @@ export class ArticlesNavigationComponent {
   constructor(private http: HttpClientService) { }
 
   navigateTo(target: NavigationTarget) {
-    let navigation: INavigation = {
+    const navigation: INavigation = {
       ArticleId: this.articleId,
       Target: target
     };
