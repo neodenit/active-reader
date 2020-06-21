@@ -77,6 +77,8 @@ namespace Neodenit.ActiveReader.Services
                     string startingText = converterService.GetText(startingWords);
                     string newText = converterService.GetText(newWords);
 
+                    var textEnding = newWords.Last().NextSpace.Contains(Constants.LineBreak) ? Constants.Ellipsis : string.Empty;
+
                     var question = new QuestionViewModel
                     {
                         CorrectAnswer = article.AnswerLength > 1 ? correctAnswer.Suffix : expression.Suffix,
@@ -84,7 +86,7 @@ namespace Neodenit.ActiveReader.Services
                         ArticleId = expression.ArticleId,
                         Choices = bestChoices,
                         StartingText = startingText,
-                        NewText = newText
+                        NewText = newText + textEnding
                     };
 
                     return question;
