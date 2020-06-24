@@ -8,5 +8,7 @@
         public const string Ellipsis = "...";
 
         public const int StartingPosition = 1;
+
+        public static readonly char[] SentenceBreaks = new[] { '.', '!', '?', '\n' };
     }
 }

@@ -27,5 +27,8 @@ namespace Neodenit.ActiveReader.Common
                 prefixWords.Dequeue();
             }
         }
+
+        public static bool ContainsSentenceBreak(this string text) =>
+            text.Any(x => Constants.SentenceBreaks.Contains(x));
     }
 }

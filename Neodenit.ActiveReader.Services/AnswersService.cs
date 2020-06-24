@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Neodenit.ActiveReader.Common;
 using Neodenit.ActiveReader.Common.DataModels;
 using Neodenit.ActiveReader.Common.Interfaces;
 
@@ -32,9 +33,13 @@ namespace Neodenit.ActiveReader.Services
         {
             var firstWordChoices = statistics.Where(s => s.Prefix == prefix && !string.IsNullOrEmpty(s.Suffix));
 
-            var pairs = firstWordChoices.SelectMany(first => GetSingleWordChoices(statistics, statisticsService.GetNextExpressionPrefix(first)).Select(second => new KeyValuePair<Stat, Stat>(first, second)));
+            var pairs = firstWordChoices.SelectMany(first =>
+                GetSingleWordChoices(statistics, statisticsService.GetNextExpressionPrefix(first))
+                    .Select(second => new KeyValuePair<Stat, Stat>(first, second)));
 
-            var result = pairs.Select(p => new Stat
+            var validPairs = pairs.Where(p => !p.Key.Suffix.ContainsSentenceBreak());
+
+            var result = validPairs.Select(p => new Stat
             {
                 Suffix = $"{p.Key.Suffix} {p.Value.Suffix}",
                 Probability = statisticsService.GetProbability(statistics, p.Key) * statisticsService.GetProbability(statistics, p.Value)

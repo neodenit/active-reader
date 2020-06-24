@@ -53,6 +53,11 @@ namespace Neodenit.ActiveReader.Services
             {
                 var expression = item.Value;
 
+                if (expression.Prefix.ContainsSentenceBreak() || expression.Suffix.ContainsSentenceBreak())
+                {
+                    continue;
+                }
+
                 Stat correctAnswer = article.AnswerLength > 1
                     ? answersService.GetTwoWordAnswer(expression, item.Next?.Value)
                     : expression;
@@ -62,7 +67,9 @@ namespace Neodenit.ActiveReader.Services
                     : answersService.GetSingleWordChoices(statistics, correctAnswer.Prefix);
 
                 var choicesCount = article.AnswerLength > 1 && CoreSettings.Default.RandomizeFirstWord
-                    ? answersService.GetSingleWordChoices(statistics, correctAnswer.Prefix).Count()
+                    ? answersService.GetSingleWordChoices(statistics, correctAnswer.Prefix)
+                        .Where(x => !x.Suffix.ContainsSentenceBreak())
+                        .Count()
                     : choices.Count();
 
                 if (choicesCount > 1)
@@ -77,19 +84,20 @@ namespace Neodenit.ActiveReader.Services
                     string startingText = converterService.GetText(startingWords);
                     string newText = converterService.GetText(newWords);
 
-                    var textEnding = newWords.Last().NextSpace.Contains(Constants.LineBreak) ? Constants.Ellipsis : string.Empty;
-
-                    var question = new QuestionViewModel
+                    if (!newWords.Last().NextSpace.ContainsSentenceBreak())
                     {
-                        CorrectAnswer = article.AnswerLength > 1 ? correctAnswer.Suffix : expression.Suffix,
-                        AnswerPosition = expression.SuffixPosition,
-                        ArticleId = expression.ArticleId,
-                        Choices = bestChoices,
-                        StartingText = startingText,
-                        NewText = newText + textEnding
-                    };
+                        var question = new QuestionViewModel
+                        {
+                            CorrectAnswer = article.AnswerLength > 1 ? correctAnswer.Suffix : expression.Suffix,
+                            AnswerPosition = expression.SuffixPosition,
+                            ArticleId = expression.ArticleId,
+                            Choices = bestChoices,
+                            StartingText = startingText,
+                            NewText = newText
+                        };
 
-                    return question;
+                        return question;
+                    }
                 }
             }
 
