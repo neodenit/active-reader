@@ -39,7 +39,7 @@ export class ArticlesReadComponent implements OnInit {
 
         this.showAnswer = true;
 
-        let nextPosition = this.position + this.article.answerLength;
+        const nextPosition = this.position + this.article.answerLength;
         this.getQuestion(this.article.id, nextPosition);
       } else {
         this.score--;
@@ -59,10 +59,12 @@ export class ArticlesReadComponent implements OnInit {
         this.newText = data.newText;
         this.choices = data.choices;
         this.correctAnswer = data.correctAnswer;
+
+        setTimeout(() => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" }));
       });
 
-      this.http.post<IQuestion>(`articles/${articleId}/position/${nextPosition}`, null, null);
-    }
+    this.http.post<IQuestion>(`articles/${articleId}/position/${nextPosition}`, null, null);
+  }
 
   navigateToPosition(position: number) {
     this.score = null;
