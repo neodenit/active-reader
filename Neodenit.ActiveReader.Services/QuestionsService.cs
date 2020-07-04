@@ -84,12 +84,15 @@ namespace Neodenit.ActiveReader.Services
                     string startingText = converterService.GetText(startingWords);
                     string newText = converterService.GetText(newWords);
 
+                    var endPosition = orderedWords.Last().Position;
+
                     if (!newWords.Last().NextSpace.ContainsSentenceBreak())
                     {
                         var question = new QuestionViewModel
                         {
                             CorrectAnswer = article.AnswerLength > 1 ? correctAnswer.Suffix : expression.Suffix,
                             AnswerPosition = expression.SuffixPosition,
+                            Progress = 100 * expression.SuffixPosition / endPosition,
                             ArticleId = expression.ArticleId,
                             Choices = bestChoices,
                             StartingText = startingText,
@@ -104,6 +107,7 @@ namespace Neodenit.ActiveReader.Services
             return new QuestionViewModel
             {
                 AnswerPosition = 0,
+                Progress = 100,
                 ArticleId = articleId,
                 StartingText = converterService.GetText(orderedWords)
             };

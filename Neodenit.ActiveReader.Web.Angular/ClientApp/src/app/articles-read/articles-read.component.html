@@ -1,15 +1,19 @@
-<div class="row d-flex justify-content-sm-between sticky-top bg-white pt-2 pb-2 pb-sm-0">
-  <div class="col-sm-auto">
-    <h2 *ngIf="article">{{ article.title }}</h2>
+<div class="sticky-top bg-white pt-2 pb-2">
+  <div class="row d-flex justify-content-sm-between pb-2 pb-sm-0">
+    <div class="col-sm-auto">
+      <h2 class="text-truncate" *ngIf="article">{{ article.title }}</h2>
+    </div>
+
+    <div class="col-sm-auto">
+      <articles-score [score]="score"></articles-score>
+    </div>
+
+    <div class="col-sm-auto">
+      <articles-navigation *ngIf="article" [articleId]="article.id" (navigate)="navigateToPosition($event)"></articles-navigation>
+    </div>
   </div>
 
-  <div class="col-sm-auto">
-    <articles-score [score]="score"></articles-score>
-  </div>
-
-  <div class="col-sm-auto">
-    <articles-navigation *ngIf="article" [articleId]="article.id" (navigate)="navigateToPosition($event)"></articles-navigation>
-  </div>
+  <ngb-progressbar type="success" [value]="progress"></ngb-progressbar>
 </div>
 
 <div class="multiline mb-2"><span>{{ startingText }}</span><span class="font-weight-bold">{{ newText }}</span></div>

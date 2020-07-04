@@ -12,6 +12,7 @@ export class ArticlesReadComponent implements OnInit {
   article: IArticle;
   score: number;
   position: number;
+  progress: number;
   startingText: string;
   newText: string;
   choices: string[];
@@ -55,6 +56,7 @@ export class ArticlesReadComponent implements OnInit {
         this.showAnswer = false;
 
         this.position = data.answerPosition;
+        this.progress = data.progress;
         this.startingText = data.startingText;
         this.newText = data.newText;
         this.choices = data.choices;
