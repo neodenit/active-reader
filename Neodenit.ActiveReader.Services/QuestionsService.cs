@@ -67,9 +67,11 @@ namespace Neodenit.ActiveReader.Services
                     : answersService.GetSingleWordChoices(statistics, correctAnswer.Prefix);
 
                 var choicesCount = article.AnswerLength > 1 && CoreSettings.Default.RandomizeFirstWord
-                    ? answersService.GetSingleWordChoices(statistics, correctAnswer.Prefix)
-                        .Where(x => !x.Suffix.ContainsSentenceBreak())
-                        .Count()
+                    ? Math.Min(
+                        choices.Count(),
+                        answersService.GetSingleWordChoices(statistics, correctAnswer.Prefix)
+                            .Where(x => !x.Suffix.ContainsSentenceBreak())
+                            .Count())
                     : choices.Count();
 
                 if (choicesCount > 1)
