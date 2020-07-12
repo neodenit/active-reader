@@ -17,7 +17,11 @@ export class ArticlesReadComponent implements OnInit {
   newText: string;
   choices: string[];
   correctAnswer: string;
-  showAnswer: boolean;
+  incorrectAnswer: string;
+  showCorrectAnswer: boolean;
+  showIncorrectAnswer: boolean;
+
+  incorrectAnswerTimeout = 3000;
 
   constructor(private http: HttpClientService, private route: ActivatedRoute) {
     this.position = 1;
@@ -34,18 +38,24 @@ export class ArticlesReadComponent implements OnInit {
   }
 
   check(answer: string) {
-    if (!this.showAnswer) {
+    if (!this.showCorrectAnswer && !this.showIncorrectAnswer) {
       if (answer === this.correctAnswer) {
         this.score++;
 
-        this.showAnswer = true;
+        this.showCorrectAnswer = true;
 
         const nextPosition = this.position + this.article.answerLength;
         this.getQuestion(this.article.id, nextPosition);
       } else {
         this.score--;
 
-        this.choices = this.choices.filter(x => x !== answer);
+        this.incorrectAnswer = answer;
+        this.showIncorrectAnswer = true;
+
+        setTimeout(() => {
+          this.showIncorrectAnswer = false;
+          this.choices = this.choices.filter(x => x !== answer);
+        }, this.incorrectAnswerTimeout);
       }
     }
   }
@@ -53,7 +63,8 @@ export class ArticlesReadComponent implements OnInit {
   getQuestion(articleId: number, nextPosition: number) {
     this.http.get<IQuestion>(`questions/article/${articleId}/position/${nextPosition}`,
       data => {
-        this.showAnswer = false;
+        this.showCorrectAnswer = false;
+        this.showIncorrectAnswer = false;
 
         this.position = data.answerPosition;
         this.progress = data.progress;
