@@ -20,7 +20,11 @@
 
 <div class="list-group list-group-horizontal-sm">
   <a *ngFor="let choice of choices" class="list-group-item list-group-item-action text-center font-weight-bold border-dark right"
-     [ngClass]="choice === correctAnswer && showAnswer ? 'bg-success text-white' : 'bg-light'"
+     [ngClass]="choice === correctAnswer && showCorrectAnswer
+       ? 'bg-success text-white'
+       : choice === incorrectAnswer && showIncorrectAnswer
+       ? 'bg-danger text-white'
+       : 'bg-light'"
      (click)="check(choice)">{{ choice }}</a>
 </div>
 
