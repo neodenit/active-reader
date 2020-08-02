@@ -22,6 +22,9 @@ export class ArticlesReadComponent implements OnInit {
   showIncorrectAnswer: boolean;
 
   incorrectAnswerTimeout = 3000;
+  correctAnswerTimeout = 1000;
+
+  correctAnswerTime: Date;
 
   constructor(private http: HttpClientService, private route: ActivatedRoute) {
     this.position = 1;
@@ -40,6 +43,8 @@ export class ArticlesReadComponent implements OnInit {
   check(answer: string) {
     if (!this.showCorrectAnswer && !this.showIncorrectAnswer) {
       if (answer === this.correctAnswer) {
+        this.correctAnswerTime = new Date();
+
         this.score++;
 
         this.showCorrectAnswer = true;
@@ -63,17 +68,24 @@ export class ArticlesReadComponent implements OnInit {
   getQuestion(articleId: number, nextPosition: number) {
     this.http.get<IQuestion>(`questions/article/${articleId}/position/${nextPosition}`,
       data => {
-        this.showCorrectAnswer = false;
-        this.showIncorrectAnswer = false;
+        const currentTime = new Date().getTime();
+        const previousTime = this.correctAnswerTime ? this.correctAnswerTime.getTime() : 0
+        const timeDiff = currentTime - previousTime;
+        const delay = Math.max(0, this.correctAnswerTimeout - timeDiff);
 
-        this.position = data.answerPosition;
-        this.progress = data.progress;
-        this.startingText = data.startingText;
-        this.newText = data.newText;
-        this.choices = data.choices;
-        this.correctAnswer = data.correctAnswer;
+        setTimeout(() => {
+          this.showCorrectAnswer = false;
+          this.showIncorrectAnswer = false;
 
-        setTimeout(() => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" }));
+          this.position = data.answerPosition;
+          this.progress = data.progress;
+          this.startingText = data.startingText;
+          this.newText = data.newText;
+          this.choices = data.choices;
+          this.correctAnswer = data.correctAnswer;
+
+          setTimeout(() => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" }));
+        }, delay);
       });
 
     this.http.post<IQuestion>(`articles/${articleId}/position/${nextPosition}`, null, null);
