@@ -5,7 +5,7 @@ namespace Neodenit.ActiveReader.Common.Interfaces
 {
     public interface IAnswersService
     {
-        IEnumerable<string> GetBestChoices(string correctAnswer, IEnumerable<Stat> allChoices, int maxChoices, int answerLength);
+        IEnumerable<string> GetBestChoices(string correctAnswer, string correctAnswerFirstWord, IEnumerable<Stat> allChoices, int maxChoices, int answerLength);
 
         IEnumerable<string> GetBestChoicesLegacy(string correctAnswer, IEnumerable<Stat> allChoices, int maxChoices);
 

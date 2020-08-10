@@ -62,21 +62,18 @@ namespace Neodenit.ActiveReader.Services
                     ? answersService.GetTwoWordAnswer(expression, item.Next?.Value)
                     : expression;
 
+                var correctAnswerFirstWord = expression.Suffix;
+
                 IEnumerable<Stat> choices = article.AnswerLength > 1
                     ? answersService.GetDoubleWordChoices(statistics, correctAnswer.Prefix)
                     : answersService.GetSingleWordChoices(statistics, correctAnswer.Prefix);
 
-                var choicesCount = article.AnswerLength > 1 && CoreSettings.Default.RandomizeFirstWord
-                    ? Math.Min(
-                        choices.Count(),
-                        answersService.GetSingleWordChoices(statistics, correctAnswer.Prefix)
-                            .Where(x => !x.Suffix.ContainsSentenceBreak())
-                            .Count())
-                    : choices.Count();
+                IEnumerable<string> bestChoices = answersService.GetBestChoices(correctAnswer.Suffix, correctAnswerFirstWord, choices, article.MaxChoices, article.AnswerLength);
+
+                var choicesCount = bestChoices.Count();
 
                 if (choicesCount > 1)
                 {
-                    var bestChoices = answersService.GetBestChoices(correctAnswer.Suffix, choices, article.MaxChoices, article.AnswerLength);
 
                     var correctedPosition = lastPosition - article.AnswerLength;
 

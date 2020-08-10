@@ -15,6 +15,6 @@ namespace Neodenit.ActiveReader.Common.Interfaces
 
         double GetProbability(IEnumerable<Stat> statistics, Stat stat);
 
-        IEnumerable<string> GetWeightedChoices(string correctAnswer, IEnumerable<Stat> allChoices, int maxChoices, int answerLength);
+        IEnumerable<string> GetWeightedChoices(IEnumerable<Stat> choices, int maxChoices, int answerLength);
     }
 }

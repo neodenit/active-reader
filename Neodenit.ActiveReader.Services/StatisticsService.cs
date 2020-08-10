@@ -29,7 +29,7 @@ namespace Neodenit.ActiveReader.Services
                 article.PrefixLength
             );
 
-            var statDict = pairs.GroupBy(p => p).Select(p => new { Pair = p.Key, Count = p.Count()});
+            var statDict = pairs.GroupBy(p => p).Select(p => new { Pair = p.Key, Count = p.Count() });
 
             var result = statDict.Select(stat =>
                 new Stat
@@ -106,7 +106,7 @@ namespace Neodenit.ActiveReader.Services
             return result;
         }
 
-        public IEnumerable<string> GetWeightedChoices(string correctAnswer, IEnumerable<Stat> allChoices, int maxChoices, int answerLength)
+        public IEnumerable<string> GetWeightedChoices(IEnumerable<Stat> choices, int maxChoices, int answerLength)
         {
             var precision = Math.Pow(10, CoreSettings.Default.PrecisionOrder);
 
@@ -114,16 +114,42 @@ namespace Neodenit.ActiveReader.Services
                ? s => (int)(s.Probability * precision)
                : (Func<Stat, int>)(s => s.Count);
 
-            var selector = new WeightedSelector<string>();
+            var weightedSelector = new WeightedSelector<Stat>();
 
-            var weightedStat = allChoices
-                .Where(c => c.Suffix != correctAnswer)
-                .Select(c => new WeightedItem<string>(c.Suffix, getWeight(c)));
+            var weightedStat = choices
+                .Select(c => new WeightedItem<Stat>(c, getWeight(c)));
 
-            selector.Add(weightedStat);
+            weightedSelector.Add(weightedStat);
 
-            var result = selector.SelectMultiple(maxChoices);
-            return result;
+            if (answerLength > 1 && CoreSettings.Default.RandomizeFirstWord)
+            {
+                static IEnumerable<string> GetRandomChoices(WeightedSelector<Stat> selector)
+                {
+                    while (selector.ReadOnlyItems.Any())
+                    {
+                        var choice = selector.Select();
+
+                        var exceptions = selector.ReadOnlyItems.Where(x => x.Value.SuffixFirstWord == choice.SuffixFirstWord).ToList();
+
+                        foreach (var exception in exceptions)
+                        {
+                            selector.Remove(exception);
+                        }
+
+                        yield return choice.Suffix;
+                    }
+                }
+
+                IEnumerable<string> randomChoices = GetRandomChoices(weightedSelector);
+                var result = randomChoices.Take(maxChoices).ToList();
+                return result;
+            }
+            else
+            {
+                var randomChoices = weightedSelector.SelectMultiple(maxChoices);
+                var result = randomChoices.Select(c => c.Suffix);
+                return result;
+            }
         }
     }
 }

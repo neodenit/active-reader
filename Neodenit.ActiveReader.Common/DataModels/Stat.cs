@@ -21,5 +21,8 @@ namespace Neodenit.ActiveReader.Common.DataModels
 
         [NotMapped]
         public int SuffixPosition { get; set; }
+
+        [NotMapped]
+        public string SuffixFirstWord { get; set; }
     }
 }

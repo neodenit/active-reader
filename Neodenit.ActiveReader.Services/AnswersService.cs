@@ -41,6 +41,7 @@ namespace Neodenit.ActiveReader.Services
 
             var result = validPairs.Select(p => new Stat
             {
+                SuffixFirstWord = p.Key.Suffix,
                 Suffix = $"{p.Key.Suffix} {p.Value.Suffix}",
                 Probability = statisticsService.GetProbability(statistics, p.Key) * statisticsService.GetProbability(statistics, p.Value)
             });
@@ -48,19 +49,21 @@ namespace Neodenit.ActiveReader.Services
             return result;
         }
 
-        public IEnumerable<string> GetBestChoices(string correctAnswer, IEnumerable<Stat> allChoices, int maxChoices, int answerLength)
+        public IEnumerable<string> GetBestChoices(string correctAnswer, string correctAnswerFirstWord, IEnumerable<Stat> allChoices, int maxChoices, int answerLength)
         {
-            if (allChoices.Count() <= maxChoices)
+            var altChoices = allChoices.Where(c => c.Suffix != correctAnswer && c.SuffixFirstWord != correctAnswerFirstWord);
+            var maxAltChoicesCount = maxChoices - 1;
+
+            if (altChoices.Count() <= maxAltChoicesCount)
             {
-                var result = allChoices.Select(c => c.Suffix).OrderBy(_ => Guid.NewGuid());
+                var result = altChoices.Select(c => c.Suffix).Append(correctAnswer).OrderBy(_ => Guid.NewGuid());
                 return result;
             }
             else
             {
-                var altChoicesCount = maxChoices - 1;
-                var altChoices = statisticsService.GetWeightedChoices(correctAnswer, allChoices, altChoicesCount, answerLength);
+                var bestAltChoices = statisticsService.GetWeightedChoices(altChoices, maxAltChoicesCount, answerLength);
 
-                var result = altChoices.Append(correctAnswer).OrderBy(_ => Guid.NewGuid());
+                var result = bestAltChoices.Append(correctAnswer).OrderBy(_ => Guid.NewGuid());
                 return result;
             }
         }
@@ -72,7 +75,6 @@ namespace Neodenit.ActiveReader.Services
             .ThenBy(_ => Guid.NewGuid())
             .Take(maxChoices)
             .OrderBy(_ => Guid.NewGuid())
-            .Select(c => c.Suffix);
-
+            .Select(c => c.Suffix);            
     }
 }
