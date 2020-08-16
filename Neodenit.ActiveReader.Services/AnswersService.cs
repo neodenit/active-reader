@@ -54,18 +54,10 @@ namespace Neodenit.ActiveReader.Services
             var altChoices = allChoices.Where(c => c.Suffix != correctAnswer && c.SuffixFirstWord != correctAnswerFirstWord);
             var maxAltChoicesCount = maxChoices - 1;
 
-            if (altChoices.Count() <= maxAltChoicesCount)
-            {
-                var result = altChoices.Select(c => c.Suffix).Append(correctAnswer).OrderBy(_ => Guid.NewGuid());
-                return result;
-            }
-            else
-            {
-                var bestAltChoices = statisticsService.GetWeightedChoices(altChoices, maxAltChoicesCount, answerLength);
+            IEnumerable<string> bestAltChoices = statisticsService.GetWeightedChoices(altChoices, maxAltChoicesCount, answerLength);
 
-                var result = bestAltChoices.Append(correctAnswer).OrderBy(_ => Guid.NewGuid());
-                return result;
-            }
+            var result = bestAltChoices.Append(correctAnswer).OrderBy(_ => Guid.NewGuid());
+            return result;
         }
 
         public IEnumerable<string> GetBestChoicesLegacy(string correctAnswer, IEnumerable<Stat> allChoices, int maxChoices) =>
