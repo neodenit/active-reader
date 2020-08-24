@@ -16,6 +16,18 @@ code {
   color: #e01a76;
 }
 
+.main-content {
+  margin-top: 57px;
+}
+
+.reading-panel {
+  margin-top: 57px;
+}
+
+.reading-content {
+  margin-top: 220px;
+}
+
 .multiline {
   white-space: pre-wrap;
 }
