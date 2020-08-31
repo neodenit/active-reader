@@ -22,10 +22,11 @@ code {
 
 .reading-panel {
   margin-top: 57px;
+  z-index: 1025;
 }
 
 .reading-content {
-  margin-top: 220px;
+  margin-top: 230px;
 }
 
 .multiline {
