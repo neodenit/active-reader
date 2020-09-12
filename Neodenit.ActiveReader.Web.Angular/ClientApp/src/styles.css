@@ -16,17 +16,9 @@ code {
   color: #e01a76;
 }
 
-.main-content {
-  margin-top: 57px;
-}
-
 .reading-panel {
-  margin-top: 57px;
-  z-index: 1025;
-}
-
-.reading-content {
-  margin-top: 230px;
+  top: 56px;
+  z-index: 1015;
 }
 
 .multiline {

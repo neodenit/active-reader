@@ -1,5 +1,5 @@
-<div class="fixed-top container bg-white reading-panel pt-2 pb-2">
-  <div class="row d-flex justify-content-sm-between pb-2 pb-sm-0">
+<div class="sticky-top bg-white reading-panel pt-2 pb-2">
+  <div class="row d-flex justify-content-sm-between pb-2">
     <div class="col-sm-6">
       <h2 class="text-truncate" *ngIf="article">{{ article.title }}</h2>
     </div>
@@ -16,7 +16,7 @@
   <ngb-progressbar type="success" [value]="progress"></ngb-progressbar>
 </div>
 
-<div class="reading-content multiline mb-2"><span>{{ startingText }}</span><span class="font-weight-bold">{{ newText }}</span></div>
+<div class="multiline mb-2" [style.top]="readingContentTop"><span>{{ startingText }}</span><span class="font-weight-bold">{{ newText }}</span></div>
 
 <div class="list-group list-group-horizontal-sm">
   <a *ngFor="let choice of choices" class="list-group-item list-group-item-action text-center font-weight-bold border-dark right"
