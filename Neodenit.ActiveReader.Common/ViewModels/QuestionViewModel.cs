@@ -10,6 +10,8 @@ namespace Neodenit.ActiveReader.Common.ViewModels
 
         public int AnswerPosition { get; set; }
 
+        public int LastPosition { get; set; }
+
         public int Progress { get; set; }
 
         public string StartingText { get; set; }

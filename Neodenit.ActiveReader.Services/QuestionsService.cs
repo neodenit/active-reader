@@ -95,6 +95,7 @@ namespace Neodenit.ActiveReader.Services
                         {
                             CorrectAnswer = article.AnswerLength > 1 ? correctAnswer.Suffix : expression.Suffix,
                             AnswerPosition = expression.SuffixPosition,
+                            LastPosition = lastPosition,
                             Progress = 100 * expression.SuffixPosition / endPosition,
                             ArticleId = expression.ArticleId,
                             Choices = bestChoices,
@@ -109,7 +110,8 @@ namespace Neodenit.ActiveReader.Services
 
             return new QuestionViewModel
             {
-                AnswerPosition = 0,
+                AnswerPosition = lastPosition,
+                LastPosition = lastPosition,
                 Progress = 100,
                 ArticleId = articleId,
                 StartingText = converterService.GetText(orderedWords)

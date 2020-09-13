@@ -18,7 +18,7 @@ namespace Neodenit.ActiveReader.Common.Interfaces
 
         Task UpdatePositionAsync(int articleId, int position);
 
-        Task<int> Navigate(NavigationViewModel model);
+        Task<int> NavigateAsync(NavigationViewModel model);
 
         DefaultSettingsViewModel GetDefaultSettings();
 

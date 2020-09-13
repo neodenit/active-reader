@@ -86,9 +86,9 @@ export class ArticlesReadComponent implements OnInit {
 
           setTimeout(() => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" }));
         }, delay);
-      });
 
-    this.http.post<IQuestion>(`articles/${articleId}/position/${nextPosition}`, null, null);
+        this.http.post<IQuestion>(`articles/${articleId}/position/${data.lastPosition}`, null, null);
+      });
   }
 
   navigateToPosition(position: number) {

@@ -86,7 +86,7 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
         [HttpPost("navigate")]
         public async Task<ActionResult> Navigate(NavigationViewModel model)
         {
-            int position = await articlesService.Navigate(model);
+            int position = await articlesService.NavigateAsync(model);
 
             return Ok(position);
         }

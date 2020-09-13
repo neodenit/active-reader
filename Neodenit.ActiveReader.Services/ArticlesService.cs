@@ -39,8 +39,8 @@ namespace Neodenit.ActiveReader.Services
                     dest.State = ArticleState.Processing;
                 }));
 
-            await repository.CreateAsync(article);
-            await repository.SaveAsync();
+                await repository.CreateAsync(article);
+                await repository.SaveAsync();
 
             try
             {
@@ -99,7 +99,7 @@ namespace Neodenit.ActiveReader.Services
             return viewModel;
         }
 
-        public async Task<int> Navigate(NavigationViewModel model)
+        public async Task<int> NavigateAsync(NavigationViewModel model)
         {
             Article article = await repository.GetAsync(model.ArticleId);
 
@@ -116,6 +116,8 @@ namespace Neodenit.ActiveReader.Services
                 NavigationTarget.End => await wordsService.GetEndPosition(model.ArticleId, article.Position),
                 _ => throw new NotImplementedException()
             };
+
+            await UpdatePositionAsync(model.ArticleId, newPosition);
 
             return newPosition;
         }
