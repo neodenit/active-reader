@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Neodenit.ActiveReader.Common.Interfaces;
@@ -61,9 +62,9 @@ namespace Neodenit.ActiveReader.DataAccess
             dbContext.SaveChanges();
         }
 
-        public async Task SaveAsync()
+        public async Task SaveAsync(CancellationToken token)
         {
-            await dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync(token);
         }
     }
 }

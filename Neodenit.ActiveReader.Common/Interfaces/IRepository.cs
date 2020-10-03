@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Neodenit.ActiveReader.Common.Interfaces
@@ -27,6 +28,6 @@ namespace Neodenit.ActiveReader.Common.Interfaces
 
         void Save();
 
-        Task SaveAsync();
+        Task SaveAsync(CancellationToken token = default);
     }
 }
