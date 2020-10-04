@@ -69,6 +69,12 @@ export class ArticlesListComponent implements OnInit {
       () => this.articles = this.articles.filter(x => x.id !== article.id));
   }
 
+  cancel(article: IArticle) {
+    this.http.post("articles/cancel",
+      article,
+      null);
+  }
+
   private getArticles() {
     this.http.get<IArticle[]>("articles", data => {
       this.articles = data;

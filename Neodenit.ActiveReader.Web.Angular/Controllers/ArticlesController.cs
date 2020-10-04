@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +17,8 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
     {
         private readonly IArticlesService articlesService;
         private readonly IImportService importService;
+
+        private static Dictionary<string, CancellationTokenSource> tokenSources = new Dictionary<string, CancellationTokenSource>();
 
         public ArticlesController(IArticlesService articlesService, IImportService importService)
         {
@@ -50,7 +53,13 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
         [HttpPost]
         public async Task<ActionResult<ArticleViewModel>> Post(ArticleViewModel article)
         {
-            ArticleViewModel newArticle = await articlesService.CreateAsync(article, User.Identity.Name);
+            _ = article ?? throw new ArgumentNullException(nameof(article));
+
+            tokenSources[article.Title] = new CancellationTokenSource();
+
+            ArticleViewModel newArticle = await articlesService.CreateAsync(article, User.Identity.Name, tokenSources[article.Title].Token);
+
+            tokenSources.Remove(article.Title);
 
             return CreatedAtAction(nameof(GetArticle), new { id = newArticle.ID }, newArticle);
         }
@@ -77,7 +86,13 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
         [HttpPut]
         public async Task<ActionResult> Put(ArticleViewModel article)
         {
-            await articlesService.UpdateAsync(article, User.Identity.Name);
+            _ = article ?? throw new ArgumentNullException(nameof(article));
+
+            tokenSources[article.Title] = new CancellationTokenSource();
+
+            await articlesService.UpdateAsync(article, User.Identity.Name, tokenSources[article.Title].Token);
+
+            tokenSources.Remove(article.Title);
 
             return Ok();
         }
@@ -89,6 +104,30 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
             int position = await articlesService.NavigateAsync(model);
 
             return Ok(position);
+        }        
+        
+        [ValidateModel]
+        [HttpPost("cancel")]
+        public async Task<ActionResult> Cancel(ArticleViewModel article)
+        {
+            _ = article ?? throw new ArgumentNullException(nameof(article));
+
+            if (tokenSources.ContainsKey(article.Title))
+            {
+                var tokenSource = tokenSources[article.Title];
+
+                if (tokenSource.Token.CanBeCanceled)
+                {
+                    tokenSource.Cancel();
+                }
+            }
+
+            if (article.ID.HasValue)
+            {
+                await articlesService.Fail(article.ID.Value);
+            }
+
+            return Ok();
         }
 
         [ValidateModel]

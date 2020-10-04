@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Neodenit.ActiveReader.Common.ViewModels;
 
@@ -12,7 +13,7 @@ namespace Neodenit.ActiveReader.Common.Interfaces
 
         Task<ArticleViewModel> GetAsync(int id);
 
-        Task<ArticleViewModel> CreateAsync(ArticleViewModel articleViewModel, string userName);
+        Task<ArticleViewModel> CreateAsync(ArticleViewModel articleViewModel, string userName, CancellationToken token);
 
         Task DeleteAsync(int id);
 
@@ -22,8 +23,10 @@ namespace Neodenit.ActiveReader.Common.Interfaces
 
         DefaultSettingsViewModel GetDefaultSettings();
 
-        Task UpdateAsync(ArticleViewModel article, string userName);
+        Task UpdateAsync(ArticleViewModel article, string userName, CancellationToken token);
 
         Task RestartUpdateAsync(int id);
+
+        Task Fail(int id);
     }
 }

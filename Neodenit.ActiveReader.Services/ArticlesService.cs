@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.Extensions.Logging;
@@ -28,7 +29,7 @@ namespace Neodenit.ActiveReader.Services
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public async Task<ArticleViewModel> CreateAsync(ArticleViewModel articleViewModel, string userName)
+        public async Task<ArticleViewModel> CreateAsync(ArticleViewModel articleViewModel, string userName, CancellationToken token)
         {
             var article = mapper.Map<ArticleViewModel, Article>(
                 articleViewModel,
@@ -39,8 +40,8 @@ namespace Neodenit.ActiveReader.Services
                     dest.State = ArticleState.Processing;
                 }));
 
-                await repository.CreateAsync(article);
-                await repository.SaveAsync();
+            await repository.CreateAsync(article);
+            await repository.SaveAsync(token);
 
             try
             {
@@ -53,12 +54,12 @@ namespace Neodenit.ActiveReader.Services
                 logger.LogError(ex, string.Empty);
 
                 article.State = ArticleState.Failed;
-                await repository.SaveAsync();
+                await repository.SaveAsync(token);
                 throw;
             }
 
             article.State = ArticleState.Processed;
-            await repository.SaveAsync();
+            await repository.SaveAsync(token);
 
             var viewModel = mapper.Map<ArticleViewModel>(article);
             return viewModel;
@@ -145,7 +146,7 @@ namespace Neodenit.ActiveReader.Services
                 MaxChoicesMaxOption = CoreSettings.Default.MaxChoicesMaxOption
             };
 
-        public async Task UpdateAsync(ArticleViewModel articleViewModel, string userName)
+        public async Task UpdateAsync(ArticleViewModel articleViewModel, string userName, CancellationToken token)
         {
             var article = mapper.Map<ArticleViewModel, Article>(
                 articleViewModel,
@@ -165,7 +166,7 @@ namespace Neodenit.ActiveReader.Services
             {
                 article.State = ArticleState.Processing;
                 await repository.UpdateAsync(article, article.Id);
-                await repository.SaveAsync();
+                await repository.SaveAsync(token);
 
                 try
                 {
@@ -181,14 +182,14 @@ namespace Neodenit.ActiveReader.Services
 
                     article.State = ArticleState.Failed;
                     await repository.UpdateAsync(article, article.Id);
-                    await repository.SaveAsync();
+                    await repository.SaveAsync(token);
                     throw;
                 }
             }
 
             article.State = ArticleState.Processed;
             await repository.UpdateAsync(article, article.Id);
-            await repository.SaveAsync();
+            await repository.SaveAsync(token);
         }
 
         public async Task RestartUpdateAsync(int id)
@@ -216,6 +217,15 @@ namespace Neodenit.ActiveReader.Services
             }
 
             article.State = ArticleState.Processed;
+            await repository.SaveAsync();
+        }
+
+        public async Task Fail(int id)
+        {
+            Article article = repository.Get(id);
+
+            article.State = ArticleState.Failed;
+
             await repository.SaveAsync();
         }
     }

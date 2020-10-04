@@ -10,7 +10,7 @@
   </div>
 </div>
 
-<ul class="list-group mt-2">
+<ul class="list-group pt-2">
   <li *ngFor="let article of articles" class="list-group-item d-flex justify-content-between align-items-center">
     <span *ngIf="article.state === articleState.Processed">
       <a [routerLink]="['article', article.id]" class="pr-3">{{ article.title }}</a>
@@ -23,6 +23,7 @@
     <span>
       <a *ngIf="article.state === articleState.Failed" tabindex="0" (click)="restart(article)" class="oi oi-loop text-primary text-decoration-none pr-3"></a>
       <a *ngIf="article.state !== articleState.Processing" tabindex="0" (click)="remove(article)" class="oi oi-x text-danger text-decoration-none"></a>
+      <a *ngIf="article.state === articleState.Processing" tabindex="0" (click)="cancel(article)" class="oi oi-x text-secondary text-decoration-none"></a>
     </span>
   </li>
 </ul>
