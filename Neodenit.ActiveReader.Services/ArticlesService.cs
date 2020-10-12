@@ -45,9 +45,9 @@ namespace Neodenit.ActiveReader.Services
 
             try
             {
-                await expressionsService.AddExpressionsFromArticleAsync(article);
+                await expressionsService.AddExpressionsFromArticleAsync(article, token);
 
-                await wordsService.AddWordsFromArticleAsync(article);
+                await wordsService.AddWordsFromArticleAsync(article, token);
             }
             catch (Exception ex)
             {
@@ -170,11 +170,11 @@ namespace Neodenit.ActiveReader.Services
 
                 try
                 {
-                    await expressionsService.DeleteExpressionsFromArticleAsync(article.Id);
-                    await expressionsService.AddExpressionsFromArticleAsync(article);
+                    await expressionsService.DeleteExpressionsFromArticleAsync(article.Id, token);
+                    await expressionsService.AddExpressionsFromArticleAsync(article, token);
 
-                    await wordsService.DeleteWordsFromArticleAsync(article.Id);
-                    await wordsService.AddWordsFromArticleAsync(article);
+                    await wordsService.DeleteWordsFromArticleAsync(article.Id, token);
+                    await wordsService.AddWordsFromArticleAsync(article, token);
                 }
                 catch (Exception ex)
                 {
@@ -192,32 +192,32 @@ namespace Neodenit.ActiveReader.Services
             await repository.SaveAsync(token);
         }
 
-        public async Task RestartUpdateAsync(int id)
+        public async Task RestartUpdateAsync(int id, CancellationToken token)
         {
             Article article = repository.Get(id);
 
             article.State = ArticleState.Processing;
-            await repository.SaveAsync();
+            await repository.SaveAsync(token);
 
             try
             {
-                await expressionsService.DeleteExpressionsFromArticleAsync(article.Id);
-                await expressionsService.AddExpressionsFromArticleAsync(article);
+                await expressionsService.DeleteExpressionsFromArticleAsync(article.Id, token);
+                await expressionsService.AddExpressionsFromArticleAsync(article, token);
 
-                await wordsService.DeleteWordsFromArticleAsync(article.Id);
-                await wordsService.AddWordsFromArticleAsync(article);
+                await wordsService.DeleteWordsFromArticleAsync(article.Id, token);
+                await wordsService.AddWordsFromArticleAsync(article, token);
             }
             catch (Exception ex)
             {
                 logger.LogError(ex, string.Empty);
 
                 article.State = ArticleState.Failed;
-                await repository.SaveAsync();
+                await repository.SaveAsync(token);
                 throw;
             }
 
             article.State = ArticleState.Processed;
-            await repository.SaveAsync();
+            await repository.SaveAsync(token);
         }
 
         public async Task Fail(int id)

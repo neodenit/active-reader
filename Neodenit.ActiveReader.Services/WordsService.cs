@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Neodenit.ActiveReader.Common;
 using Neodenit.ActiveReader.Common.DataModels;
@@ -19,13 +20,13 @@ namespace Neodenit.ActiveReader.Services
             this.converterService = converterService;
         }
 
-        public async Task AddWordsFromArticleAsync(Article article)
+        public async Task AddWordsFromArticleAsync(Article article, CancellationToken token)
         {
             IEnumerable<Word> words = converterService.GetWords(article);
 
             await wordRepository.CreateAsync(words);
 
-            await wordRepository.SaveAsync();
+            await wordRepository.SaveAsync(token);
         }
 
         public async Task<int> GetPreviousPosition(int articleId, int position)
@@ -60,11 +61,11 @@ namespace Neodenit.ActiveReader.Services
             return newPosition;
         }
 
-        public async Task DeleteWordsFromArticleAsync(int articleId)
+        public async Task DeleteWordsFromArticleAsync(int articleId, CancellationToken token)
         {
             wordRepository.DeleteFromArticle(articleId);
 
-            await wordRepository.SaveAsync();
+            await wordRepository.SaveAsync(token);
         }
     }
 }

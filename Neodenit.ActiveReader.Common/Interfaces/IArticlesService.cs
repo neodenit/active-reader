@@ -13,7 +13,7 @@ namespace Neodenit.ActiveReader.Common.Interfaces
 
         Task<ArticleViewModel> GetAsync(int id);
 
-        Task<ArticleViewModel> CreateAsync(ArticleViewModel articleViewModel, string userName, CancellationToken token);
+        Task<ArticleViewModel> CreateAsync(ArticleViewModel articleViewModel, string userName, CancellationToken token = default);
 
         Task DeleteAsync(int id);
 
@@ -23,9 +23,9 @@ namespace Neodenit.ActiveReader.Common.Interfaces
 
         DefaultSettingsViewModel GetDefaultSettings();
 
-        Task UpdateAsync(ArticleViewModel article, string userName, CancellationToken token);
+        Task UpdateAsync(ArticleViewModel article, string userName, CancellationToken token = default);
 
-        Task RestartUpdateAsync(int id);
+        Task RestartUpdateAsync(int id, CancellationToken token = default);
 
         Task Fail(int id);
     }

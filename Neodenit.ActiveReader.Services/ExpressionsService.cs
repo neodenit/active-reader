@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Neodenit.ActiveReader.Common;
 using Neodenit.ActiveReader.Common.DataModels;
@@ -17,7 +18,7 @@ namespace Neodenit.ActiveReader.Services
             this.statisticsService = statisticsService;
         }
 
-        public async Task AddExpressionsFromArticleAsync(Article article)
+        public async Task AddExpressionsFromArticleAsync(Article article, CancellationToken token)
         {
             IEnumerable<Stat> expressions = statisticsService.GetExpressionStat(article);
             await repository.CreateAsync(expressions);
@@ -34,14 +35,14 @@ namespace Neodenit.ActiveReader.Services
                 await repository.CreateAsync(suffixes);
             }
 
-            await repository.SaveAsync();
+            await repository.SaveAsync(token);
         }
 
-        public async Task DeleteExpressionsFromArticleAsync(int articleId)
+        public async Task DeleteExpressionsFromArticleAsync(int articleId, CancellationToken token)
         {
             repository.DeleteFromArticle(articleId);
 
-            await repository.SaveAsync();
+            await repository.SaveAsync(token);
         }
     }
 }

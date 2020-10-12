@@ -1,11 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using Neodenit.ActiveReader.Common.DataModels;
 
 namespace Neodenit.ActiveReader.Common.Interfaces
 {
     public interface IWordsService
     {
-        Task AddWordsFromArticleAsync(Article article);
+        Task AddWordsFromArticleAsync(Article article, CancellationToken token = default);
 
         Task<int> GetPreviousPosition(int articleId, int position);
 
@@ -13,6 +14,6 @@ namespace Neodenit.ActiveReader.Common.Interfaces
 
         Task<int> GetEndPosition(int articleId, int position);
 
-        Task DeleteWordsFromArticleAsync(int articleId);
+        Task DeleteWordsFromArticleAsync(int articleId, CancellationToken token = default);
     }
 }

@@ -77,7 +77,11 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
         [HttpPost("{id}/restart")]
         public async Task<ActionResult> Post([CheckOwner]int id)
         {
-            await articlesService.RestartUpdateAsync(id);
+            ArticleViewModel article = await articlesService.GetAsync(id);
+
+            tokenSources[article.Title] = new CancellationTokenSource();
+
+            await articlesService.RestartUpdateAsync(id, tokenSources[article.Title].Token);
 
             return Ok();
         }
