@@ -45,9 +45,7 @@ export class ArticlesListComponent implements OnInit {
 
       this.sortArticles();
     }
-  }
 
-  updateList() {
     this.getArticles();
   }
 

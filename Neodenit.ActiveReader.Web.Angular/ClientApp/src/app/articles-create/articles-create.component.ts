@@ -47,7 +47,6 @@ export class ArticlesCreateComponent implements OnInit, OnChanges {
   @Input() articleId: number;
 
   @Output() close: EventEmitter<IArticle> = new EventEmitter();
-  @Output() update: EventEmitter<void> = new EventEmitter();
 
   constructor(private http: HttpClientService, private arrayHelper: ArrayHelperService) { }
 
@@ -121,7 +120,7 @@ export class ArticlesCreateComponent implements OnInit, OnChanges {
       state: ArticleState.Processing
     };
 
-    this.http.post<IArticle>("articles", article, () => this.update.emit(), () => this.update.emit());
+    this.http.post<IArticle>("articles", article, null, null);
 
     this.reset();
     this.close.emit(article);
@@ -140,7 +139,7 @@ export class ArticlesCreateComponent implements OnInit, OnChanges {
       state: ArticleState.Processing
     };
 
-    this.http.put<IArticle>("articles", article, () => this.update.emit());
+    this.http.put<IArticle>("articles", article, null);
 
     this.reset();
     this.close.emit(article);

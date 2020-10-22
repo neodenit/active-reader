@@ -1,5 +1,5 @@
 <div [hidden]="!isAdding">
-  <articles-create [articleId]="articleId" (close)="finishAdding($event)" (update)="updateList()"></articles-create>
+  <articles-create [articleId]="articleId" (close)="finishAdding($event)"></articles-create>
 </div>
 
 <div *ngIf="!isAdding">
@@ -23,7 +23,7 @@
     <span>
       <a *ngIf="article.state === articleState.Failed" tabindex="0" (click)="restart(article)" class="oi oi-loop text-primary text-decoration-none pr-3"></a>
       <a *ngIf="article.state !== articleState.Processing" tabindex="0" (click)="remove(article)" class="oi oi-x text-danger text-decoration-none"></a>
-      <a *ngIf="article.state === articleState.Processing" tabindex="0" (click)="cancel(article)" class="oi oi-x text-secondary text-decoration-none"></a>
+      <a *ngIf="article.state === articleState.Processing && article.id" tabindex="0" (click)="cancel(article)" class="oi oi-x text-secondary text-decoration-none"></a>
     </span>
   </li>
 </ul>
