@@ -118,12 +118,9 @@ namespace Neodenit.ActiveReader.Web.Angular.Controllers
 
             if (tokenSources.ContainsKey(article.Title))
             {
-                var tokenSource = tokenSources[article.Title];
+                tokenSources[article.Title].Cancel();
 
-                if (tokenSource.Token.CanBeCanceled)
-                {
-                    tokenSource.Cancel();
-                }
+                tokenSources.Remove(article.Title);
             }
 
             if (article.ID.HasValue)
