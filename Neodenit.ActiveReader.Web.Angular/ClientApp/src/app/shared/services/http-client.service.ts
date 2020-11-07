@@ -13,13 +13,13 @@ export class HttpClientService {
       error => this.handleError(error));
   }
 
-  post<T>(localUrl: string, body: any, callback: (data: T) => void, failCallback: (data: any) => void = null) {
+  post<T>(localUrl: string, body?: any, callback?: (data: T) => void, failCallback?: (data: any) => void) {
     this.http.post<T>(`${this.baseUrl}${localUrl}`, body).subscribe(
       data => callback && callback(data),
       error => failCallback ? failCallback(error) : this.handleError(error));
   }
 
-  put<T>(localUrl: string, body: any, callback: (data: void) => void) {
+  put<T>(localUrl: string, body: any, callback?: (data: void) => void) {
     this.http.put<T>(`${this.baseUrl}${localUrl}`, body).subscribe(
       () => callback && callback(),
       error => this.handleError(error));
