@@ -143,7 +143,9 @@ namespace Neodenit.ActiveReader.Services
                 AnswerLengthMaxOption = CoreSettings.Default.AnswerLengthMaxOption,
                 MaxChoices = CoreSettings.Default.MaxChoices,
                 MaxChoicesMinOption = CoreSettings.Default.MaxChoicesMinOption,
-                MaxChoicesMaxOption = CoreSettings.Default.MaxChoicesMaxOption
+                MaxChoicesMaxOption = CoreSettings.Default.MaxChoicesMaxOption,
+                IgnoreCaseState = CoreSettings.Default.IgnoreCaseState,
+                IgnorePunctuationState = CoreSettings.Default.IgnorePunctuationState
             };
 
         public async Task UpdateAsync(ArticleViewModel articleViewModel, string userName, CancellationToken token)

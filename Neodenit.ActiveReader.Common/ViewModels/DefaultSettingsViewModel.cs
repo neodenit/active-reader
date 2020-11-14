@@ -19,5 +19,9 @@
         public int MaxChoicesMinOption { get; set; }
 
         public int MaxChoicesMaxOption { get; set; }
+
+        public bool IgnoreCaseState { get; set; }
+
+        public bool IgnorePunctuationState { get; set; }
     }
 }

@@ -35,8 +35,8 @@ export class ArticlesCreateComponent implements OnInit, OnChanges {
   defaultPrefixLength: string;
   defaultAnswerLength: string;
   defaultMaxChoices: string;
-  readonly defaultIgnoreCaseState = false;
-  readonly defaultIgnorePunctuationState = false;
+  defaultIgnoreCaseState: boolean;
+  defaultIgnorePunctuationState: boolean;
 
   prefixLengthOptions: string[];
   answerLengthOptions: string[];
@@ -60,6 +60,8 @@ export class ArticlesCreateComponent implements OnInit, OnChanges {
         this.defaultPrefixLength = data.prefixLength.toString();
         this.defaultAnswerLength = data.answerLength.toString();
         this.defaultMaxChoices = data.maxChoices.toString();
+        this.defaultIgnoreCaseState = data.ignoreCaseState;
+        this.defaultIgnorePunctuationState = data.ignorePunctuationState;
 
         this.reset();
       });

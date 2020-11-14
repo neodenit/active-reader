@@ -8,4 +8,6 @@ export interface IDefaultSettings {
   maxChoices: number;
   maxChoicesMinOption: number;
   maxChoicesMaxOption: number;
+  ignoreCaseState: boolean;
+  ignorePunctuationState: boolean;
 }
