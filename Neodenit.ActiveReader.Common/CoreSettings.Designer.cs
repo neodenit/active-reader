@@ -133,7 +133,7 @@ namespace Neodenit.ActiveReader.Common {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool IgnoreCaseState {
             get {
                 return ((bool)(this["IgnoreCaseState"]));
@@ -142,7 +142,7 @@ namespace Neodenit.ActiveReader.Common {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool IgnorePunctuationState {
             get {
                 return ((bool)(this["IgnorePunctuationState"]));
