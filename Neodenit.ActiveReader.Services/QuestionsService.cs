@@ -48,7 +48,7 @@ namespace Neodenit.ActiveReader.Services
             IEnumerable<Stat> statistics = await statRepository.GetByArticleAsync(articleId);
 
             var linkedListExpressions = new LinkedList<Stat>(expressions);
-
+            
             for (var item = linkedListExpressions.First; item != null; item = item.Next)
             {
                 var expression = item.Value;
@@ -58,15 +58,13 @@ namespace Neodenit.ActiveReader.Services
                     continue;
                 }
 
-                Stat correctAnswer = article.AnswerLength > 1
-                    ? answersService.GetTwoWordAnswer(expression, item.Next?.Value)
-                    : expression;
+                var correctAnswerExpressions = item.Take(article.AnswerLength);
+
+                Stat correctAnswer = answersService.GetMultiWordAnswer(correctAnswerExpressions);
 
                 var correctAnswerFirstWord = expression.Suffix;
 
-                IEnumerable<Stat> choices = article.AnswerLength > 1
-                    ? answersService.GetDoubleWordChoices(statistics, correctAnswer.Prefix)
-                    : answersService.GetSingleWordChoices(statistics, correctAnswer.Prefix);
+                IEnumerable<Stat> choices = answersService.GetMultiWordChoices(statistics, correctAnswer.Prefix, article.AnswerLength);
 
                 IEnumerable<string> bestChoices = answersService.GetBestChoices(correctAnswer.Suffix, correctAnswerFirstWord, choices, article.MaxChoices, article.AnswerLength);
 

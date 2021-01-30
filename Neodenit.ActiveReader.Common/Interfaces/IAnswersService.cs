@@ -13,6 +13,10 @@ namespace Neodenit.ActiveReader.Common.Interfaces
 
         IEnumerable<Stat> GetSingleWordChoices(IEnumerable<Stat> statistics, string prefix);
 
+        IEnumerable<Stat> GetMultiWordChoices(IEnumerable<Stat> statistics, string prefix, int v);
+
         Stat GetTwoWordAnswer(Stat expression, Stat nextExpression);
+
+        Stat GetMultiWordAnswer(IEnumerable<Stat> expressions);
     }
 }

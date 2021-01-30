@@ -26,6 +26,18 @@ namespace Neodenit.ActiveReader.Services
                 Prefix = expression.Prefix,
                 Suffix = nextExpression == null ? expression.Suffix : $"{expression.Suffix} {nextExpression.Suffix}"
             };
+
+            return result;
+        }
+        
+        public Stat GetMultiWordAnswer(IEnumerable<Stat> expressions)
+        {
+            var result = new Stat
+            {
+                Prefix = expressions.First().Prefix,
+                Suffix = string.Join(' ', expressions.Select(e => e.Suffix))
+            };
+
             return result;
         }
 
@@ -47,6 +59,34 @@ namespace Neodenit.ActiveReader.Services
             });
 
             return result;
+        }
+
+        public IEnumerable<Stat> GetMultiWordChoices(IEnumerable<Stat> statistics, string prefix, int n)
+        {
+            if (n == 1)
+            {
+                return statistics.Where(s => s.Prefix == prefix && !string.IsNullOrEmpty(s.Suffix))
+                    .Select(s => new Stat { Suffix = s.Suffix, Probability = statisticsService.GetProbability(statistics, s) });
+            }
+            else
+            {
+                var firstWordChoices = statistics.Where(s => s.Prefix == prefix && !string.IsNullOrEmpty(s.Suffix));
+
+                var pairs = firstWordChoices.SelectMany(first =>
+                    GetMultiWordChoices(statistics, statisticsService.GetNextExpressionPrefix(first), n - 1)
+                        .Select(second => new { first, second }));
+
+                var validPairs = pairs.Where(p => !p.first.Suffix.ContainsSentenceBreak());
+
+                var result = validPairs.Select(p => new Stat
+                {
+                    SuffixFirstWord = p.first.Suffix,
+                    Suffix = string.Join(' ', p.first.Suffix, p.second.Suffix),
+                    Probability = statisticsService.GetProbability(statistics, p.first) * p.second.Probability
+                });
+
+                return result;
+            }
         }
 
         public IEnumerable<string> GetBestChoices(string correctAnswer, string correctAnswerFirstWord, IEnumerable<Stat> allChoices, int maxChoices, int answerLength)

@@ -30,5 +30,20 @@ namespace Neodenit.ActiveReader.Common
 
         public static bool ContainsSentenceBreak(this string text) =>
             text.Any(x => Constants.SentenceBreaks.Contains(x));
+
+        public static IEnumerable<T> Take<T>(this LinkedListNode<T> listNode, int n)
+        {
+            if (n > 0)
+            {
+                yield return listNode.Value;
+
+                var rest = listNode.Next.Take(n - 1);
+
+                foreach (var node in rest)
+                {
+                    yield return node;
+                }
+            }
+        }
     }
 }
