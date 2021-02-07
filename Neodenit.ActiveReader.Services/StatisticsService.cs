@@ -101,7 +101,7 @@ namespace Neodenit.ActiveReader.Services
         public double GetProbability(IEnumerable<Stat> statistics, Stat stat)
         {
             double p1 = statistics.Single(s => s.Prefix == stat.Prefix && s.Suffix == stat.Suffix).Count;
-            double p2 = statistics.Single(s => s.Prefix == stat.Prefix && string.IsNullOrEmpty(s.Suffix)).Count;
+            double p2 = statistics.Single(s => s.Prefix == stat.Prefix && s.Suffix == null).Count;
             var result = p1 / p2;
             return result;
         }
