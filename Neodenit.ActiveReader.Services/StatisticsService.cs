@@ -110,14 +110,10 @@ namespace Neodenit.ActiveReader.Services
         {
             var precision = Math.Pow(10, CoreSettings.Default.PrecisionOrder);
 
-            var getWeight = answerLength > 1
-               ? s => (int)(s.Probability * precision)
-               : (Func<Stat, int>)(s => s.Count);
-
             var weightedSelector = new WeightedSelector<Stat>();
 
             var weightedStat = choices
-                .Select(c => new WeightedItem<Stat>(c, getWeight(c)));
+                .Select(c => new WeightedItem<Stat>(c, (int)(c.Probability * precision)));
 
             weightedSelector.Add(weightedStat);
 

@@ -60,6 +60,11 @@ namespace Neodenit.ActiveReader.Services
 
                 var correctAnswerExpressions = item.Take(article.AnswerLength);
 
+                if (correctAnswerExpressions.Count() < article.AnswerLength)
+                {
+                    break;
+                }
+
                 Stat correctAnswer = answersService.GetMultiWordAnswer(correctAnswerExpressions);
 
                 var correctAnswerFirstWord = expression.Suffix;
@@ -72,7 +77,6 @@ namespace Neodenit.ActiveReader.Services
 
                 if (choicesCount > 1)
                 {
-
                     var correctedPosition = lastPosition - article.AnswerLength;
 
                     var startingWords = orderedWords.Where(w => w.Position < correctedPosition);

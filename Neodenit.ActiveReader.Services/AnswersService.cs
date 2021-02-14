@@ -94,7 +94,9 @@ namespace Neodenit.ActiveReader.Services
             var altChoices = allChoices.Where(c => c.Suffix != correctAnswer && c.SuffixFirstWord != correctAnswerFirstWord);
             var maxAltChoicesCount = maxChoices - 1;
 
-            IEnumerable<string> bestAltChoices = statisticsService.GetWeightedChoices(altChoices, maxAltChoicesCount, answerLength);
+            IEnumerable<string> bestAltChoices = allChoices.Count() > maxAltChoicesCount
+                ? statisticsService.GetWeightedChoices(altChoices, maxAltChoicesCount, answerLength)
+                : altChoices.Select(x => x.Suffix);
 
             var result = bestAltChoices.Append(correctAnswer).OrderBy(_ => Guid.NewGuid());
             return result;

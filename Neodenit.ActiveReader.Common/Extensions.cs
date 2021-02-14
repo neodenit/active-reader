@@ -33,7 +33,7 @@ namespace Neodenit.ActiveReader.Common
 
         public static IEnumerable<T> Take<T>(this LinkedListNode<T> listNode, int n)
         {
-            if (n > 0)
+            if (n > 0 && listNode != null)
             {
                 yield return listNode.Value;
 
