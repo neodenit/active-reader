@@ -19,15 +19,17 @@ namespace Neodenit.ActiveReader.Services
 
         public IEnumerable<Stat> GetExpressionStat(Article article)
         {
-            IEnumerable<string> words = converterService.GetWords(article.Text, article.IgnorePunctuation);
+            IEnumerable<string> sentences = converterService.GetSentences(article.Text);
 
-            IEnumerable<KeyValuePair<string, string>> pairs = words.GetPairs(
+            IEnumerable<IEnumerable<string>> sentenceWords = sentences.Select(s => converterService.GetWords(s, article.IgnorePunctuation));
+
+            IEnumerable<KeyValuePair<string, string>> pairs = sentenceWords.SelectMany(x => x.GetPairs(
                 w => converterService.GetPrefix(w, article.IgnoreCase),
                 w => converterService.GetSuffix(w, article.IgnoreCase),
                 (word, prefix, suffix) =>
                     new KeyValuePair<string, string>(prefix, suffix),
                 article.PrefixLength
-            );
+            ));
 
             var statDict = pairs.GroupBy(p => p).Select(p => new { Pair = p.Key, Count = p.Count() });
 
@@ -45,14 +47,16 @@ namespace Neodenit.ActiveReader.Services
 
         public IEnumerable<Stat> GetPrefixStat(Article article)
         {
-            IEnumerable<string> words = converterService.GetWords(article.Text, article.IgnorePunctuation);
+            IEnumerable<string> sentences = converterService.GetSentences(article.Text);
 
-            IEnumerable<string> prefixes = words.GetPairs(
+            IEnumerable<IEnumerable<string>> sentenceWords = sentences.Select(s => converterService.GetWords(s, article.IgnorePunctuation));
+
+            IEnumerable<string> prefixes = sentenceWords.SelectMany(x => x.GetPairs(
                 w => converterService.GetPrefix(w, article.IgnoreCase),
                 w => string.Empty,
                 (word, prefix, suffix) => prefix,
                 article.PrefixLength
-            );
+            ));
 
             var statDict = prefixes.GroupBy(p => p).Select(p => new { Prefix = p.Key, Count = p.Count() });
 
@@ -69,14 +73,16 @@ namespace Neodenit.ActiveReader.Services
 
         public IEnumerable<Stat> GetSuffixStat(Article article)
         {
-            IEnumerable<string> words = converterService.GetWords(article.Text, article.IgnorePunctuation);
+            IEnumerable<string> sentences = converterService.GetSentences(article.Text);
 
-            IEnumerable<string> pairs = words.GetPairs(
+            IEnumerable<IEnumerable<string>> sentenceWords = sentences.Select(s => converterService.GetWords(s, article.IgnorePunctuation));
+
+            IEnumerable<string> pairs = sentenceWords.SelectMany(x => x.GetPairs(
                 w => string.Empty,
                 w => converterService.GetSuffix(w, article.IgnoreCase),
                 (word, prefix, suffix) => suffix,
                 article.PrefixLength
-            );
+            ));
 
             var statDict = pairs.GroupBy(p => p).Select(p => new { Suffix = p.Key, Count = p.Count() });
 

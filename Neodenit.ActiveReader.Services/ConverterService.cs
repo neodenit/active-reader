@@ -73,6 +73,10 @@ namespace Neodenit.ActiveReader.Services
 
         public IEnumerable<string> GetWords(string text, bool ignorePunctuation) =>
             Regex.Split(text, ignorePunctuation ? @"\W+" : @"\s+");
+        
+        public IEnumerable<string> GetSentences(string text) =>
+            Regex.Split(text, $"[{string.Join(string.Empty, Constants.SentenceBreaks)}]")
+                .Where(s => !string.IsNullOrWhiteSpace(s));
 
         public string NormalizeWord(string word, bool ignoreCase) =>
             ignoreCase ? word.ToLowerInvariant() : word;

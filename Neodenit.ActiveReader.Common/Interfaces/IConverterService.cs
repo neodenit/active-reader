@@ -21,6 +21,8 @@ namespace Neodenit.ActiveReader.Common.Interfaces
 
         IEnumerable<string> GetSpaces(string text, bool ignorePunctuation);
 
+        IEnumerable<string> GetSentences(string text);
+
         IEnumerable<string> SplitPrefix(string prefix);
     }
 }
