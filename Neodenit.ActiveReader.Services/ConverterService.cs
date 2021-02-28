@@ -78,6 +78,9 @@ namespace Neodenit.ActiveReader.Services
             Regex.Split(text, $"[{string.Join(string.Empty, Constants.SentenceBreaks)}]")
                 .Where(s => !string.IsNullOrWhiteSpace(s));
 
+        public bool HasMultipleSentences(string text) =>
+            GetSentences(text).Count() > 1;
+
         public string NormalizeWord(string word, bool ignoreCase) =>
             ignoreCase ? word.ToLowerInvariant() : word;
 

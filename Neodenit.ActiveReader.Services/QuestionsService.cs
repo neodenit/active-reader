@@ -53,7 +53,7 @@ namespace Neodenit.ActiveReader.Services
             {
                 var expression = item.Value;
 
-                if (expression.Prefix.ContainsSentenceBreak() || expression.Suffix.ContainsSentenceBreak())
+                if (expression.Prefix.ContainsSentenceBreak() || converterService.HasMultipleSentences(expression.Suffix))
                 {
                     continue;
                 }

@@ -23,6 +23,8 @@ namespace Neodenit.ActiveReader.Common.Interfaces
 
         IEnumerable<string> GetSentences(string text);
 
+        bool HasMultipleSentences(string text);
+
         IEnumerable<string> SplitPrefix(string prefix);
     }
 }
