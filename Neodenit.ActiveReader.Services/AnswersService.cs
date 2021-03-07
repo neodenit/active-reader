@@ -49,9 +49,7 @@ namespace Neodenit.ActiveReader.Services
                 GetSingleWordChoices(statistics, statisticsService.GetNextExpressionPrefix(first))
                     .Select(second => new KeyValuePair<Stat, Stat>(first, second)));
 
-            var validPairs = pairs.Where(p => !p.Key.Suffix.ContainsSentenceBreak());
-
-            var result = validPairs.Select(p => new Stat
+            var result = pairs.Select(p => new Stat
             {
                 SuffixFirstWord = p.Key.Suffix,
                 Suffix = $"{p.Key.Suffix} {p.Value.Suffix}",
@@ -76,9 +74,7 @@ namespace Neodenit.ActiveReader.Services
                     GetMultiWordChoices(statistics, statisticsService.GetNextExpressionPrefix(first), n - 1)
                         .Select(second => new { first, second }));
 
-                var validPairs = pairs.Where(p => !p.first.Suffix.ContainsSentenceBreak());
-
-                var result = validPairs.Select(p => new Stat
+                var result = pairs.Select(p => new Stat
                 {
                     SuffixFirstWord = p.first.Suffix,
                     Suffix = string.Join(' ', p.first.Suffix, p.second.Suffix),
