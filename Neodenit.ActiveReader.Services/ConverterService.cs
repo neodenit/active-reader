@@ -74,9 +74,12 @@ namespace Neodenit.ActiveReader.Services
         public IEnumerable<string> GetWords(string text, bool ignorePunctuation) =>
             Regex.Split(text, ignorePunctuation ? @"\W+" : @"\s+");
         
-        public IEnumerable<string> GetSentences(string text) =>
-            Regex.Split(text, $"[{string.Join(string.Empty, Constants.SentenceBreaks)}]")
-                .Where(s => !string.IsNullOrWhiteSpace(s));
+        public IEnumerable<string> GetSentences(string text)
+        {
+            var breakPattern = string.Join(string.Empty, Constants.SentenceBreaks);
+            var matches = Regex.Matches(text, $@"([^{breakPattern}]+[{breakPattern}]+)\s*");
+            return matches.Select(x => x.Groups[1].Value);
+        }
 
         public bool HasMultipleSentences(string text) =>
             GetSentences(text).Count() > 1;
