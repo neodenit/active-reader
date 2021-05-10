@@ -83,10 +83,9 @@ namespace Neodenit.ActiveReader.Services
                     var newWords = orderedWords.Where(w => w.Position >= correctedPosition && w.Position < expression.SuffixPosition);
 
                     var lastWord = newWords.Last();
-                    var nextWord = orderedWords.SingleOrDefault(w => w.Position == expression.SuffixPosition);
+                    var nextWords = orderedWords.SkipWhile(w => w.Position < expression.SuffixPosition).Take(article.AnswerLength - 1);
 
-                    if (!lastWord.NextSpace.ContainsSentenceBreak() &&
-                        (article.AnswerLength == 1 || !nextWord.NextSpace.ContainsSentenceBreak()))
+                    if (!lastWord.NextSpace.ContainsSentenceBreak() && !nextWords.Any(w => w.NextSpace.ContainsSentenceBreak()))
                     {
                         string startingText = converterService.GetText(startingWords);
                         string newText = converterService.GetText(newWords);
